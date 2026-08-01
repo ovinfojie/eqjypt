@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import { Plus, Trash2, Info, Download, Upload, HelpCircle, ChevronDown } from "lucide-react"
 
 type Round = {
@@ -48,8 +47,7 @@ export default function FabuJingpaiPage() {
   }
 
   return (
-    <AdminLayout>
-      <div className="max-w-[1000px]">
+    <div className="max-w-[1000px]">
         <div className="mb-6">
           <h1 className="text-[20px] font-bold text-[#1a1a2e]">发布销售竞拍</h1>
           <p className="text-[13px] text-[#6b7c93] mt-1">创建竞拍专场，设置商品信息和竞拍规则</p>
@@ -377,6 +375,5 @@ export default function FabuJingpaiPage() {
           </div>
         </div>
       </div>
-    </AdminLayout>
   )
 }

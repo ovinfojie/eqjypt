@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import { MessageCircle, Minus, Plus, ChevronRight } from "lucide-react"
 
 const steps = [
@@ -29,8 +28,7 @@ export default function XiadanPage() {
   }
 
   return (
-    <MerchantLayout>
-      <div className="max-w-[1100px]">
+    <div className="max-w-[1100px]">
         <div className="mb-6">
           <h1 className="text-[20px] font-bold text-[#1a1a2e]">提交订单</h1>
         </div>
@@ -252,6 +250,5 @@ export default function XiadanPage() {
           </div>
         </div>
       </div>
-    </MerchantLayout>
   )
 }

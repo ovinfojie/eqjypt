@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import { Plus, Trash2, ChevronDown, X, Check, Info } from "lucide-react"
 
 type ServiceItem = {
@@ -32,8 +31,7 @@ export default function YuyuePage() {
   }
 
   return (
-    <AdminLayout>
-      <div className="max-w-[900px]">
+    <div className="max-w-[900px]">
         <div className="mb-6">
           <h1 className="text-[20px] font-bold text-[#1a1a2e]">预约管理</h1>
           <p className="text-[13px] text-[#6b7c93] mt-1">管理用户的全产业链服务预约请求，审核并安排服务</p>
@@ -206,6 +204,5 @@ export default function YuyuePage() {
           </button>
         </div>
       </div>
-    </AdminLayout>
   )
 }

@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import { Search, Filter, Download, Eye, CheckCircle, XCircle, Clock } from "lucide-react"
 
 const statusMap: Record<string, { label: string; color: string; bg: string }> = {
@@ -98,8 +97,7 @@ export default function XunjiaListPage() {
   })
 
   return (
-    <AdminLayout>
-      <div>
+    <div>
         {/* Page header */}
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -261,6 +259,5 @@ export default function XunjiaListPage() {
           </div>
         </div>
       </div>
-    </AdminLayout>
   )
 }

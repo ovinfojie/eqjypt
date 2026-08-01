@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import { Info, Download, Eye, ChevronDown } from "lucide-react"
 
 const skuRows = [
@@ -15,8 +14,7 @@ export default function GongyingBaoJiaPage() {
   const [settlement, setSettlement] = useState({ jianlonglong: true, gonghang: false })
 
   return (
-    <MerchantLayout>
-      <div className="max-w-[1000px]">
+    <div className="max-w-[1000px]">
         <div className="mb-6">
           <h1 className="text-[20px] font-bold text-[#1a1a2e]">发起供应报价</h1>
           <p className="text-[13px] text-[#6b7c93] mt-1">针对采购方的询价需求进行报价，填写供应信息和价格后提交</p>
@@ -327,6 +325,5 @@ export default function GongyingBaoJiaPage() {
           </div>
         </div>
       </div>
-    </MerchantLayout>
   )
 }

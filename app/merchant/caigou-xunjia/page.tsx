@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import { Info, Upload, X, Plus, Minus, ChevronDown } from "lucide-react"
 
 const mockProduct = {
@@ -19,8 +18,7 @@ export default function CaigouXunjiaPage() {
   const [deliveryMode, setDeliveryMode] = useState<"seller" | "buyer">("seller")
 
   return (
-    <MerchantLayout>
-      <div className="max-w-[900px]">
+    <div className="max-w-[900px]">
         {/* Page title */}
         <div className="mb-6">
           <h1 className="text-[20px] font-bold text-[#1a1a2e]">发起采购询价</h1>
@@ -251,6 +249,5 @@ export default function CaigouXunjiaPage() {
           </div>
         </div>
       </div>
-    </MerchantLayout>
   )
 }
