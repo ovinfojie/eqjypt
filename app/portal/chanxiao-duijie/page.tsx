@@ -4,7 +4,7 @@ import { useState, useRef } from "react"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { Search, ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
 
 /* ─── Types ─── */
 type InfoType = "采购" | "供应"
@@ -271,25 +271,44 @@ function CategorySection({ cat }: { cat: Category }) {
 
 /* ─── Page ─── */
 export default function ChanxiaoDuijiePage() {
-  const [keyword, setKeyword] = useState("")
-
+  // keyword state removed — search is handled per-section in CategorySection
   return (
     <div className="min-h-screen flex flex-col bg-[#f5f7fa]">
       <SiteHeader />
       <main className="flex-1">
 
-        {/* Top search bar */}
-        <div className="bg-white border-b border-[#dde3ec] py-4">
-          <div className="max-w-[1100px] mx-auto px-6 flex items-center justify-end gap-2">
-            <input
-              value={keyword}
-              onChange={(e) => setKeyword(e.target.value)}
-              placeholder="请输入商品名称"
-              className="border border-[#dde3ec] rounded px-3 py-1.5 text-[13px] w-[200px] focus:outline-none focus:border-[#1a5fa8]"
-            />
-            <button className="flex items-center gap-1.5 px-4 py-1.5 bg-[#1a5fa8] text-white text-[13px] rounded hover:bg-[#0d4a8a] transition-colors">
-              <Search className="w-3.5 h-3.5" /> 搜索
-            </button>
+        {/* Hero Banner */}
+        <div
+          className="relative w-full h-[240px] flex items-center justify-center overflow-hidden"
+          style={{
+            background: "linear-gradient(135deg, #0a3d7a 0%, #1a5fa8 50%, #1e7fc4 100%)",
+          }}
+        >
+          {/* Background texture overlay */}
+          <div
+            className="absolute inset-0 opacity-20"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+            }}
+          />
+          {/* Decorative circles */}
+          <div className="absolute left-[8%] top-1/2 -translate-y-1/2 w-32 h-32 rounded-full border border-white/10 opacity-30" />
+          <div className="absolute left-[6%] top-1/2 -translate-y-1/2 w-48 h-48 rounded-full border border-white/10 opacity-20" />
+          <div className="absolute right-[8%] top-1/2 -translate-y-1/2 w-32 h-32 rounded-full border border-white/10 opacity-30" />
+          <div className="absolute right-[6%] top-1/2 -translate-y-1/2 w-48 h-48 rounded-full border border-white/10 opacity-20" />
+
+          {/* Content */}
+          <div className="relative z-10 text-center">
+            <h1 className="text-[42px] font-bold text-white mb-2 tracking-wide">产销对接</h1>
+            <p className="text-[16px] text-white/80 mb-5">产销衔接 阳光高效</p>
+            <div className="flex items-center justify-center gap-4">
+              <span className="px-5 py-1.5 rounded-full border border-white/40 bg-white/10 text-white text-[14px] backdrop-blur-sm">
+                采购 → 销售
+              </span>
+              <span className="px-5 py-1.5 rounded-full border border-white/40 bg-white/10 text-white text-[14px] backdrop-blur-sm">
+                高效 → 共赢
+              </span>
+            </div>
           </div>
         </div>
 
