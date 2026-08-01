@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { ChevronLeft, Star, MessageCircle, Phone, ChevronDown, ChevronUp } from "lucide-react"
+import { ChevronLeft, MessageCircle, Phone, ChevronDown, ChevronUp } from "lucide-react"
 
 const demand = {
   id: "DD20260001",
@@ -98,11 +98,6 @@ const quotes = [
   },
 ]
 
-const creditColors: Record<string, string> = {
-  "AAA": "text-[#c8961a] bg-[#fff8e1]",
-  "AA": "text-[#1a5fa8] bg-[#e8f4fd]",
-  "A": "text-[#555] bg-[#f0f0f0]",
-}
 
 export default function XqBaojiaListPage() {
   const [expanded, setExpanded] = useState<Record<string, boolean>>({ Q001: true })
@@ -210,22 +205,13 @@ export default function XqBaojiaListPage() {
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-0.5">
                     <span className="text-[14px] font-semibold text-[#333] truncate">{q.company}</span>
-                    <span className={`px-1.5 py-0.5 rounded text-[11px] font-semibold ${creditColors[q.creditLevel]}`}>
-                      {q.creditLevel}
-                    </span>
-                    {q.badge && (
-                      <span className="flex items-center gap-0.5 px-2 py-0.5 rounded-full bg-[#fff4e6] text-[#e8831a] text-[11px] font-semibold">
-                        <Star className="w-3 h-3 fill-[#e8831a]" />
-                        {q.badge}
-                      </span>
-                    )}
                   </div>
                   <div className="text-[12px] text-[#999]">报价时间：{q.submitTime}</div>
                 </div>
 
                 {/* Price */}
                 <div className="text-center shrink-0">
-                  <div className="text-[18px] font-bold text-[#e8831a]">
+                  <div className="text-[15px] font-semibold text-[#333]">
                     {q.priceMin.toFixed(2)} ~ {q.priceMax.toFixed(2)}
                   </div>
                   <div className="text-[12px] text-[#999]">{q.unit}</div>

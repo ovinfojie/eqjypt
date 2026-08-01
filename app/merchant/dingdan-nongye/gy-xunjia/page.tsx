@@ -26,11 +26,6 @@ const supply = {
   total: 9000,
 }
 
-const existingInquiries = [
-  { company: "平远新供销天润粮油有限公司", qty: "3000公斤", expectPrice: "80元/kg", time: "2026-04-20 09:15", status: "已确认" },
-  { company: "广州供销数字科技有限公司", qty: "2000公斤", expectPrice: "82元/kg", time: "2026-04-19 14:30", status: "待回复" },
-  { company: "东莞新供销天润农产品有限公司", qty: "1500公斤", expectPrice: "78元/kg", time: "2026-04-18 11:22", status: "待回复" },
-]
 
 export default function GyXunjiaPage() {
   const [inquiryQty, setInquiryQty] = useState("")
@@ -111,24 +106,6 @@ export default function GyXunjiaPage() {
             </div>
           </div>
 
-          {/* Existing inquiries */}
-          <div className="bg-white rounded border border-[#e8edf5] p-4">
-            <div className="text-[13px] font-semibold text-[#333] mb-3">
-              已收到询价 <span className="text-[#3a8c3f]">{existingInquiries.length}</span> 条
-            </div>
-            <div className="space-y-3">
-              {existingInquiries.map((q, i) => (
-                <div key={i} className={`p-3 rounded border ${q.status === "已确认" ? "border-[#3a8c3f] bg-[#f0f9f0]" : "border-[#e8edf5]"}`}>
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-[12px] font-medium text-[#333] line-clamp-1">{q.company}</span>
-                    <span className={`text-[11px] px-1.5 py-0.5 rounded ${q.status === "已确认" ? "bg-[#3a8c3f] text-white" : "bg-[#f0f0f0] text-[#666]"}`}>{q.status}</span>
-                  </div>
-                  <div className="text-[12px] text-[#e8831a] font-semibold">期望：{q.expectPrice}</div>
-                  <div className="text-[11px] text-[#999]">询购量：{q.qty} · {q.time}</div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Right: inquiry form */}

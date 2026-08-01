@@ -26,11 +26,6 @@ const demand = {
   total: 9000,
 }
 
-const existingQuotes = [
-  { company: "惠州新供销天润粮油储备有限公司", price: "78~88元/kg", qty: "9000公斤", time: "2026-04-20 14:23", status: "已选中" },
-  { company: "广州新供销天润米业有限公司", price: "80~85元/kg", qty: "8000公斤", time: "2026-04-19 10:05", status: "待选" },
-  { company: "深圳供销农产品贸易有限公司", price: "75~82元/kg", qty: "5000公斤", time: "2026-04-18 16:40", status: "待选" },
-]
 
 export default function XqBaojiaPage() {
   const [priceMin, setPriceMin] = useState("")
@@ -105,24 +100,6 @@ export default function XqBaojiaPage() {
             </div>
           </div>
 
-          {/* Existing quotes */}
-          <div className="bg-white rounded border border-[#e8edf5] p-4">
-            <div className="text-[13px] font-semibold text-[#333] mb-3">
-              已收到报价 <span className="text-[#1a5fa8]">{existingQuotes.length}</span> 条
-            </div>
-            <div className="space-y-3">
-              {existingQuotes.map((q, i) => (
-                <div key={i} className={`p-3 rounded border ${q.status === "已选中" ? "border-[#1a5fa8] bg-[#f0f7ff]" : "border-[#e8edf5]"}`}>
-                  <div className="flex items-center justify-between mb-1">
-                    <span className="text-[12px] font-medium text-[#333] line-clamp-1">{q.company}</span>
-                    <span className={`text-[11px] px-1.5 py-0.5 rounded ${q.status === "已选中" ? "bg-[#1a5fa8] text-white" : "bg-[#f0f0f0] text-[#666]"}`}>{q.status}</span>
-                  </div>
-                  <div className="text-[12px] text-[#e8831a] font-semibold">{q.price}</div>
-                  <div className="text-[11px] text-[#999]">供应量：{q.qty} · {q.time}</div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
 
         {/* Right: quote form */}
