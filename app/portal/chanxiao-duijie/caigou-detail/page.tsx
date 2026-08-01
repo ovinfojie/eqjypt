@@ -166,7 +166,7 @@ export default function CaigouDetailPage() {
         {/* CTA */}
         <div className="text-center">
           <Link
-            href="/portal/dingdan-nongye/gongying-baojia"
+            href="/portal/chanxiao-duijie/caigou-baojia"
             className="inline-block px-16 py-3 bg-[#1a5fa8] text-white text-[15px] font-semibold rounded hover:bg-[#0d4a8a] transition-colors"
           >
             立即报价
