@@ -181,7 +181,7 @@ export default function XqListPage() {
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex flex-col gap-1">
-                      <Link href={`/merchant/dingdan-nongye/xq-baojia?id=${row.id}`}
+                      <Link href={`/merchant/dingdan-nongye/xq-baojia-list?id=${row.id}`}
                         className="text-[12px] text-[#1a5fa8] hover:underline">查看报价</Link>
                       <button className="text-[12px] text-[#666] hover:text-[#1a5fa8] text-left">查看详情</button>
                     </div>
