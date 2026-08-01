@@ -219,7 +219,7 @@ export default function DingdanNongyePage() {
                         </td>
                         <td className="px-4 py-3">
                           <div className="flex flex-col gap-1">
-                            <button className="text-[12px] text-[#1a5fa8] hover:underline text-left">详细信息</button>
+                            <Link href="/portal/dingdan-nongye/xq-detail" className="text-[12px] text-[#1a5fa8] hover:underline text-left">详细信息</Link>
                             <Link href="/portal/dingdan-nongye/gongying-baojia" className="text-[12px] text-[#e8831a] hover:underline">
                               发起供应报价
                             </Link>
@@ -318,7 +318,7 @@ export default function DingdanNongyePage() {
                           </td>
                           <td className="px-4 py-3">
                             <div className="flex flex-col gap-1">
-                              <button className="text-[12px] text-[#1a5fa8] hover:underline text-left">详细信息</button>
+                              <Link href="/portal/dingdan-nongye/gy-detail" className="text-[12px] text-[#1a5fa8] hover:underline text-left">详细信息</Link>
                               <Link href="/portal/dingdan-nongye/caigou-xunjia" className="text-[12px] text-[#e8831a] hover:underline">
                                 发起采购询价
                               </Link>
