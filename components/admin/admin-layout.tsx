@@ -6,9 +6,18 @@ import { cn } from "@/lib/utils"
 import {
   LayoutDashboard, ClipboardList, Gavel, Calendar,
   Users, BarChart2, Package, Settings, ChevronRight, ArrowLeft,
+  Star, MapPin, ShieldCheck, Building2,
 } from "lucide-react"
 
 const menuGroups = [
+  {
+    label: "供销严选管理",
+    items: [
+      { label: "产地管理",   href: "/admin/yanxuan/chandi-list",    icon: MapPin       },
+      { label: "商品审核",   href: "/admin/yanxuan/shangpin-shenhe", icon: ShieldCheck  },
+      { label: "供应商审核", href: "/admin/yanxuan/supplier-shenhe", icon: Building2    },
+    ],
+  },
   {
     label: "订单农业管理",
     items: [
