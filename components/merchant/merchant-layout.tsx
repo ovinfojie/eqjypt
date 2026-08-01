@@ -6,11 +6,18 @@ import { cn } from "@/lib/utils"
 import {
   LayoutDashboard, FileText, TrendingUp, ShoppingCart,
   Package, Users, Settings, ChevronRight, ArrowLeft,
-  MessageSquare, ChevronDown, Handshake, Star, Gavel, Link2, ShieldCheck,
+  MessageSquare, ChevronDown, Handshake, Star, Gavel, Link2, ShieldCheck, ClipboardList,
 } from "lucide-react"
 import { useState } from "react"
 
 const menuGroups = [
+  {
+    label: "采购管理",
+    items: [
+      { label: "我的采购订单", href: "/merchant/orders",       icon: ClipboardList, badge: 3 },
+      { label: "我的采购车",   href: "/portal/cart",           icon: ShoppingCart,  badge: 4 },
+    ],
+  },
   {
     label: "供销严选",
     items: [
@@ -188,7 +195,8 @@ export function MerchantLayout({ children }: { children: React.ReactNode }) {
                       )
                     }
                     // Regular item
-                    const isActive = pathname === item.href
+                    const isActive = pathname === (item as { href: string }).href
+                    const badge = (item as { badge?: number }).badge
                     return (
                       <Link
                         key={(item as { href: string }).href}
@@ -201,8 +209,14 @@ export function MerchantLayout({ children }: { children: React.ReactNode }) {
                         )}
                       >
                         <Icon className="w-4 h-4 shrink-0" />
-                        <span>{item.label}</span>
-                        {isActive && <ChevronRight className="w-3 h-3 ml-auto text-[#1a5fa8]" />}
+                        <span className="flex-1">{item.label}</span>
+                        {badge ? (
+                          <span className="w-4 h-4 rounded-full bg-[#e8831a] text-white text-[10px] font-bold flex items-center justify-center shrink-0">
+                            {badge}
+                          </span>
+                        ) : isActive ? (
+                          <ChevronRight className="w-3 h-3 ml-auto text-[#1a5fa8]" />
+                        ) : null}
                       </Link>
                     )
                   })}

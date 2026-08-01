@@ -3,6 +3,7 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
+import { ShoppingCart } from "lucide-react"
 
 const navItems = [
   { label: "订单农业服务", href: "/portal/dingdan-nongye" },
@@ -74,6 +75,17 @@ export function SiteHeader() {
             className="px-3 py-1.5 border border-[#dde3ec] text-[12px] text-[#6b7c93] rounded hover:border-[#1a5fa8] hover:text-[#1a5fa8] transition-colors"
           >
             总控台
+          </Link>
+          {/* 购物车入口 */}
+          <Link
+            href="/portal/cart"
+            className="relative flex items-center justify-center w-9 h-9 rounded hover:bg-[#e8f4fd] transition-colors"
+            aria-label="采购车"
+          >
+            <ShoppingCart className="w-5 h-5 text-[#1a5fa8]" />
+            <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-[#e8831a] text-white text-[10px] font-bold flex items-center justify-center">
+              4
+            </span>
           </Link>
           <Link
             href="/portal/login"
