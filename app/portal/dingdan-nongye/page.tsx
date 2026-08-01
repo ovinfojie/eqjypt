@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import {
@@ -181,10 +182,13 @@ export default function DingdanNongyePage() {
                   依托县域公共型农业社会化服务平台、乡镇农产品综合服务站和供销农场生产基地，对标市场标准、对接市场需求，发展粮食和重要农产品订单种植，保障优质农产品稳定供给。
                 </p>
               </div>
-              <button className="flex items-center gap-2 px-5 py-2.5 bg-[#e8831a] text-white text-[14px] font-semibold rounded hover:bg-[#d4751a] transition-colors shrink-0">
+              <Link
+                href="/portal/dingdan-nongye/caigou-xunjia"
+                className="flex items-center gap-2 px-5 py-2.5 bg-[#e8831a] text-white text-[14px] font-semibold rounded hover:bg-[#d4751a] transition-colors shrink-0"
+              >
                 <Plus className="w-4 h-4" />
                 发布采购需求
-              </button>
+              </Link>
             </div>
 
             {/* Stats bar */}
@@ -226,7 +230,7 @@ export default function DingdanNongyePage() {
                     <div className="w-14 h-14 rounded-full bg-[#e8f4fd] border-2 border-[#1a5fa8] flex items-center justify-center mx-auto mb-1">
                       <span className="text-[11px] font-semibold text-[#1a5fa8]">供应方</span>
                     </div>
-                    <div className="text-[10px] text-[#6b7c93] leading-tight">组织生产、分解任务<br />质量把控、产品交付</div>
+                    <div className="text-[10px] text-[#6b7c93] leading-tight">组织生产���分解任务<br />质量把控、产品交付</div>
                   </div>
                   {/* Bottom-right: 农户 */}
                   <div className="absolute bottom-0 right-0 text-center w-[130px]">
@@ -422,9 +426,12 @@ export default function DingdanNongyePage() {
                             <div className="text-[14px] font-semibold text-[#1a5fa8]">{item.quoteCount}</div>
                             <div className="text-[11px] text-[#6b7c93]">家供应商报价</div>
                           </div>
-                          <button className="px-4 py-1.5 bg-[#1a5fa8] text-white text-[13px] rounded hover:bg-[#0d4a8a] transition-colors">
+                          <Link
+                            href={item.status === "需求发布" || item.status === "报价中" ? "/portal/dingdan-nongye/gongying-baojia" : "#"}
+                            className="px-4 py-1.5 bg-[#1a5fa8] text-white text-[13px] rounded hover:bg-[#0d4a8a] transition-colors"
+                          >
                             {item.status === "需求发布" || item.status === "报价中" ? "立即报价" : "查看详情"}
-                          </button>
+                          </Link>
                         </div>
                       </div>
                     </div>
