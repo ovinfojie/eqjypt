@@ -5,13 +5,13 @@ import { usePathname } from "next/navigation"
 import { cn } from "@/lib/utils"
 
 const navItems = [
-  { label: "订单农业服务", href: "/dingdan-nongye" },
-  { label: "产销对接", href: "/chanxiao-duijie" },
-  { label: "供销严选", href: "/gongxiao-yanxuan" },
-  { label: "竞价交易", href: "/jingjia-jiaoyi" },
-  { label: "全产业链服务", href: "/quanchanyilian" },
-  { label: "农业信用服务", href: "/nongye-xinyong" },
-  { label: "开放合作共赢", href: "/kaifang-hezuo" },
+  { label: "订单农业服务", href: "/portal/dingdan-nongye" },
+  { label: "产销对接", href: "/portal/chanxiao-duijie" },
+  { label: "供销严选", href: "/portal/gongxiao-yanxuan" },
+  { label: "竞价交易", href: "/portal/jingjia-jiaoyi" },
+  { label: "全产业链服务", href: "/portal/quanchanyilian" },
+  { label: "农业信用服务", href: "/portal/nongye-xinyong" },
+  { label: "开放合作共赢", href: "/portal/kaifang-hezuo" },
 ]
 
 export function SiteHeader() {
@@ -69,6 +69,12 @@ export function SiteHeader() {
 
         {/* Right actions */}
         <div className="ml-auto flex items-center gap-3 shrink-0">
+          <Link
+            href="/"
+            className="px-3 py-1.5 border border-[#dde3ec] text-[12px] text-[#6b7c93] rounded hover:border-[#1a5fa8] hover:text-[#1a5fa8] transition-colors"
+          >
+            总控台
+          </Link>
           <Link
             href="/login"
             className="text-[14px] text-[#1a5fa8] hover:underline"
