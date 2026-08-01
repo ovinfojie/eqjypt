@@ -1,5 +1,5 @@
 "use client"
-
+// session detail page
 import { useState, useEffect } from "react"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
