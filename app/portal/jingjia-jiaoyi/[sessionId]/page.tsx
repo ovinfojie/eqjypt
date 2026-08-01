@@ -29,7 +29,7 @@ interface BidRecord {
   round: number
 }
 
-/* ─── Mock session data ─── */
+/* ─── Mock data ─── */
 const SESSION = {
   id: "a001",
   title: "2026年春季粮食竞价专场（第12期）",
@@ -42,7 +42,6 @@ const SESSION = {
   deposit: "50万元",
   startTime: "2026-04-20 10:00",
   endTime: "2026-04-20 16:00",
-  status: "live" as const,
   announcement: "本专场为广东省春季粮食统采竞价专场，共2轮次6个品种。参拍企业需完成保证金缴纳，担保交易通过建行龙存管或工行安心付完成。竞价采用英式升价拍卖，每次加价不低于加价幅度，竞价节时长300秒，允许延时。中标企业须在3个工作日内完成签约。",
 }
 
@@ -56,14 +55,14 @@ const GOODS: GoodRow[] = [
 ]
 
 const BID_RECORDS: BidRecord[] = [
-  { time: "10:42:18", company: "广州新供销天润米业有限公司", price: "2080元/吨", round: 1 },
-  { time: "10:41:03", company: "惠州新供销天润粮油储备有限公司", price: "2070元/吨", round: 1 },
-  { time: "10:39:55", company: "深圳供销农产品贸易有限公司", price: "2060元/吨", round: 1 },
-  { time: "10:38:02", company: "广州新供销天润米业有限公司", price: "2050元/吨", round: 1 },
-  { time: "10:36:45", company: "东莞新供销天润农产品有限公司", price: "2040元/吨", round: 1 },
+  { time: "10:42:18", company: "广州新供销天润米业有限公司",         price: "2080元/吨", round: 1 },
+  { time: "10:41:03", company: "惠州新供销天润粮油储备有限公司",     price: "2070元/吨", round: 1 },
+  { time: "10:39:55", company: "深圳供销农产品贸易有限公司",         price: "2060元/吨", round: 1 },
+  { time: "10:38:02", company: "广州新供销天润米业有限公司",         price: "2050元/吨", round: 1 },
+  { time: "10:36:45", company: "东莞新供销天润农产品有限公司",       price: "2040元/吨", round: 1 },
 ]
 
-const GOOD_STATUS_CONFIG = {
+const STATUS_CFG = {
   bidding: { label: "竞拍中", bg: "bg-[#fef2f2]", text: "text-[#cc2222]", dot: "bg-[#cc2222] animate-pulse" },
   waiting: { label: "待竞拍", bg: "bg-[#f5f7fa]", text: "text-[#666]",    dot: "bg-[#aaa]" },
   sold:    { label: "已成交", bg: "bg-[#e8f9f0]", text: "text-[#1a8a3f]", dot: "bg-[#1a8a3f]" },
@@ -71,21 +70,21 @@ const GOOD_STATUS_CONFIG = {
 
 /* ─── Countdown hook ─── */
 function useCountdown(initial: number) {
-  const [seconds, setSeconds] = useState(initial)
+  const [secs, setSecs] = useState(initial)
   useEffect(() => {
-    if (seconds <= 0) return
-    const t = setInterval(() => setSeconds((s) => s - 1), 1000)
+    if (secs <= 0) return
+    const t = setInterval(() => setSecs((s) => s - 1), 1000)
     return () => clearInterval(t)
-  }, [seconds])
-  const h = String(Math.floor(seconds / 3600)).padStart(2, "0")
-  const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, "0")
-  const s = String(seconds % 60).padStart(2, "0")
+  }, [secs])
+  const h = String(Math.floor(secs / 3600)).padStart(2, "0")
+  const m = String(Math.floor((secs % 3600) / 60)).padStart(2, "0")
+  const s = String(secs % 60).padStart(2, "0")
   return `${h}:${m}:${s}`
 }
 
 /* ─── Page ─── */
 export default function SessionDetailPage() {
-  const countdown = useCountdown(8324) // ~2h18m44s
+  const countdown = useCountdown(8324)
   const [myBidPrice, setMyBidPrice] = useState("")
   const [bidSuccess, setBidSuccess] = useState(false)
   const [activeGood, setActiveGood] = useState("g1")
@@ -143,10 +142,10 @@ export default function SessionDetailPage() {
             {/* Meta grid */}
             <div className="grid grid-cols-4 gap-3 mt-4 pt-4 border-t border-[#e8edf5] text-[13px]">
               {[
-                { label: "是否延时", value: SESSION.allowExtend },
+                { label: "是否延时",   value: SESSION.allowExtend   },
                 { label: "交易节时长", value: SESSION.sessionDuration },
-                { label: "保证金", value: SESSION.deposit },
-                { label: "开始时间", value: SESSION.startTime },
+                { label: "保证金",     value: SESSION.deposit        },
+                { label: "开始时间",   value: SESSION.startTime      },
               ].map((m) => (
                 <div key={m.label}>
                   <span className="text-[#999]">{m.label}：</span>
@@ -157,7 +156,7 @@ export default function SessionDetailPage() {
           </div>
 
           <div className="flex gap-5">
-            {/* Left: goods list */}
+            {/* Left */}
             <div className="flex-1 min-w-0">
 
               {/* Goods table */}
@@ -177,7 +176,7 @@ export default function SessionDetailPage() {
                     </thead>
                     <tbody>
                       {GOODS.map((g) => {
-                        const sc = GOOD_STATUS_CONFIG[g.status]
+                        const sc = STATUS_CFG[g.status]
                         const isActive = activeGood === g.id
                         return (
                           <tr
@@ -266,7 +265,7 @@ export default function SessionDetailPage() {
                     <span className="text-[#999]">加价幅度</span>
                     <span className="text-[#1a5fa8] font-medium">{currentGood.increment}</span>
                   </div>
-                  <div className="flex justify-between text-[13px]">
+                  <div className="flex justify-between text-[13px] items-center">
                     <span className="text-[#999]">当前最高价</span>
                     <span className="text-[22px] font-bold text-[#cc2222] leading-tight">{currentGood.currentPrice}</span>
                   </div>
