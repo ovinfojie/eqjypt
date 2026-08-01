@@ -193,7 +193,7 @@ export default function WoShoudaodePage() {
                         <span className="px-2 py-0.5 rounded text-[12px] font-medium" style={{ color: s.color, background: s.bg }}>{s.label}</span>
                       </td>
                       <td className="px-3 py-3">
-                        <Link href="/merchant/dingdan-nongye/gy-xunjia" className="flex items-center gap-1 text-[#1a5fa8] hover:underline text-[12px]">
+                        <Link href="/merchant/dingdan-nongye/gy-xunjia/detail" className="flex items-center gap-1 text-[#1a5fa8] hover:underline text-[12px]">
                           <Eye className="w-3.5 h-3.5" />查看
                         </Link>
                       </td>
@@ -230,7 +230,7 @@ export default function WoShoudaodePage() {
                         <span className="px-2 py-0.5 rounded text-[12px] font-medium" style={{ color: s.color, background: s.bg }}>{s.label}</span>
                       </td>
                       <td className="px-3 py-3">
-                        <Link href="/merchant/dingdan-nongye/xq-baojia-list" className="flex items-center gap-1 text-[#1a5fa8] hover:underline text-[12px]">
+                        <Link href="/merchant/dingdan-nongye/xq-baojia/detail" className="flex items-center gap-1 text-[#1a5fa8] hover:underline text-[12px]">
                           <Eye className="w-3.5 h-3.5" />查看
                         </Link>
                       </td>

@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Search, ChevronDown, Eye } from "lucide-react"
+import { Search, ChevronDown, Eye, Pencil } from "lucide-react"
 
 type Tab = "caigou" | "gongying"
 type Status = "all" | "pending" | "quoted" | "ordered" | "closed" | "expired"
@@ -151,9 +151,16 @@ export default function WoFaqidePage() {
                         <span className="px-2 py-0.5 rounded text-[12px] font-medium" style={{ color: s.color, background: s.bg }}>{s.label}</span>
                       </td>
                       <td className="px-3 py-3">
-                        <Link href="/merchant/dingdan-nongye/gy-xunjia" className="flex items-center gap-1 text-[#1a5fa8] hover:underline text-[12px]">
-                          <Eye className="w-3.5 h-3.5" />查看
-                        </Link>
+                        <div className="flex flex-col gap-1">
+                          <Link href="/merchant/dingdan-nongye/gy-xunjia/detail" className="flex items-center gap-1 text-[#1a5fa8] hover:underline text-[12px]">
+                            <Eye className="w-3.5 h-3.5" />查看
+                          </Link>
+                          {row.status === "pending" && (
+                            <Link href="/merchant/dingdan-nongye/gy-xunjia/edit" className="flex items-center gap-1 text-[#e8831a] hover:underline text-[12px]">
+                              <Pencil className="w-3.5 h-3.5" />修改
+                            </Link>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   )
@@ -187,9 +194,16 @@ export default function WoFaqidePage() {
                         <span className="px-2 py-0.5 rounded text-[12px] font-medium" style={{ color: s.color, background: s.bg }}>{s.label}</span>
                       </td>
                       <td className="px-3 py-3">
-                        <Link href="/merchant/dingdan-nongye/xq-baojia" className="flex items-center gap-1 text-[#1a5fa8] hover:underline text-[12px]">
-                          <Eye className="w-3.5 h-3.5" />查看
-                        </Link>
+                        <div className="flex flex-col gap-1">
+                          <Link href="/merchant/dingdan-nongye/xq-baojia/detail" className="flex items-center gap-1 text-[#1a5fa8] hover:underline text-[12px]">
+                            <Eye className="w-3.5 h-3.5" />查看
+                          </Link>
+                          {row.status === "pending" && (
+                            <Link href="/merchant/dingdan-nongye/xq-baojia/edit" className="flex items-center gap-1 text-[#e8831a] hover:underline text-[12px]">
+                              <Pencil className="w-3.5 h-3.5" />修改
+                            </Link>
+                          )}
+                        </div>
                       </td>
                     </tr>
                   )
