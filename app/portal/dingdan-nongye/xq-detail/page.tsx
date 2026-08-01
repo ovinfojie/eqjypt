@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { MapPin, Calendar, Building2, Package, FileText, Clock, CreditCard, Truck, ChevronRight } from "lucide-react"
+import { MapPin, Calendar, Building2, Package, Clock, CreditCard, Truck, ChevronRight } from "lucide-react"
 
 const demand = {
   id: "DD20251230006",
@@ -30,12 +30,6 @@ const demand = {
   quoteCount: 3,
 }
 
-const quotes = [
-  { id: "BJ001", supplier: "惠州新供销天润供应链有限公司", price: "3.6元/斤", quantity: "50吨", totalAmt: "18万元", deliveryTime: "2026-02-01", qualityStd: "符合国标GB/T1350", status: "待确认", time: "2026-01-02 09:15" },
-  { id: "BJ002", supplier: "广东天嘉冷链物流有限公司", price: "3.5元/斤", quantity: "50吨", totalAmt: "17.5万元", deliveryTime: "2026-01-28", qualityStd: "符合国标GB/T1350，有机认证", status: "待确认", time: "2026-01-03 11:30" },
-  { id: "BJ003", supplier: "广东新供销丰水米业有限公司", price: "3.8元/斤", quantity: "50吨", totalAmt: "19万元", deliveryTime: "2026-02-05", qualityStd: "绿色食品认证，符合国标", status: "待确认", time: "2026-01-04 15:45" },
-]
-
 const statusColor: Record<string, string> = {
   "报价中": "bg-[#fff3e0] text-[#e8831a] border-[#ffd8a8]",
   "需求发布": "bg-[#e3f2fd] text-[#1565c0] border-[#bbdefb]",
@@ -48,7 +42,6 @@ export default function XqDetailPage() {
   return (
     <div className="min-h-screen bg-[#f5f7fa] flex flex-col">
       <SiteHeader />
-
       <div className="flex-1 max-w-[1200px] mx-auto w-full px-6 py-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-1.5 text-[13px] text-[#999] mb-5">
@@ -60,9 +53,8 @@ export default function XqDetailPage() {
         </div>
 
         <div className="flex gap-5">
-          {/* Left main content */}
+          {/* Left main */}
           <div className="flex-1 space-y-4">
-
             {/* Title card */}
             <div className="bg-white rounded border border-[#e8edf5] p-6">
               <div className="flex items-start justify-between mb-3">
@@ -84,7 +76,7 @@ export default function XqDetailPage() {
 
             {/* Demand details */}
             <div className="bg-white rounded border border-[#e8edf5] p-6">
-              <h2 className="text-[15px] font-semibold text-[#1a2a3a] border-l-3 border-[#1a5fa8] pl-3 mb-5 flex items-center gap-2">
+              <h2 className="text-[15px] font-semibold text-[#1a2a3a] mb-5 flex items-center gap-2">
                 <span className="w-1 h-4 bg-[#1a5fa8] rounded-full inline-block"></span>需求内容
               </h2>
               <div className="grid grid-cols-2 gap-x-8 gap-y-4 mb-5">
@@ -108,18 +100,16 @@ export default function XqDetailPage() {
                   </div>
                 ))}
               </div>
-              <div className="border-t border-[#f0f3f8] pt-4">
+              <div className="border-t border-[#f0f3f8] pt-4 space-y-3">
                 <div className="flex items-start gap-2">
                   <span className="text-[13px] text-[#888] w-24 shrink-0">需求描述</span>
                   <p className="text-[13px] text-[#333] leading-relaxed flex-1">{demand.description}</p>
                 </div>
-              </div>
-              {demand.remark && (
-                <div className="flex items-start gap-2 mt-3">
+                <div className="flex items-start gap-2">
                   <span className="text-[13px] text-[#888] w-24 shrink-0">备注说明</span>
                   <p className="text-[13px] text-[#333] flex-1">{demand.remark}</p>
                 </div>
-              )}
+              </div>
             </div>
 
             {/* Contact info */}
@@ -128,83 +118,23 @@ export default function XqDetailPage() {
                 <span className="w-1 h-4 bg-[#1a5fa8] rounded-full inline-block"></span>买方联系人信息
               </h2>
               <div className="grid grid-cols-2 gap-x-8 gap-y-3">
-                <div className="flex items-center gap-2">
-                  <span className="text-[13px] text-[#888] w-24 shrink-0">联系人姓名</span>
-                  <span className="text-[13px] text-[#333] font-medium">{demand.contact}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-[13px] text-[#888] w-24 shrink-0">联系电话</span>
-                  <span className="text-[13px] text-[#333] font-medium">{demand.phone}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-[13px] text-[#888] w-24 shrink-0">采购单位</span>
-                  <span className="text-[13px] text-[#333] font-medium">{demand.buyer}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <span className="text-[13px] text-[#888] w-24 shrink-0">所在城市</span>
-                  <span className="text-[13px] text-[#333] font-medium">{demand.city}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Quote list */}
-            <div className="bg-white rounded border border-[#e8edf5] p-6">
-              <div className="flex items-center justify-between mb-5">
-                <h2 className="text-[15px] font-semibold text-[#1a2a3a] flex items-center gap-2">
-                  <span className="w-1 h-4 bg-[#1a5fa8] rounded-full inline-block"></span>
-                  供应商报价
-                  <span className="ml-1 px-2 py-0.5 bg-[#1a5fa8] text-white text-[12px] rounded-full">{quotes.length}</span>
-                </h2>
-              </div>
-              <div className="space-y-3">
-                {quotes.map((q, i) => (
-                  <div key={q.id} className={`border rounded p-4 ${i === 0 ? "border-[#e8831a] bg-[#fffdf8]" : "border-[#e8edf5]"}`}>
-                    <div className="flex items-start justify-between mb-3">
-                      <div>
-                        {i === 0 && <span className="inline-block px-2 py-0.5 bg-[#e8831a] text-white text-[11px] rounded mr-2">最优报价</span>}
-                        <span className="text-[14px] font-semibold text-[#1a2a3a]">{q.supplier}</span>
-                      </div>
-                      <span className="text-[12px] text-[#999]">{q.time}</span>
-                    </div>
-                    <div className="grid grid-cols-4 gap-4 mb-3">
-                      <div>
-                        <div className="text-[12px] text-[#888] mb-0.5">报价单价</div>
-                        <div className="text-[16px] font-bold text-[#e8831a]">{q.price}</div>
-                      </div>
-                      <div>
-                        <div className="text-[12px] text-[#888] mb-0.5">供应数量</div>
-                        <div className="text-[14px] font-semibold text-[#333]">{q.quantity}</div>
-                      </div>
-                      <div>
-                        <div className="text-[12px] text-[#888] mb-0.5">总金额</div>
-                        <div className="text-[14px] font-semibold text-[#333]">{q.totalAmt}</div>
-                      </div>
-                      <div>
-                        <div className="text-[12px] text-[#888] mb-0.5">预计交货</div>
-                        <div className="text-[14px] font-semibold text-[#333]">{q.deliveryTime}</div>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-1 text-[12px] text-[#666]">
-                        <FileText className="w-3.5 h-3.5" />
-                        质量标准：{q.qualityStd}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="px-2 py-0.5 text-[12px] border border-[#dde3ec] rounded text-[#666]">{q.status}</span>
-                        <button className="px-4 py-1.5 bg-[#1a5fa8] text-white text-[12px] rounded hover:bg-[#0d4a8a] transition-colors">确认报价</button>
-                        <button className="px-4 py-1.5 border border-[#dde3ec] text-[#666] text-[12px] rounded hover:border-[#1a5fa8] hover:text-[#1a5fa8] transition-colors">联系供应商</button>
-                      </div>
-                    </div>
+                {[
+                  { label: "联系人姓名", value: demand.contact },
+                  { label: "联系电话", value: demand.phone },
+                  { label: "采购单位", value: demand.buyer },
+                  { label: "所在城市", value: demand.city },
+                ].map(item => (
+                  <div key={item.label} className="flex items-center gap-2">
+                    <span className="text-[13px] text-[#888] w-24 shrink-0">{item.label}</span>
+                    <span className="text-[13px] text-[#333] font-medium">{item.value}</span>
                   </div>
                 ))}
               </div>
             </div>
-
           </div>
 
           {/* Right sidebar */}
           <div className="w-60 shrink-0 space-y-4">
-            {/* Action card */}
             <div className="bg-white rounded border border-[#e8edf5] p-4">
               <div className="text-center mb-4">
                 <div className="text-[28px] font-bold text-[#e8831a]">{demand.budget}</div>
@@ -225,7 +155,6 @@ export default function XqDetailPage() {
               </button>
             </div>
 
-            {/* Key info */}
             <div className="bg-white rounded border border-[#e8edf5] p-4">
               <h3 className="text-[13px] font-semibold text-[#1a2a3a] mb-3 flex items-center gap-1.5">
                 <span className="w-1 h-3.5 bg-[#1a5fa8] rounded-full inline-block"></span>关键信息
@@ -233,7 +162,7 @@ export default function XqDetailPage() {
               <div className="space-y-3">
                 {[
                   { icon: Clock, label: "报价截止", value: demand.deadline },
-                  { icon: Calendar, label: "收货时间", value: demand.deliveryPeriod },
+                  { icon: Calendar, label: "收货时间", value: "2026-01 至 2026-03" },
                   { icon: CreditCard, label: "预付款", value: demand.prepayRatio },
                   { icon: Truck, label: "配送方式", value: demand.deliveryMethod },
                 ].map(item => (
@@ -248,7 +177,6 @@ export default function XqDetailPage() {
               </div>
             </div>
 
-            {/* Similar demands */}
             <div className="bg-white rounded border border-[#e8edf5] p-4">
               <h3 className="text-[13px] font-semibold text-[#1a2a3a] mb-3 flex items-center gap-1.5">
                 <span className="w-1 h-3.5 bg-[#1a5fa8] rounded-full inline-block"></span>相似需求
@@ -272,7 +200,6 @@ export default function XqDetailPage() {
           </div>
         </div>
       </div>
-
       <SiteFooter />
     </div>
   )

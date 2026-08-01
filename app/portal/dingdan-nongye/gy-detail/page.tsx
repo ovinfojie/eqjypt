@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { MapPin, Calendar, Building2, Package, FileText, Clock, CreditCard, Truck, ChevronRight } from "lucide-react"
+import { MapPin, Calendar, Building2, Package, Clock, CreditCard, Truck, ChevronRight } from "lucide-react"
 
 const supply = {
   id: "GY20251230008",
@@ -33,27 +33,18 @@ const supply = {
   inquiryCount: 5,
 }
 
-const inquiries = [
-  { id: "XJ001", buyer: "广州某食品有限公司", quantity: "100吨/月", budget: "45万元/月", deliveryAddr: "广州市天河区", contact: "李经理", status: "待回复", time: "2026-01-02 10:20", desc: "长期稳定采购，需要每月供货100吨，要求统一包装规格25kg/袋。" },
-  { id: "XJ002", buyer: "深圳某超市连锁集团", quantity: "50吨/月", budget: "面议", deliveryAddr: "深圳市宝安区", contact: "陈采购", status: "已回复", time: "2026-01-03 14:35", desc: "供应我司旗下30家门店，需要精品礼盒装，要求有机认证。" },
-  { id: "XJ003", buyer: "佛山某粮食配送公司", quantity: "200吨", budget: "85万元", deliveryAddr: "佛山市顺德区", contact: "张总", status: "待回复", time: "2026-01-04 09:00", desc: "一次性采购200吨，用于年货储备，要求2026年1月底前到货。" },
-]
-
 const statusColor: Record<string, string> = {
   "报价中": "bg-[#fff3e0] text-[#e8831a] border-[#ffd8a8]",
   "需求发布": "bg-[#e3f2fd] text-[#1565c0] border-[#bbdefb]",
   "已签约": "bg-[#e8f5e9] text-[#2e7d32] border-[#c8e6c9]",
   "履约中": "bg-[#f3e5f5] text-[#7b1fa2] border-[#e1bee7]",
   "已完成": "bg-[#f5f5f5] text-[#757575] border-[#e0e0e0]",
-  "待回复": "bg-[#fff3e0] text-[#e8831a] border-[#ffd8a8]",
-  "已回复": "bg-[#e8f5e9] text-[#2e7d32] border-[#c8e6c9]",
 }
 
 export default function GyDetailPage() {
   return (
     <div className="min-h-screen bg-[#f5f7fa] flex flex-col">
       <SiteHeader />
-
       <div className="flex-1 max-w-[1200px] mx-auto w-full px-6 py-6">
         {/* Breadcrumb */}
         <div className="flex items-center gap-1.5 text-[13px] text-[#999] mb-5">
@@ -65,9 +56,8 @@ export default function GyDetailPage() {
         </div>
 
         <div className="flex gap-5">
-          {/* Left main content */}
+          {/* Left main */}
           <div className="flex-1 space-y-4">
-
             {/* Title card */}
             <div className="bg-white rounded border border-[#e8edf5] p-6">
               <div className="flex items-start justify-between mb-3">
@@ -117,12 +107,10 @@ export default function GyDetailPage() {
                   <span className="text-[13px] text-[#888] w-24 shrink-0">供应描述</span>
                   <p className="text-[13px] text-[#333] leading-relaxed flex-1">{supply.description}</p>
                 </div>
-                {supply.remark && (
-                  <div className="flex items-start gap-2">
-                    <span className="text-[13px] text-[#888] w-24 shrink-0">备注说明</span>
-                    <p className="text-[13px] text-[#333] flex-1">{supply.remark}</p>
-                  </div>
-                )}
+                <div className="flex items-start gap-2">
+                  <span className="text-[13px] text-[#888] w-24 shrink-0">备注说明</span>
+                  <p className="text-[13px] text-[#333] flex-1">{supply.remark}</p>
+                </div>
               </div>
             </div>
 
@@ -132,7 +120,9 @@ export default function GyDetailPage() {
                 <span className="w-1 h-4 bg-[#3a8c3f] rounded-full inline-block"></span>商品信息
               </h2>
               <div className="flex items-start gap-5 p-4 bg-[#f8fdf8] rounded border border-[#d4edda]">
-                <div className="w-20 h-20 bg-[#e8f5e9] rounded flex items-center justify-center text-[30px] shrink-0">🌾</div>
+                <div className="w-16 h-16 bg-[#e8f5e9] rounded flex items-center justify-center text-[#3a8c3f] shrink-0">
+                  <Package className="w-7 h-7" />
+                </div>
                 <div className="flex-1 grid grid-cols-2 gap-x-8 gap-y-3">
                   {[
                     { label: "商品名称", value: supply.productName },
@@ -170,48 +160,13 @@ export default function GyDetailPage() {
                 ))}
               </div>
             </div>
-
-            {/* Inquiry list */}
-            <div className="bg-white rounded border border-[#e8edf5] p-6">
-              <div className="flex items-center justify-between mb-5">
-                <h2 className="text-[15px] font-semibold text-[#1a2a3a] flex items-center gap-2">
-                  <span className="w-1 h-4 bg-[#3a8c3f] rounded-full inline-block"></span>
-                  采购方询价
-                  <span className="ml-1 px-2 py-0.5 bg-[#3a8c3f] text-white text-[12px] rounded-full">{inquiries.length}</span>
-                </h2>
-              </div>
-              <div className="space-y-3">
-                {inquiries.map((q) => (
-                  <div key={q.id} className="border border-[#e8edf5] rounded p-4 hover:border-[#3a8c3f] transition-colors">
-                    <div className="flex items-start justify-between mb-2">
-                      <span className="text-[14px] font-semibold text-[#1a2a3a]">{q.buyer}</span>
-                      <div className="flex items-center gap-2">
-                        <span className={`text-[12px] px-2 py-0.5 rounded border ${statusColor[q.status]}`}>{q.status}</span>
-                        <span className="text-[12px] text-[#999]">{q.time}</span>
-                      </div>
-                    </div>
-                    <p className="text-[13px] text-[#555] mb-3 leading-relaxed">{q.desc}</p>
-                    <div className="flex items-center gap-5 text-[12px] text-[#666] mb-3">
-                      <span className="flex items-center gap-1"><Package className="w-3.5 h-3.5 text-[#3a8c3f]" /> 询价数量：{q.quantity}</span>
-                      <span className="flex items-center gap-1"><FileText className="w-3.5 h-3.5 text-[#3a8c3f]" /> 预算：{q.budget}</span>
-                      <span className="flex items-center gap-1"><MapPin className="w-3.5 h-3.5 text-[#3a8c3f]" /> 收货地址：{q.deliveryAddr}</span>
-                    </div>
-                    <div className="flex justify-end gap-2">
-                      <button className="px-4 py-1.5 bg-[#3a8c3f] text-white text-[12px] rounded hover:bg-[#2d7032] transition-colors">回复询价</button>
-                      <button className="px-4 py-1.5 border border-[#dde3ec] text-[#666] text-[12px] rounded hover:border-[#3a8c3f] hover:text-[#3a8c3f] transition-colors">联系买方</button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
 
           {/* Right sidebar */}
           <div className="w-60 shrink-0 space-y-4">
-            {/* Action card */}
             <div className="bg-white rounded border border-[#e8edf5] p-4">
               <div className="text-center mb-4">
-                <div className="text-[22px] font-bold text-[#3a8c3f]">{supply.priceRange}</div>
+                <div className="text-[20px] font-bold text-[#3a8c3f]">{supply.priceRange}</div>
                 <div className="text-[12px] text-[#888]">供应价格区间</div>
               </div>
               <div className="text-center mb-4">
@@ -229,7 +184,6 @@ export default function GyDetailPage() {
               </button>
             </div>
 
-            {/* Key info */}
             <div className="bg-white rounded border border-[#e8edf5] p-4">
               <h3 className="text-[13px] font-semibold text-[#1a2a3a] mb-3 flex items-center gap-1.5">
                 <span className="w-1 h-3.5 bg-[#3a8c3f] rounded-full inline-block"></span>关键信息
@@ -252,7 +206,6 @@ export default function GyDetailPage() {
               </div>
             </div>
 
-            {/* Similar supplies */}
             <div className="bg-white rounded border border-[#e8edf5] p-4">
               <h3 className="text-[13px] font-semibold text-[#1a2a3a] mb-3 flex items-center gap-1.5">
                 <span className="w-1 h-3.5 bg-[#3a8c3f] rounded-full inline-block"></span>相似供应
@@ -276,7 +229,6 @@ export default function GyDetailPage() {
           </div>
         </div>
       </div>
-
       <SiteFooter />
     </div>
   )
