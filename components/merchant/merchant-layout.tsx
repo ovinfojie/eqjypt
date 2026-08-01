@@ -12,6 +12,8 @@ const menuGroups = [
   {
     label: "订单农业",
     items: [
+      { label: "订单种植需求", href: "/merchant/dingdan-nongye/xq-list", icon: FileText },
+      { label: "订单种植供应", href: "/merchant/dingdan-nongye/gy-list", icon: TrendingUp },
       { label: "发起采购询价", href: "/merchant/caigou-xunjia", icon: FileText },
       { label: "发起供应报价", href: "/merchant/gongying-baojia", icon: TrendingUp },
       { label: "提交订单", href: "/merchant/xiadan", icon: ShoppingCart },
