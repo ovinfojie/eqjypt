@@ -3,6 +3,7 @@
 import { useState } from "react"
 import Link from "next/link"
 import { ChevronLeft, Upload, X, MessageCircle } from "lucide-react"
+import { ProductPicker, type PickedProduct } from "@/components/merchant/product-picker"
 
 const supply = {
   id: "ID0001120x",
@@ -28,6 +29,7 @@ const supply = {
 
 
 export default function GyXunjiaPage() {
+  const [pickedProduct, setPickedProduct] = useState<PickedProduct | null>(null)
   const [inquiryQty, setInquiryQty] = useState("")
   const [expectPrice, setExpectPrice] = useState("")
   const [deliveryAddr, setDeliveryAddr] = useState("")
@@ -113,6 +115,14 @@ export default function GyXunjiaPage() {
           <h2 className="text-[16px] font-semibold text-[#333] mb-6 text-center">提交采购询价</h2>
 
           <div className="max-w-[620px]">
+            {/* Section: 选择商品 */}
+            <div className="mb-4 pb-1 border-b border-[#e8edf5]">
+              <span className="text-[13px] font-semibold text-[#3a8c3f] border-l-2 border-[#3a8c3f] pl-2">选择询价商品</span>
+            </div>
+            <div className="mb-6 mt-4">
+              <ProductPicker value={pickedProduct} onChange={setPickedProduct} />
+            </div>
+
             {/* Section: 询价内容 */}
             <div className="mb-4 pb-1 border-b border-[#e8edf5]">
               <span className="text-[13px] font-semibold text-[#3a8c3f] border-l-2 border-[#3a8c3f] pl-2">询价内容</span>

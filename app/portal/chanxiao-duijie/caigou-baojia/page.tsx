@@ -5,6 +5,7 @@ import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { Info, ChevronRight, ChevronDown, Download, Eye } from "lucide-react"
+import { ProductPicker, type PickedProduct } from "@/components/merchant/product-picker"
 
 /* ─── Demand data (mirrors caigou-detail) ─── */
 const demand = {
@@ -42,6 +43,7 @@ export default function CaigouBaoJiaPage() {
   const [activeTab, setActiveTab]         = useState<"baojia" | "detail">("baojia")
   const [tradeMode, setTradeMode]         = useState<"guarantee" | "noguarantee">("guarantee")
   const [settlement, setSettlement]       = useState({ jianlonglong: true, gonghang: false })
+  const [pickedProduct, setPickedProduct] = useState<PickedProduct | null>(null)
 
   return (
     <div className="min-h-screen flex flex-col bg-[#f5f7fa]">
@@ -168,17 +170,10 @@ export default function CaigouBaoJiaPage() {
 
                   {/* Select supply product */}
                   <div className="mb-6">
-                    <h3 className="text-[14px] font-semibold text-[#1a1a2e] mb-3">选择供应商品</h3>
-                    <div className="border border-[#1a5fa8] bg-[#f8fbff] rounded-lg p-3 flex items-center gap-3">
-                      <div className="w-12 h-12 bg-[#1a5fa8] rounded flex items-center justify-center shrink-0">
-                        <span className="text-white text-[10px]">图片</span>
-                      </div>
-                      <div className="flex-1">
-                        <div className="text-[13px] font-semibold text-[#1a1a2e] mb-0.5">桂味荔枝（优等品）</div>
-                        <div className="text-[12px] text-[#6b7c93]">水果/热带水果/荔枝 · 市集SPU编码P626342237328</div>
-                      </div>
-                      <button className="text-[13px] text-[#1a5fa8] hover:underline shrink-0">更换商品</button>
-                    </div>
+                    <h3 className="text-[14px] font-semibold text-[#1a1a2e] mb-3">
+                      <span className="text-red-500 mr-1">*</span>选择供应商品
+                    </h3>
+                    <ProductPicker value={pickedProduct} onChange={setPickedProduct} />
                   </div>
 
                   {/* SKU / price table */}
