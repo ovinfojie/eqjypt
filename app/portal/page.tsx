@@ -144,7 +144,7 @@ export default function HomePage() {
                 </div>
 
                 <Link
-                  href="/dingdan-nongye"
+                  href="/portal/dingdan-nongye"
                   className="inline-flex items-center gap-2 px-8 py-3 bg-[#1a5fa8] text-white text-[14px] font-semibold rounded hover:bg-[#0d4a8a] transition-colors"
                 >
                   点击直达 <ArrowRight className="w-4 h-4" />
@@ -235,7 +235,7 @@ export default function HomePage() {
                   ))}
                 </div>
                 <Link
-                  href="/chanxiao-duijie"
+                  href="/portal/chanxiao-duijie"
                   className="inline-flex items-center gap-2 px-8 py-3 bg-[#1a5fa8] text-white text-[14px] font-semibold rounded hover:bg-[#0d4a8a] transition-colors"
                 >
                   点击直达 <ArrowRight className="w-4 h-4" />
@@ -272,7 +272,7 @@ export default function HomePage() {
                   ))}
                 </div>
                 <Link
-                  href="/gongxiao-yanxuan"
+                  href="/portal/gongxiao-yanxuan"
                   className="inline-flex items-center gap-2 px-8 py-3 bg-[#1a5fa8] text-white text-[14px] font-semibold rounded hover:bg-[#0d4a8a] transition-colors"
                 >
                   点击直达 <ArrowRight className="w-4 h-4" />
@@ -340,7 +340,7 @@ export default function HomePage() {
                 ))}
                 <div className="col-span-2 pt-2">
                   <Link
-                    href="/jingjia-jiaoyi"
+                    href="/portal/jingjia-jiaoyi"
                     className="w-full flex items-center justify-center gap-2 px-6 py-3 bg-[#e8831a] text-white text-[14px] font-semibold rounded hover:bg-[#d4751a] transition-colors"
                   >
                     点击直达 <ArrowRight className="w-4 h-4" />
@@ -375,7 +375,7 @@ export default function HomePage() {
               ))}
             </div>
             <Link
-              href="/quanchanyilian"
+              href="/portal/quanchanyilian"
               className="inline-flex items-center gap-2 px-8 py-3 bg-[#1a5fa8] text-white text-[14px] font-semibold rounded hover:bg-[#0d4a8a] transition-colors"
             >
               点击直达 <ArrowRight className="w-4 h-4" />
@@ -396,13 +396,13 @@ export default function HomePage() {
             </div>
             <div className="flex gap-3 shrink-0">
               <Link
-                href="/register"
+                href="/portal/register"
                 className="px-7 py-2.5 bg-[#e8831a] text-white text-[14px] font-semibold rounded hover:bg-[#d4751a] transition-colors"
               >
                 立即注册
               </Link>
               <Link
-                href="/login"
+                href="/portal/login"
                 className="px-7 py-2.5 bg-white/10 text-white text-[14px] font-semibold rounded hover:bg-white/20 transition-colors border border-white/30"
               >
                 登录平台

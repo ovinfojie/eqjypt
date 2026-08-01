@@ -76,13 +76,13 @@ export function SiteHeader() {
             总控台
           </Link>
           <Link
-            href="/login"
+            href="/portal/login"
             className="text-[14px] text-[#1a5fa8] hover:underline"
           >
             登录
           </Link>
           <Link
-            href="/register"
+            href="/portal/register"
             className="px-4 py-1.5 bg-[#1a5fa8] text-white text-[14px] rounded hover:bg-[#0d4a8a] transition-colors"
           >
             注册
