@@ -40,6 +40,19 @@ const menuGroups = [
     ],
   },
   {
+    label: "农业信用服务",
+    items: [
+      { label: "信用档案管理", href: "/admin/xinyong/dangan-list", icon: Users       },
+      { label: "金融申请审核", href: "/admin/xinyong/jrcp-shenhe", icon: ShieldCheck },
+    ],
+  },
+  {
+    label: "开放合作共赢",
+    items: [
+      { label: "合作申请审核", href: "/admin/kaifang-hezuo/shenhe", icon: Link2 },
+    ],
+  },
+  {
     label: "平台运营",
     items: [
       { label: "运营总览", href: "/admin", icon: LayoutDashboard },
