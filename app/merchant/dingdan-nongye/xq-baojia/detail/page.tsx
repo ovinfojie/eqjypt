@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { useSearchParams } from "next/navigation"
 import { ChevronLeft, FileText, Pencil } from "lucide-react"
 
 const submitted = {
@@ -57,14 +58,20 @@ function Section({ title, color = "#1a5fa8", children }: { title: string; color?
 }
 
 export default function XqBaojiaDetailPage() {
+  const searchParams = useSearchParams()
+  const fromShoudaode = searchParams.get("from") === "shoudaode"
   const s = STATUS_MAP[submitted.status]
 
   return (
     <div className="max-w-[820px]">
       {/* Breadcrumb */}
       <div className="text-[13px] text-[#999] mb-4 flex items-center gap-1">
-        <Link href="/merchant/xunbaojia/wo-faqide" className="flex items-center gap-1 hover:text-[#1a5fa8]">
-          <ChevronLeft className="w-3.5 h-3.5" /> 我发起的
+        <Link
+          href={fromShoudaode ? "/merchant/xunbaojia/wo-shoudaode" : "/merchant/xunbaojia/wo-faqide"}
+          className="flex items-center gap-1 hover:text-[#1a5fa8]"
+        >
+          <ChevronLeft className="w-3.5 h-3.5" />
+          {fromShoudaode ? "我收到的" : "我发起的"}
         </Link>
         <span>›</span>
         <span className="text-[#333]">供应报价详情</span>
@@ -85,7 +92,7 @@ export default function XqBaojiaDetailPage() {
             <span className="px-3 py-1 rounded text-[13px] font-medium" style={{ color: s.color, background: s.bg }}>
               {s.label}
             </span>
-            {submitted.status === "pending" && (
+            {!fromShoudaode && submitted.status === "pending" && (
               <Link
                 href="/merchant/dingdan-nongye/xq-baojia/edit"
                 className="flex items-center gap-1.5 px-4 h-8 border border-[#1a5fa8] text-[#1a5fa8] text-[13px] rounded hover:bg-[#e8f4fd] transition-colors"
