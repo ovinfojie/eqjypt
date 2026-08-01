@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import {
   LayoutDashboard, ClipboardList, Gavel, Calendar,
   Users, BarChart2, Package, Settings, ChevronRight, ArrowLeft,
-  Star, MapPin, ShieldCheck, Building2,
+  Star, MapPin, ShieldCheck, Building2, Link2,
 } from "lucide-react"
 
 const menuGroups = [
@@ -30,6 +30,13 @@ const menuGroups = [
     items: [
       { label: "需求管理列表", href: "/admin/xunjia-list", icon: ClipboardList },
       { label: "预约管理",     href: "/admin/yuyue",       icon: Calendar      },
+    ],
+  },
+  {
+    label: "全产业链服务",
+    items: [
+      { label: "服务机构管理", href: "/admin/quancyl/jigou-list", icon: Building2    },
+      { label: "合作申请审核", href: "/admin/quancyl/shenhe",     icon: ShieldCheck  },
     ],
   },
   {
