@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils"
 import {
   LayoutDashboard, FileText, TrendingUp, ShoppingCart,
   Package, Users, Settings, ChevronRight, ArrowLeft,
-  MessageSquare, ChevronDown, Handshake, Star,
+  MessageSquare, ChevronDown, Handshake, Star, Gavel,
 } from "lucide-react"
 import { useState } from "react"
 
@@ -19,6 +19,18 @@ const menuGroups = [
         children: [
           { label: "我的商品",   href: "/merchant/yanxuan/shangpin-list" },
           { label: "发布商品",   href: "/merchant/yanxuan/fabu-shangpin" },
+        ],
+      },
+    ],
+  },
+  {
+    label: "竞价交易",
+    items: [
+      {
+        label: "竞价交易", icon: Gavel,
+        children: [
+          { label: "我参与的竞拍", href: "/merchant/jingjia/wo-canjia" },
+          { label: "我发布的竞拍", href: "/merchant/jingjia/wo-fabu" },
         ],
       },
     ],
@@ -71,7 +83,7 @@ const menuGroups = [
 
 export function MerchantLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname()
-  const [expandedGroups, setExpandedGroups] = useState<string[]>(["询报价管理", "采购管理", "销售管理", "供销严选"])
+  const [expandedGroups, setExpandedGroups] = useState<string[]>(["询报价管理", "采购管理", "销售管理", "供销严选", "竞价交易"])
 
   const toggleGroup = (label: string) => {
     setExpandedGroups((prev) =>

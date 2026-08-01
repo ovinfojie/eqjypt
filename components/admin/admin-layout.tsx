@@ -19,11 +19,17 @@ const menuGroups = [
     ],
   },
   {
+    label: "竞价交易管理",
+    items: [
+      { label: "专场管理",   href: "/admin/jingjia/session-list", icon: Gavel        },
+      { label: "发布竞拍",   href: "/admin/fabu-jingpai",          icon: ClipboardList },
+    ],
+  },
+  {
     label: "订单农业管理",
     items: [
       { label: "需求管理列表", href: "/admin/xunjia-list", icon: ClipboardList },
-      { label: "发布销售竞拍", href: "/admin/fabu-jingpai", icon: Gavel },
-      { label: "预约管理", href: "/admin/yuyue", icon: Calendar },
+      { label: "预约管理",     href: "/admin/yuyue",       icon: Calendar      },
     ],
   },
   {
