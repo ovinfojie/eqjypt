@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { Search, Download } from "lucide-react"
 
+
 const mockData = [
   {
     id: "ID0001120x", publisher: "平远新供销天润粮油有限公司", dept: "粮油业务部",
@@ -183,7 +184,7 @@ export default function XqListPage() {
                     <div className="flex flex-col gap-1">
                       <Link href={`/merchant/dingdan-nongye/xq-baojia-list?id=${row.id}`}
                         className="text-[12px] text-[#1a5fa8] hover:underline">查看报价</Link>
-                      <button className="text-[12px] text-[#666] hover:text-[#1a5fa8] text-left">查看详情</button>
+                      <Link href={`/merchant/dingdan-nongye/xq-list/${row.id}`} className="text-[12px] text-[#666] hover:text-[#1a5fa8] text-left">查看详情</Link>
                     </div>
                   </td>
                 </tr>

@@ -242,9 +242,9 @@ export default function OrdersPage() {
                             确认收货
                           </button>
                         )}
-                        <button className="py-1.5 border border-[#1a5fa8] text-[#1a5fa8] text-[12px] rounded hover:bg-[#e8f4fd] transition-colors">
+                        <Link href={`/merchant/orders/${order.id}`} className="py-1.5 border border-[#1a5fa8] text-[#1a5fa8] text-[12px] rounded hover:bg-[#e8f4fd] transition-colors text-center">
                           查看详情
-                        </button>
+                        </Link>
                         {(order.status === "pending_confirm" || order.status === "pending_payment") && (
                           <button className="py-1.5 border border-[#e8edf5] text-[#6b7c93] text-[12px] rounded hover:border-red-300 hover:text-red-500 transition-colors">
                             取消订单

@@ -150,10 +150,10 @@ export default function WoCanjiaPage() {
                     <Clock className="w-3 h-3" />{b.endTime}
                   </div>
                   <Link
-                    href={`/portal/jingjia-jiaoyi/a001`}
+                    href={`/merchant/jingjia/wo-canjia/${b.id}`}
                     className="flex items-center gap-1 text-[#1a5fa8] hover:underline text-[12px]"
                   >
-                    <Eye className="w-3.5 h-3.5" />查看专场
+                    <Eye className="w-3.5 h-3.5" />查看记录
                   </Link>
                 </div>
               </div>

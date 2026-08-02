@@ -109,7 +109,7 @@ export default function CaigouListPage() {
                     </td>
                     <td className="px-4 py-3.5">
                       <div className="flex items-center justify-center gap-3">
-                        <Link href={`/portal/chanxiao-duijie/caigou-detail?id=${row.id}`}
+                        <Link href={`/merchant/chanxiao/caigou-list/${row.id}`}
                           className="flex items-center gap-1 text-[12px] text-[#1a5fa8] hover:underline">
                           <Eye className="w-3.5 h-3.5" />查看
                         </Link>

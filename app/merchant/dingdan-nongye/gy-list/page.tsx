@@ -4,6 +4,7 @@ import { useState } from "react"
 import Link from "next/link"
 import { Search, Download } from "lucide-react"
 
+
 const mockData = [
   {
     id: "ID0001120x", publisher: "惠州新供销天润粮油储备有限公司",
@@ -183,7 +184,7 @@ export default function GyListPage() {
                     <div className="flex flex-col gap-1">
                       <Link href={`/merchant/dingdan-nongye/gy-xunjia?id=${row.id}`}
                         className="text-[12px] text-[#1a5fa8] hover:underline">查看询价</Link>
-                      <button className="text-[12px] text-[#666] hover:text-[#1a5fa8] text-left">查看详情</button>
+                      <Link href={`/merchant/dingdan-nongye/gy-list/${row.id}`} className="text-[12px] text-[#666] hover:text-[#1a5fa8] text-left">查看详情</Link>
                     </div>
                   </td>
                 </tr>
