@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { ChevronLeft, FileText, Pencil } from "lucide-react"
@@ -57,7 +58,7 @@ function Section({ title, color = "#1a5fa8", children }: { title: string; color?
   )
 }
 
-export default function XqBaojiaDetailPage() {
+function XqBaojiaDetailContent() {
   const searchParams = useSearchParams()
   const fromShoudaode = searchParams.get("from") === "shoudaode"
   const s = STATUS_MAP[submitted.status]
@@ -149,5 +150,13 @@ export default function XqBaojiaDetailPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function XqBaojiaDetailPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-[#999] text-[13px]">加载中…</div>}>
+      <XqBaojiaDetailContent />
+    </Suspense>
   )
 }

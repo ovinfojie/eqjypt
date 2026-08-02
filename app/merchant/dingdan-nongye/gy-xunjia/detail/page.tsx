@@ -1,5 +1,6 @@
 "use client"
 
+import { Suspense } from "react"
 import Link from "next/link"
 import { useSearchParams } from "next/navigation"
 import { ChevronLeft, FileText, Pencil } from "lucide-react"
@@ -57,7 +58,7 @@ function Section({ title, color = "#3a8c3f", children }: { title: string; color?
   )
 }
 
-export default function GyXunjiaDetailPage() {
+function GyXunjiaDetailContent() {
   const searchParams = useSearchParams()
   const fromShoudaode = searchParams.get("from") === "shoudaode"
   const s = STATUS_MAP[submitted.status]
@@ -150,5 +151,13 @@ export default function GyXunjiaDetailPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function GyXunjiaDetailPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-[#999] text-[13px]">加载中…</div>}>
+      <GyXunjiaDetailContent />
+    </Suspense>
   )
 }
