@@ -232,14 +232,17 @@ export default function DingdanNongyePage() {
             </table>
             <div className="p-4 flex items-center justify-center gap-3">
               <Link
-                href="/portal/dingdan-nongye/caigou-xunjia"
+                href="/merchant/dingdan-nongye/fabu-xq"
                 className="px-6 py-2 border border-[#1a5fa8] text-[#1a5fa8] text-[13px] rounded hover:bg-[#e8f4fd] transition-colors flex items-center gap-1.5"
               >
                 发布订单种植需求 <ChevronRight className="w-3.5 h-3.5" />
               </Link>
-              <button className="px-6 py-2 border border-[#dde3ec] text-[#6b7c93] text-[13px] rounded hover:border-[#1a5fa8] hover:text-[#1a5fa8] transition-colors flex items-center gap-1.5">
+              <Link
+                href="/portal/dingdan-nongye/xq-list"
+                className="px-6 py-2 border border-[#dde3ec] text-[#6b7c93] text-[13px] rounded hover:border-[#1a5fa8] hover:text-[#1a5fa8] transition-colors flex items-center gap-1.5"
+              >
                 更多订单种植需求 <ChevronRight className="w-3.5 h-3.5" />
-              </button>
+              </Link>
             </div>
           </div>
         </div>
@@ -336,9 +339,12 @@ export default function DingdanNongyePage() {
                 >
                   发布订单种植供应 <ChevronRight className="w-3.5 h-3.5" />
                 </Link>
-                <button className="px-6 py-2 border border-[#dde3ec] text-[#6b7c93] text-[13px] rounded hover:border-[#1a5fa8] hover:text-[#1a5fa8] transition-colors flex items-center gap-1.5">
+                <Link
+                  href="/portal/dingdan-nongye/gy-list"
+                  className="px-6 py-2 border border-[#dde3ec] text-[#6b7c93] text-[13px] rounded hover:border-[#1a5fa8] hover:text-[#1a5fa8] transition-colors flex items-center gap-1.5"
+                >
                   更多订单种植供应 <ChevronRight className="w-3.5 h-3.5" />
-                </button>
+                </Link>
               </div>
             </div>
           </div>
