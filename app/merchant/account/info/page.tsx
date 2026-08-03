@@ -153,24 +153,6 @@ export default function AccountInfoPage() {
 
   return (
     <div className="space-y-5">
-      {/* 状态切换器 */}
-      <div className="bg-[#fff8e6] border border-[#f5d78e] rounded-lg px-5 py-3 flex items-center gap-3 flex-wrap">
-        <span className="text-[12px] text-[#8a6a00] font-medium shrink-0">认证状态演示切换：</span>
-        {AUTH_STATES.map(s => (
-          <button
-            key={s}
-            onClick={() => setAuthState(s)}
-            className={`px-3 py-1 rounded text-[12px] border transition-colors ${
-              authState === s
-                ? "bg-[#1a5fa8] text-white border-[#1a5fa8]"
-                : "bg-white text-[#555] border-[#dde3ec] hover:border-[#1a5fa8] hover:text-[#1a5fa8]"
-            }`}
-          >
-            {AUTH_STATE_LABELS[s]}
-          </button>
-        ))}
-      </div>
-
       {/* 基本信息 */}
       <div className="bg-white rounded-lg border border-[#e8edf5]">
         <div className="px-6 py-4 border-b border-[#f0f4f8]">
