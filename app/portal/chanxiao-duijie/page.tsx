@@ -241,8 +241,8 @@ function CategorySection({ cat }: { cat: Category }) {
                         </Link>
                       ) : (
                         <>
-                          <button className="text-[#1a5fa8] hover:underline">加入采购车</button>
-                          <Link href={`/portal/chanxiao-duijie/xiaoshou-detail?id=${row.id}`} className="text-[#e8831a] hover:underline">
+                          <Link href="/portal/cart" className="text-[#1a5fa8] hover:underline">加入采购车</Link>
+                          <Link href={`/portal/checkout?id=${row.id}`} className="text-[#e8831a] hover:underline">
                             立即下单
                           </Link>
                         </>
