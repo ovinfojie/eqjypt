@@ -17,8 +17,12 @@ const menuGroups = [
   {
     label: "工作台",
     items: [
-      { label: "工作台",   href: "/merchant",                icon: LayoutDashboard },
-      { label: "消息通知", href: "/merchant/message-center", icon: Bell            },
+      { label: "工作台",             href: "/merchant",                          icon: LayoutDashboard },
+      { label: "消息通知",           href: "/merchant/message-center",           icon: Bell            },
+      { label: "账号信息",           href: "/merchant/account/info",             icon: UserCircle      },
+      { label: "账号信息（仅企管）", href: "/merchant/account/info-admin",       icon: UserCircle      },
+      { label: "账号信息（个人）",   href: "/merchant/account/info-personal",    icon: UserCircle      },
+      { label: "账号信息（店员）",   href: "/merchant/account/info-staff",       icon: UserCircle      },
     ],
   },
 
