@@ -8,7 +8,9 @@ import { ShoppingCart } from "lucide-react"
 const navItems = [
   { label: "订单农业服务", href: "/portal/dingdan-nongye" },
   { label: "产销对接", href: "/portal/chanxiao-duijie" },
+  { label: "采购专区", href: "/portal/caigou" },
   { label: "供销严选", href: "/portal/gongxiao-yanxuan" },
+  { label: "集采专区", href: "/portal/jicai" },
   { label: "竞价交易", href: "/portal/jingjia-jiaoyi" },
   { label: "全产业链服务", href: "/portal/quanchanyilian" },
   { label: "农业信用服务", href: "/portal/nongye-xinyong" },
@@ -70,6 +72,12 @@ export function SiteHeader() {
 
         {/* Right actions */}
         <div className="ml-auto flex items-center gap-3 shrink-0">
+          <Link
+            href="/portal/jiage-daping"
+            className="px-3 py-1.5 border border-[#dde3ec] text-[12px] text-[#6b7c93] rounded hover:border-[#1a5fa8] hover:text-[#1a5fa8] transition-colors"
+          >
+            价格大屏
+          </Link>
           <Link
             href="/"
             className="px-3 py-1.5 border border-[#dde3ec] text-[12px] text-[#6b7c93] rounded hover:border-[#1a5fa8] hover:text-[#1a5fa8] transition-colors"
