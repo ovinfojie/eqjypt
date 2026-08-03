@@ -20,7 +20,8 @@ export default function ShenQingPage() {
 
   if (submitted) {
     return (
-<div className="max-w-[480px] mx-auto py-16 text-center">
+  <>
+    <div className="max-w-[480px] mx-auto py-16 text-center">
           <div className="w-16 h-16 rounded-full bg-[#3a8c3f]/10 flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-8 h-8 text-[#3a8c3f]" />
           </div>
@@ -36,11 +37,13 @@ export default function ShenQingPage() {
             查看我的服务
           </Link>
         </div>
+  </>
 )
   }
 
   return (
-{/* Header */}
+  <>
+    {/* Header */}
       <div className="flex items-center gap-3 mb-6">
         <Link href="/merchant/quancyl/wo-de-fuwu" className="flex items-center gap-1 text-[13px] text-[#6b7c93] hover:text-[#1a5fa8]">
           <ChevronLeft className="w-4 h-4" />
@@ -197,5 +200,6 @@ export default function ShenQingPage() {
           </>
         )}
       </div>
+  </>
 )
 }

@@ -7,45 +7,57 @@ import {
   LayoutDashboard, ClipboardList, Gavel, Calendar,
   Users, BarChart2, Package, Settings, ChevronRight, ArrowLeft,
   Star, MapPin, ShieldCheck, Building2, Link2,
+  Monitor, TrendingUp, Layers, Wallet, Bell, Tag, Gift,
 } from "lucide-react"
 
 const menuGroups = [
   {
+    label: "工作台",
+    items: [
+      { label: "运营工作台", href: "/admin",                  icon: LayoutDashboard },
+      { label: "监察大屏",   href: "/admin/jianchajiance",    icon: Monitor         },
+    ],
+  },
+  {
     label: "供销严选管理",
     items: [
-      { label: "产地管理",   href: "/admin/yanxuan/chandi-list",    icon: MapPin       },
-      { label: "商品审核",   href: "/admin/yanxuan/shangpin-shenhe", icon: ShieldCheck  },
-      { label: "供应商审核", href: "/admin/yanxuan/supplier-shenhe", icon: Building2    },
+      { label: "产地管理",     href: "/admin/yanxuan/chandi-list",     icon: MapPin      },
+      { label: "产地商品管理", href: "/admin/yanxuan/chandi-product",  icon: Package     },
+      { label: "大单品专区",   href: "/admin/yanxuan/dadan-zone",      icon: Star        },
+      { label: "商品审核",     href: "/admin/yanxuan/shangpin-shenhe", icon: ShieldCheck },
+      { label: "供应商审核",   href: "/admin/yanxuan/supplier-shenhe", icon: Building2   },
     ],
   },
   {
     label: "竞价交易管理",
     items: [
       { label: "专场管理",   href: "/admin/jingjia/session-list", icon: Gavel        },
-      { label: "发布竞拍",   href: "/admin/fabu-jingpai",          icon: ClipboardList },
+      { label: "发布竞拍",   href: "/admin/fabu-jingpai",         icon: ClipboardList },
+      { label: "保证金管理", href: "/admin/jingjia/deposit",      icon: Wallet        },
     ],
   },
   {
     label: "订单农业管理",
     items: [
-      { label: "需求管理列表",     href: "/admin/xunjia-list",                  icon: ClipboardList },
-      { label: "订单种植需求管理", href: "/admin/dingdan-nongye/xq-list",        icon: ClipboardList },
-      { label: "订单种植供应管理", href: "/admin/dingdan-nongye/gy-list",        icon: Package       },
-      { label: "已成交订单管理",   href: "/admin/dingdan-nongye/order-list",     icon: Star          },
-      { label: "预约管理",         href: "/admin/yuyue",                         icon: Calendar      },
+      { label: "需求管理",         href: "/admin/xunjia-list",                icon: ClipboardList },
+      { label: "订单种植需求管理", href: "/admin/dingdan-nongye/xq-list",     icon: ClipboardList },
+      { label: "订单种植供应管理", href: "/admin/dingdan-nongye/gy-list",     icon: Package       },
+      { label: "已成交订单管理",   href: "/admin/dingdan-nongye/order-list",  icon: Star          },
+      { label: "预约管理",         href: "/admin/yuyue",                      icon: Calendar      },
     ],
   },
   {
     label: "全产业链服务",
     items: [
-      { label: "服务机构管理", href: "/admin/quancyl/jigou-list", icon: Building2    },
-      { label: "合作申请审核", href: "/admin/quancyl/shenhe",     icon: ShieldCheck  },
+      { label: "服务机构管理", href: "/admin/quancyl/jigou-list", icon: Building2   },
+      { label: "合作申请审核", href: "/admin/quancyl/shenhe",     icon: ShieldCheck },
     ],
   },
   {
     label: "农业信用服务",
     items: [
       { label: "信用档案管理", href: "/admin/xinyong/dangan-list", icon: Users       },
+      { label: "金融产品管理", href: "/admin/xinyong/jrcp-list",   icon: Layers      },
       { label: "金融申请审核", href: "/admin/xinyong/jrcp-shenhe", icon: ShieldCheck },
     ],
   },
@@ -56,13 +68,54 @@ const menuGroups = [
     ],
   },
   {
-    label: "平台运营",
+    label: "会员管理",
     items: [
-      { label: "运营总览", href: "/admin", icon: LayoutDashboard },
-      { label: "商家管理", href: "/admin/merchants", icon: Users },
-      { label: "商品管理", href: "/admin/products", icon: Package },
-      { label: "数据统计", href: "/admin/analytics", icon: BarChart2 },
-      { label: "系统设置", href: "/admin/settings", icon: Settings },
+      { label: "会员列表",     href: "/admin/member/list",    icon: Users       },
+      { label: "企业升级审核", href: "/admin/member/upgrade", icon: ShieldCheck },
+    ],
+  },
+  {
+    label: "二级运营管理",
+    items: [
+      { label: "运营管理列表", href: "/admin/yunying/list", icon: Building2 },
+    ],
+  },
+  {
+    label: "价格指数管理",
+    items: [
+      { label: "价格指数列表", href: "/admin/jiage/index-list", icon: TrendingUp },
+    ],
+  },
+  {
+    label: "补贴管理",
+    items: [
+      { label: "补贴列表",   href: "/admin/butie/list",    icon: Gift     },
+    ],
+  },
+  {
+    label: "营销管理",
+    items: [
+      { label: "营销总览", href: "/admin/marketing/overview", icon: Gift },
+    ],
+  },
+  {
+    label: "财务管理",
+    items: [
+      { label: "结算总览", href: "/admin/finance/settlement", icon: Wallet },
+    ],
+  },
+  {
+    label: "报表",
+    items: [
+      { label: "补贴报表", href: "/admin/report/butie", icon: BarChart2 },
+    ],
+  },
+  {
+    label: "平台配置",
+    items: [
+      { label: "消息公告管理", href: "/admin/platform/notice", icon: Bell     },
+      { label: "参数配置",     href: "/admin/platform/config", icon: Settings },
+      { label: "店铺标签管理", href: "/admin/platform/tags",   icon: Tag      },
     ],
   },
 ]

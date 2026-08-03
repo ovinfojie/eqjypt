@@ -35,6 +35,7 @@ export default function JrcpShenhePage() {
   const modalApp = APPLICATIONS.find(a => a.id === modalId)
 
   return (
+  <>
 <div className="space-y-5">
         <div className="flex items-center justify-between">
           <div>
@@ -154,5 +155,6 @@ export default function JrcpShenhePage() {
           </div>
         </div>
       )}
+  </>
 )
 }

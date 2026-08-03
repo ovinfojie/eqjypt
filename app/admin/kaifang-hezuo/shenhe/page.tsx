@@ -48,6 +48,7 @@ export default function KaifangHezuoShenhePage() {
   const modalApp = APPLICATIONS.find(a => a.id === modalId)
 
   return (
+  <>
 <div className="space-y-5">
         <div className="flex items-center justify-between">
           <div>
@@ -204,5 +205,6 @@ export default function KaifangHezuoShenhePage() {
           </div>
         </div>
       )}
+  </>
 )
 }

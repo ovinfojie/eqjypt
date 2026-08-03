@@ -78,6 +78,7 @@ export default function JiGouListPage() {
   ]
 
   return (
+  <>
 <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-[18px] font-bold text-[#1a1a2e]">全产业链服务机构管理</h1>
@@ -175,5 +176,6 @@ export default function JiGouListPage() {
           <div className="text-center py-12 text-[#999] text-[13px]">暂无符合条件的机构</div>
         )}
       </div>
+  </>
 )
 }

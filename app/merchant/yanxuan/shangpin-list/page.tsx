@@ -41,6 +41,7 @@ export default function YanxuanShangpinListPage() {
   })
 
   return (
+  <>
 <div className="mb-5">
         <div className="flex items-center justify-between mb-1">
           <h1 className="text-[20px] font-bold text-[#1a1a2e]">我的供销严选商品</h1>
@@ -159,5 +160,6 @@ export default function YanxuanShangpinListPage() {
           </tbody>
         </table>
       </div>
+  </>
 )
 }

@@ -26,6 +26,7 @@ export default function ChandiListPage() {
   const filtered = data.filter((r) => !keyword || r.name.includes(keyword) || r.area.includes(keyword))
 
   return (
+  <>
 <div className="mb-5 flex items-center justify-between">
         <div>
           <h1 className="text-[20px] font-bold text-[#1a1a2e] mb-1">产地管理</h1>
@@ -126,5 +127,6 @@ export default function ChandiListPage() {
           </tbody>
         </table>
       </div>
+  </>
 )
 }

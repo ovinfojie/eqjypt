@@ -66,6 +66,7 @@ export default function ShenHePage() {
   const reviewing = applications.find(a => a.id === reviewId)
 
   return (
+  <>
 <div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-[18px] font-bold text-[#1a1a2e]">全产业链合作申请审核</h1>
@@ -223,5 +224,6 @@ export default function ShenHePage() {
           </div>
         </div>
       )}
+  </>
 )
 }
