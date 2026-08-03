@@ -8,9 +8,7 @@ import { ShoppingCart } from "lucide-react"
 const navItems = [
   { label: "订单农业服务", href: "/portal/dingdan-nongye" },
   { label: "产销对接", href: "/portal/chanxiao-duijie" },
-  { label: "采购专区", href: "/portal/caigou" },
   { label: "供销严选", href: "/portal/gongxiao-yanxuan" },
-  { label: "集采专区", href: "/portal/jicai" },
   { label: "竞价交易", href: "/portal/jingjia-jiaoyi" },
   { label: "全产业链服务", href: "/portal/quanchanyilian" },
   { label: "农业信用服务", href: "/portal/nongye-xinyong" },
