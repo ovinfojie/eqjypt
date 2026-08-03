@@ -84,6 +84,13 @@ const menuGroups = [
       { label: "提交订单", href: "/merchant/xiadan",                             icon: ShoppingCart  },
       { label: "订单变更", href: "/merchant/dingdan-nongye/change-confirm",      icon: FileSignature },
       { label: "申请取消", href: "/merchant/dingdan-nongye/cancel-apply",        icon: ClipboardList },
+      {
+        label: "订单管理", icon: ClipboardList,
+        children: [
+          { label: "我采购", href: "/merchant/dingdan-nongye/order-mgmt/wo-caigou"   },
+          { label: "我销售", href: "/merchant/dingdan-nongye/order-mgmt/wo-xiaoshou" },
+        ],
+      },
     ],
   },
 
