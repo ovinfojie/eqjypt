@@ -17,8 +17,12 @@ const menuGroups = [
   {
     label: "工作台",
     items: [
-      { label: "工作台",   href: "/merchant",                icon: LayoutDashboard },
-      { label: "消息通知", href: "/merchant/message-center", icon: Bell            },
+      { label: "工作台",             href: "/merchant",                          icon: LayoutDashboard },
+      { label: "消息通知",           href: "/merchant/message-center",           icon: Bell            },
+      { label: "账号信息",           href: "/merchant/account/info",             icon: UserCircle      },
+      { label: "账号信息（仅企管）", href: "/merchant/account/info-admin",       icon: UserCircle      },
+      { label: "账号信息（个人）",   href: "/merchant/account/info-personal",    icon: UserCircle      },
+      { label: "账号信息（店员）",   href: "/merchant/account/info-staff",       icon: UserCircle      },
     ],
   },
 
@@ -26,7 +30,8 @@ const menuGroups = [
   {
     label: "商户设置",
     items: [
-      { label: "企业信息",   href: "/merchant/enterprise/info",   icon: Building2  },
+      { label: "商户装修",   href: "/merchant/settings/decoration", icon: Layers     },
+      { label: "企业信息",   href: "/merchant/enterprise/info",     icon: Building2  },
       { label: "员工管理",   href: "/merchant/enterprise/staff",  icon: Users      },
       { label: "子商户管理", href: "/merchant/enterprise/sub",    icon: Users      },
       { label: "角色权限",   href: "/merchant/enterprise/roles",  icon: Settings   },
@@ -79,6 +84,13 @@ const menuGroups = [
       { label: "提交订单", href: "/merchant/xiadan",                             icon: ShoppingCart  },
       { label: "订单变更", href: "/merchant/dingdan-nongye/change-confirm",      icon: FileSignature },
       { label: "申请取消", href: "/merchant/dingdan-nongye/cancel-apply",        icon: ClipboardList },
+      {
+        label: "订单管理", icon: ClipboardList,
+        children: [
+          { label: "我采购", href: "/merchant/dingdan-nongye/order-mgmt/wo-caigou"   },
+          { label: "我销售", href: "/merchant/dingdan-nongye/order-mgmt/wo-xiaoshou" },
+        ],
+      },
     ],
   },
 
