@@ -5,6 +5,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
+import { useParams } from "next/navigation"
 import { ChevronLeft, RefreshCw, Search, RotateCcw, ChevronRight, Eye, Users } from "lucide-react"
 
 /* ─── Types ─── */
@@ -250,8 +251,10 @@ function SessionCard({ s }: { s: ZoneSession }) {
 }
 
 /* ─── Page ─── */
-export default function ZonePage({ params }: { params: { zoneId: string } }) {
-  const zone = ZONES[params.zoneId] ?? ZONES["grain"]
+export default function ZonePage() {
+  const rawParams = useParams()
+  const zoneId = rawParams?.zoneId as string
+  const zone = ZONES[zoneId] ?? ZONES["grain"]
   const [keyword, setKeyword] = useState("")
   const [statusFilter, setStatusFilter] = useState("全部")
   const [now, setNow] = useState("")
