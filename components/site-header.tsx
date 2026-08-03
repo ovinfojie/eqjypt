@@ -73,12 +73,6 @@ export function SiteHeader() {
         {/* Right actions */}
         <div className="ml-auto flex items-center gap-3 shrink-0">
           <Link
-            href="/portal/jiage-daping"
-            className="px-3 py-1.5 border border-[#dde3ec] text-[12px] text-[#6b7c93] rounded hover:border-[#1a5fa8] hover:text-[#1a5fa8] transition-colors"
-          >
-            价格大屏
-          </Link>
-          <Link
             href="/"
             className="px-3 py-1.5 border border-[#dde3ec] text-[12px] text-[#6b7c93] rounded hover:border-[#1a5fa8] hover:text-[#1a5fa8] transition-colors"
           >
