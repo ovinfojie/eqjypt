@@ -134,13 +134,13 @@ export function PriceIndexSection() {
           <YAxis domain={["auto", "auto"]} tick={{ fontSize: 12, fill: "#6b7c93" }} axisLine={false} tickLine={false} />
           <Tooltip
             contentStyle={{ fontSize: 12, border: "1px solid #dde3ec", borderRadius: 4 }}
-            formatter={(value: number, name: string) => {
+            formatter={(value, name) => {
               const labels: Record<string, string> = {
                 sell: "销售价格指数",
                 buy: "采购价格指数",
                 collect: "收购价格指数",
               }
-              return [value.toFixed(1), labels[name] || name]
+              return [Number(value).toFixed(1), labels[String(name)] || String(name)]
             }}
           />
           <Line type="monotone" dataKey="sell" stroke="#e34040" strokeWidth={2} dot={false} />

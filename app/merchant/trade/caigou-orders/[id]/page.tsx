@@ -14,7 +14,7 @@ const ORDER = {
   orderNo: "PO2026080100123",
   createdAt: "2026-08-01 10:32:15",
   payDeadline: "2026-08-01 22:32:15",
-  status: "pending_confirm" as const,
+  status: "pending_confirm" as keyof typeof STATUS_CONFIG,
   supplier: "广东供销农产品股份有限公司",
   supplierContact: "李经理",
   supplierPhone: "020-8899****",

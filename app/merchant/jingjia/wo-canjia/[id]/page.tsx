@@ -12,7 +12,7 @@ const BID = {
   unit: "吨",
   totalQty: "200吨",
   organizer: "广东省粮食交易中心",
-  sessionStatus: "bidding" as const,
+  sessionStatus: "bidding" as keyof typeof STATUS_CONFIG,
   endTime: "2026-04-20 16:00",
   startTime: "2026-04-20 09:00",
   deposit: "50万元",

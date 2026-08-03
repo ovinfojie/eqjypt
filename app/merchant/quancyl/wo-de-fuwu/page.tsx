@@ -7,18 +7,26 @@ import {
 } from "lucide-react"
 import Link from "next/link"
 
-const statusMap = {
+const statusMap: Record<string, { label: string; color: string; icon: React.ElementType }> = {
   active:   { label: "服务中",   color: "text-[#3a8c3f] bg-[#edf7ee]",   icon: CheckCircle },
   pending:  { label: "审核中",   color: "text-[#c47d0e] bg-[#fef3e0]",   icon: Clock       },
-  expired:  { label: "已到期",   color: "text-[#999]    bg-[#f5f5f5]",   icon: XCircle     },
+  expired:  { label: "已到期",   color: "text-[#999] bg-[#f5f5f5]",      icon: XCircle     },
   rejected: { label: "已驳回",   color: "text-[#d9363e] bg-[#fff1f0]",   icon: AlertCircle },
 }
 
-const myServices = [
+type ServiceStatus = "active" | "pending" | "expired" | "rejected"
+type ServiceItem = {
+  id: string; type: string; icon: React.ElementType; color: string
+  name: string; status: ServiceStatus
+  startDate: string; endDate: string; region: string; contact: string
+  monthlyOrders: number; totalAmount: string
+}
+
+const myServices: ServiceItem[] = [
   {
     id: "1", type: "乡镇农产品综合服务站", icon: MapPin,  color: "#3a8c3f",
     name: "XX县XX镇农产品综合服务站",
-    status: "active" as const,
+    status: "active",
     startDate: "2025-03-01", endDate: "2026-03-01",
     region: "广东省梅州市XX县XX镇",
     contact: "张经理 / 138xxxx1234",
@@ -27,7 +35,7 @@ const myServices = [
   {
     id: "2", type: "冷链仓储服务", icon: Warehouse, color: "#1a5fa8",
     name: "XX冷链物流（广州）仓储服务",
-    status: "active" as const,
+    status: "active",
     startDate: "2025-01-15", endDate: "2026-01-15",
     region: "广州市花都区",
     contact: "李经理 / 139xxxx5678",
@@ -36,7 +44,7 @@ const myServices = [
   {
     id: "3", type: "粮食收购加工", icon: Wheat, color: "#c47d0e",
     name: "XX粮食收购加工合作申请",
-    status: "pending" as const,
+    status: "pending",
     startDate: "2025-12-20", endDate: "--",
     region: "广东省韶关市南雄市",
     contact: "王总 / 137xxxx9012",
@@ -45,7 +53,7 @@ const myServices = [
   {
     id: "4", type: "农产品直供配送", icon: Truck, color: "#3a8c3f",
     name: "XX配送（深圳）直供配送合作",
-    status: "expired" as const,
+    status: "expired",
     startDate: "2024-06-01", endDate: "2025-06-01",
     region: "深圳市南山区",
     contact: "陈经理 / 136xxxx3456",
