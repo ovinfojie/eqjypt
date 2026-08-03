@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { Search, Filter, Download, Eye, CheckCircle, XCircle, Clock } from "lucide-react"
 
 const statusMap: Record<string, { label: string; color: string; bg: string }> = {
@@ -211,10 +212,10 @@ export default function XunjiaListPage() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex items-center gap-2">
-                        <button className="flex items-center gap-1 text-[#1a5fa8] hover:underline text-[12px]">
+                        <Link href={`/admin/xunjia-list/${row.id}`} className="flex items-center gap-1 text-[#1a5fa8] hover:underline text-[12px]">
                           <Eye className="w-3.5 h-3.5" />
                           详情
-                        </button>
+                        </Link>
                         {row.status === "pending" && (
                           <>
                             <button className="flex items-center gap-1 text-[#2e7d32] hover:underline text-[12px]">
