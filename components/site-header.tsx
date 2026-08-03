@@ -24,7 +24,7 @@ export function SiteHeader() {
     <header className="w-full bg-white border-b border-border shadow-sm sticky top-0 z-50">
       <div className="max-w-[1400px] mx-auto px-6 h-16 flex items-center gap-8">
         {/* Logo + Platform Name */}
-        <Link href="/" className="flex items-center gap-3 shrink-0">
+        <Link href="/portal" className="flex items-center gap-3 shrink-0">
           <div className="flex items-center gap-1.5">
             {/* China CO-OP logo placeholder */}
             <div className="w-10 h-10 flex items-center justify-center">
