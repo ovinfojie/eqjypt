@@ -42,7 +42,7 @@ const categories: Category[] = [
     name: "粮食",
     totalQty: "10000吨",
     totalAmt: "1000000万元",
-    moreHref: "/portal/chanxiao-duijie?cat=粮食",
+    moreHref: "/portal/chanxiao-duijie/more/粮食",
     subs: [
       { name: "南晶香占", totalQty: "100吨", totalAmt: "100万元" },
       { name: "大豆",     totalQty: "100吨", totalAmt: "100万元" },
@@ -65,7 +65,7 @@ const categories: Category[] = [
     name: "特色农产品",
     totalQty: "10000吨",
     totalAmt: "1000000万元",
-    moreHref: "/portal/chanxiao-duijie?cat=特色农产品",
+    moreHref: "/portal/chanxiao-duijie/more/特色农产品",
     subs: [
       { name: "特色农产品1", totalQty: "100吨", totalAmt: "100万元" },
       { name: "特色农产品2", totalQty: "100吨", totalAmt: "100万元" },
@@ -87,7 +87,7 @@ const categories: Category[] = [
     name: "农资",
     totalQty: "10000吨",
     totalAmt: "1000000万元",
-    moreHref: "/portal/chanxiao-duijie?cat=农资",
+    moreHref: "/portal/chanxiao-duijie/more/农资",
     subs: [
       { name: "BB肥",  totalQty: "100吨", totalAmt: "100万元" },
       { name: "复合肥", totalQty: "100吨", totalAmt: "100万元" },
