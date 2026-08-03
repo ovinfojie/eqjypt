@@ -8,6 +8,7 @@ import {
   Package, Users, Settings, ChevronRight, ArrowLeft,
   MessageSquare, ChevronDown, Handshake, Star, Gavel, Link2, ShieldCheck,
   Building2, Layers, ClipboardList, FileSignature, Wallet, Gift, UserCircle,
+  Bookmark, Bell, XCircle,
 } from "lucide-react"
 import { useState } from "react"
 
@@ -15,7 +16,8 @@ const menuGroups = [
   {
     label: "工作台",
     items: [
-      { label: "工作台", href: "/merchant", icon: LayoutDashboard },
+      { label: "工作台",     href: "/merchant",                icon: LayoutDashboard },
+      { label: "消息通知",   href: "/merchant/message-center", icon: Bell            },
     ],
   },
   {
@@ -85,7 +87,10 @@ const menuGroups = [
           { label: "发布销售信息", href: "/merchant/chanxiao/fabu-xiaoshou" },
         ],
       },
-      { label: "订单管理", href: "/merchant/chanxiao/orders", icon: ClipboardList },
+      { label: "订单管理",   href: "/merchant/chanxiao/orders",          icon: ClipboardList },
+      { label: "撤回需求/信息", href: "/merchant/chanxiao/withdraw",      icon: XCircle       },
+      { label: "撤回报价",   href: "/merchant/chanxiao/quote-withdraw",   icon: XCircle       },
+      { label: "我的收藏",   href: "/merchant/chanxiao/favorites",        icon: Bookmark      },
     ],
   },
   {
@@ -100,7 +105,9 @@ const menuGroups = [
           { label: "我收到的", href: "/merchant/xunbaojia/wo-shoudaode" },
         ],
       },
-      { label: "提交订单", href: "/merchant/xiadan", icon: ShoppingCart },
+      { label: "提交订单",   href: "/merchant/xiadan",                               icon: ShoppingCart },
+      { label: "订单变更",   href: "/merchant/dingdan-nongye/change-confirm",        icon: FileSignature },
+      { label: "申请取消",   href: "/merchant/dingdan-nongye/cancel-apply",          icon: ClipboardList },
     ],
   },
   {

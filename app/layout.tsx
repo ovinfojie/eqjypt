@@ -1,5 +1,6 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
+import { PromiseErrorHandler } from '@/components/promise-error-handler'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -41,8 +42,9 @@ export default function RootLayout({
   return (
     <html lang="zh-CN" className="bg-background">
       <body className="antialiased font-sans">
+        <PromiseErrorHandler />
         {children}
-        {process.env.NODE_ENV === 'production' && <Analytics />}
+        {process.env.NODE_ENV === 'production' && <Analytics mode="production" />}
       </body>
     </html>
   )
