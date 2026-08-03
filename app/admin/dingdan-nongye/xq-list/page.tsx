@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import { Search, Download, Eye, CheckCircle, XCircle } from "lucide-react"
 
 const mockData = [
@@ -65,8 +64,7 @@ export default function AdminXqListPage() {
   })
 
   return (
-    <AdminLayout>
-      <div>
+<div>
         {/* 页头 */}
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -198,6 +196,5 @@ export default function AdminXqListPage() {
           </div>
         </div>
       </div>
-    </AdminLayout>
-  )
+)
 }

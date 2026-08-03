@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import {
   Search, Plus, CheckCircle, XCircle, Pause,
   MapPin, Leaf, Wheat, Warehouse, Truck, Building2, Eye, Edit2,
@@ -79,8 +78,7 @@ export default function JiGouListPage() {
   ]
 
   return (
-    <AdminLayout>
-      <div className="flex items-center justify-between mb-6">
+<div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-[18px] font-bold text-[#1a1a2e]">全产业链服务机构管理</h1>
           <p className="text-[13px] text-[#6b7c93] mt-0.5">管理已入驻的全产业链服务机构</p>
@@ -177,6 +175,5 @@ export default function JiGouListPage() {
           <div className="text-center py-12 text-[#999] text-[13px]">暂无符合条件的机构</div>
         )}
       </div>
-    </AdminLayout>
-  )
+)
 }

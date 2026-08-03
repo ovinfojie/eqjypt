@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import { ChevronLeft, CheckCircle, XCircle, FileText, Building2, User, Phone } from "lucide-react"
 
 const DEMAND = {
@@ -74,8 +73,7 @@ export default function AdminXqDetailPage() {
   const [showReject, setShowReject] = useState(false)
 
   return (
-    <AdminLayout>
-      <div className="max-w-[900px] space-y-4">
+<div className="max-w-[900px] space-y-4">
         {/* 面包屑 */}
         <div className="flex items-center gap-1.5 text-[13px] text-[#999]">
           <Link href="/admin/dingdan-nongye/xq-list" className="flex items-center gap-1 hover:text-[#1a5fa8] transition-colors">
@@ -210,6 +208,5 @@ export default function AdminXqDetailPage() {
           </div>
         </Section>
       </div>
-    </AdminLayout>
-  )
+)
 }

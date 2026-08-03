@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import { ChevronLeft, FileText, Building2, User, Phone, AlertTriangle } from "lucide-react"
 
 const ORDER = {
@@ -82,8 +81,7 @@ export default function AdminOrderDetailPage() {
   const sc = statusColors[d.status] ?? { color: "#999", bg: "#f5f5f5" }
 
   return (
-    <AdminLayout>
-      <div className="max-w-[960px] space-y-4">
+<div className="max-w-[960px] space-y-4">
         {/* 面包屑 */}
         <div className="flex items-center gap-1.5 text-[13px] text-[#999]">
           <Link href="/admin/dingdan-nongye/order-list" className="flex items-center gap-1 hover:text-[#1a5fa8] transition-colors">
@@ -251,6 +249,5 @@ export default function AdminOrderDetailPage() {
           </div>
         </Section>
       </div>
-    </AdminLayout>
-  )
+)
 }

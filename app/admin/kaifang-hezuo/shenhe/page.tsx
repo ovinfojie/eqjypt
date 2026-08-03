@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import { Search, Clock, CheckCircle, XCircle, Eye, Globe, Truck, ShoppingBag, BarChart2, Users, Handshake, TrendingUp } from "lucide-react"
 
 const STATS = [
@@ -49,8 +48,7 @@ export default function KaifangHezuoShenhePage() {
   const modalApp = APPLICATIONS.find(a => a.id === modalId)
 
   return (
-    <AdminLayout>
-      <div className="space-y-5">
+<div className="space-y-5">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-[20px] font-bold text-[#1a1a2e]">合作申请审核</h1>
@@ -206,6 +204,5 @@ export default function KaifangHezuoShenhePage() {
           </div>
         </div>
       )}
-    </AdminLayout>
-  )
+)
 }

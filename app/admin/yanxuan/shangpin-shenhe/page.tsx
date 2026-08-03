@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import { Eye, CheckCircle2, XCircle, ChevronDown } from "lucide-react"
 
 type AuditStatus = "pending" | "approved" | "rejected"
@@ -51,8 +50,7 @@ export default function ShangpinShenhePage() {
   const pendingCount = data.filter(r => r.status === "pending").length
 
   return (
-    <AdminLayout>
-      <div className="mb-5">
+<div className="mb-5">
         <h1 className="text-[20px] font-bold text-[#1a1a2e] mb-1">
           商品审核
           {pendingCount > 0 && (
@@ -166,6 +164,5 @@ export default function ShangpinShenhePage() {
           </div>
         </div>
       )}
-    </AdminLayout>
-  )
+)
 }

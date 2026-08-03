@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import { Search, ShieldCheck, TrendingUp, Users, BarChart2, ChevronDown } from "lucide-react"
 
 const STATS = [
@@ -41,8 +40,7 @@ export default function XinyongDanganListPage() {
   })
 
   return (
-    <AdminLayout>
-      <div className="space-y-5">
+<div className="space-y-5">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-[20px] font-bold text-[#1a1a2e]">信用档案管理</h1>
@@ -128,6 +126,5 @@ export default function XinyongDanganListPage() {
           </div>
         </div>
       </div>
-    </AdminLayout>
-  )
+)
 }

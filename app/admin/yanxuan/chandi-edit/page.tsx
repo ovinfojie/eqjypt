@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import { ChevronLeft, Plus, Trash2, Upload, CheckCircle2 } from "lucide-react"
 
 const CAPABILITIES = ["数字化交易与撮合能力", "品控与流通体系", "柔性与合规", "金融赋能能力", "政策与拓利优势", "生态与环境保障"]
@@ -33,8 +32,7 @@ export default function ChandiEditPage() {
 
   if (saved) {
     return (
-      <AdminLayout>
-        <div className="max-w-[560px] mx-auto mt-16 text-center">
+<div className="max-w-[560px] mx-auto mt-16 text-center">
           <CheckCircle2 className="w-16 h-16 text-[#1a7a3c] mx-auto mb-4" />
           <h2 className="text-[22px] font-bold text-[#1a1a2e] mb-2">保存成功</h2>
           <p className="text-[14px] text-[#6b7c93] mb-8">产地信息已更新，前台展示将立即生效。</p>
@@ -47,13 +45,11 @@ export default function ChandiEditPage() {
             </button>
           </div>
         </div>
-      </AdminLayout>
-    )
+)
   }
 
   return (
-    <AdminLayout>
-      <div className="mb-5 flex items-center gap-3">
+<div className="mb-5 flex items-center gap-3">
         <Link href="/admin/yanxuan/chandi-list" className="flex items-center gap-1 text-[#6b7c93] hover:text-[#1a1a2e] text-[13px]">
           <ChevronLeft className="w-4 h-4" />产地列表
         </Link>
@@ -158,6 +154,5 @@ export default function ChandiEditPage() {
           <Link href="/admin/yanxuan/chandi-list" className="text-[13px] text-[#6b7c93] hover:text-[#1a1a2e]">取消</Link>
         </div>
       </div>
-    </AdminLayout>
-  )
+)
 }

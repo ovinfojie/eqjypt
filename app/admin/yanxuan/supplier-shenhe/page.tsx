@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import { Eye, CheckCircle2, XCircle, Building2 } from "lucide-react"
 
 type AuditStatus = "pending" | "approved" | "rejected"
@@ -54,8 +53,7 @@ export default function SupplierShenhePage() {
   const pendingCount = data.filter(r => r.status === "pending").length
 
   return (
-    <AdminLayout>
-      <div className="mb-5">
+<div className="mb-5">
         <h1 className="text-[20px] font-bold text-[#1a1a2e] mb-1">
           供应商审核
           {pendingCount > 0 && (
@@ -168,6 +166,5 @@ export default function SupplierShenhePage() {
           </div>
         </div>
       )}
-    </AdminLayout>
-  )
+)
 }

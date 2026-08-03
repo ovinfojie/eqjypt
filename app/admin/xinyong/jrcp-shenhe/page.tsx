@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import { Search, Clock, CheckCircle, XCircle, Eye } from "lucide-react"
 
 const APPLICATIONS = [
@@ -36,8 +35,7 @@ export default function JrcpShenhePage() {
   const modalApp = APPLICATIONS.find(a => a.id === modalId)
 
   return (
-    <AdminLayout>
-      <div className="space-y-5">
+<div className="space-y-5">
         <div className="flex items-center justify-between">
           <div>
             <h1 className="text-[20px] font-bold text-[#1a1a2e]">金融申请审核</h1>
@@ -156,6 +154,5 @@ export default function JrcpShenhePage() {
           </div>
         </div>
       )}
-    </AdminLayout>
-  )
+)
 }

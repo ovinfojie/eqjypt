@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import {
   Search, CheckCircle, XCircle, Clock, AlertCircle,
   Eye, ChevronDown, Filter,
@@ -67,8 +66,7 @@ export default function ShenHePage() {
   const reviewing = applications.find(a => a.id === reviewId)
 
   return (
-    <AdminLayout>
-      <div className="flex items-center justify-between mb-6">
+<div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-[18px] font-bold text-[#1a1a2e]">全产业链合作申请审核</h1>
           <p className="text-[13px] text-[#6b7c93] mt-0.5">审核各类全产业链服务合作入驻申请</p>
@@ -225,6 +223,5 @@ export default function ShenHePage() {
           </div>
         </div>
       )}
-    </AdminLayout>
-  )
+)
 }

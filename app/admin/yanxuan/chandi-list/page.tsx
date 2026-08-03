@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import { Plus, Pencil, Eye, ToggleLeft, ToggleRight, MapPin } from "lucide-react"
 import { useState } from "react"
 
@@ -27,8 +26,7 @@ export default function ChandiListPage() {
   const filtered = data.filter((r) => !keyword || r.name.includes(keyword) || r.area.includes(keyword))
 
   return (
-    <AdminLayout>
-      <div className="mb-5 flex items-center justify-between">
+<div className="mb-5 flex items-center justify-between">
         <div>
           <h1 className="text-[20px] font-bold text-[#1a1a2e] mb-1">产地管理</h1>
           <p className="text-[13px] text-[#6b7c93]">管理供销严选平台的产地直供中心，配置产地信息、能力介绍和供应商绑定。</p>
@@ -128,6 +126,5 @@ export default function ChandiListPage() {
           </tbody>
         </table>
       </div>
-    </AdminLayout>
-  )
+)
 }

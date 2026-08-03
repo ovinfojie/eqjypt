@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import { ChevronLeft, CheckCircle, XCircle, FileText, Building2, User, Phone } from "lucide-react"
 
 const SUPPLY = {
@@ -73,8 +72,7 @@ export default function AdminGyDetailPage() {
   const [showReject, setShowReject] = useState(false)
 
   return (
-    <AdminLayout>
-      <div className="max-w-[900px] space-y-4">
+<div className="max-w-[900px] space-y-4">
         {/* 面包屑 */}
         <div className="flex items-center gap-1.5 text-[13px] text-[#999]">
           <Link href="/admin/dingdan-nongye/gy-list" className="flex items-center gap-1 hover:text-[#3a8c3f] transition-colors">
@@ -236,6 +234,5 @@ export default function AdminGyDetailPage() {
           ))}
         </Section>
       </div>
-    </AdminLayout>
-  )
+)
 }

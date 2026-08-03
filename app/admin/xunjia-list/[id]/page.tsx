@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { useState } from "react"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import {
   ChevronLeft, CheckCircle, XCircle, MessageSquare,
   Phone, FileText, Clock, User, Building2,
@@ -140,8 +139,7 @@ export default function XunjiaDetailPage() {
   const [expandedQuote, setExpandedQuote] = useState<string | null>("Q001")
 
   return (
-    <AdminLayout>
-      <div className="max-w-[960px] space-y-4">
+<div className="max-w-[960px] space-y-4">
         {/* 面包屑 */}
         <div className="flex items-center gap-1.5 text-[13px] text-[#999]">
           <Link href="/admin/xunjia-list" className="flex items-center gap-1 hover:text-[#1a5fa8] transition-colors">
@@ -349,6 +347,5 @@ export default function XunjiaDetailPage() {
           </div>
         </Section>
       </div>
-    </AdminLayout>
-  )
+)
 }

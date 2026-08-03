@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { AdminLayout } from "@/components/admin/admin-layout"
 import { Search, Download, Eye } from "lucide-react"
 
 const mockData = [
@@ -100,8 +99,7 @@ export default function AdminOrderListPage() {
   const totalAmount = mockData.reduce((s, d) => s + d.amount, 0)
 
   return (
-    <AdminLayout>
-      <div>
+<div>
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-[20px] font-bold text-[#1a1a2e]">已成交订单管理</h1>
@@ -214,6 +212,5 @@ export default function AdminOrderListPage() {
           </div>
         </div>
       </div>
-    </AdminLayout>
-  )
+)
 }
