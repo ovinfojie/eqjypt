@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import { Plus, Search, Eye, Edit2, Trash2 } from "lucide-react"
 
 type StatusFilter = "全部" | "销售中" | "即将结束" | "已完成" | "已关闭"
@@ -34,8 +33,7 @@ export default function XiaoshouListPage() {
   )
 
   return (
-    <MerchantLayout>
-      <div className="max-w-[960px]">
+<div className="max-w-[960px]">
         <div className="flex items-center justify-between mb-5">
           <div>
             <h1 className="text-[18px] font-bold text-[#1a1a2e]">我的销售信息</h1>
@@ -131,6 +129,5 @@ export default function XiaoshouListPage() {
           </table>
         </div>
       </div>
-    </MerchantLayout>
-  )
+)
 }

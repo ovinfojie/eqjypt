@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import { ChevronLeft, FileText, Edit2, XCircle } from "lucide-react"
 
 const DEMAND = {
@@ -72,8 +71,7 @@ export default function XqDetailPage() {
   const pct = Math.round((d.progress / d.total) * 100)
 
   return (
-    <MerchantLayout>
-      <div className="max-w-[900px] space-y-4">
+<div className="max-w-[900px] space-y-4">
         {/* 面包屑 */}
         <div className="flex items-center gap-1.5 text-[13px] text-[#999]">
           <Link href="/merchant/dingdan-nongye/xq-list" className="flex items-center gap-1 hover:text-[#1a5fa8] transition-colors">
@@ -195,6 +193,5 @@ export default function XqDetailPage() {
           </Section>
         )}
       </div>
-    </MerchantLayout>
-  )
+)
 }

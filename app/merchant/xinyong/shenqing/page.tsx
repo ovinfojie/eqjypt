@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import { CheckCircle, ChevronRight, Landmark, ShieldCheck, FileText } from "lucide-react"
 
 const PRODUCTS = [
@@ -31,8 +30,7 @@ export default function XinyongShenqingPage() {
 
   if (submitted) {
     return (
-      <MerchantLayout>
-        <div className="max-w-[560px] mx-auto mt-16 text-center">
+<div className="max-w-[560px] mx-auto mt-16 text-center">
           <div className="w-20 h-20 rounded-full bg-[#e8fdf0] flex items-center justify-center mx-auto mb-5">
             <CheckCircle className="w-10 h-10 text-[#3a8c3f]" />
           </div>
@@ -57,13 +55,11 @@ export default function XinyongShenqingPage() {
             </button>
           </div>
         </div>
-      </MerchantLayout>
-    )
+)
   }
 
   return (
-    <MerchantLayout>
-      <div className="max-w-[860px] mx-auto space-y-6">
+<div className="max-w-[860px] mx-auto space-y-6">
         <div>
           <h1 className="text-[20px] font-bold text-[#1a1a2e]">申请金融授信</h1>
           <p className="text-[13px] text-[#888] mt-0.5">当前信用评分：<span className="font-bold text-[#1a5fa8]">{MY_SCORE} 分（AA级）</span>，可申请以下产品</p>
@@ -196,6 +192,5 @@ export default function XinyongShenqingPage() {
           </div>
         )}
       </div>
-    </MerchantLayout>
-  )
+)
 }

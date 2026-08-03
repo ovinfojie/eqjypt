@@ -6,18 +6,11 @@ import { cn } from "@/lib/utils"
 import {
   LayoutDashboard, FileText, TrendingUp, ShoppingCart,
   Package, Users, Settings, ChevronRight, ArrowLeft,
-  MessageSquare, ChevronDown, Handshake, Star, Gavel, Link2, ShieldCheck, ClipboardList,
+  MessageSquare, ChevronDown, Handshake, Star, Gavel, Link2, ShieldCheck,
 } from "lucide-react"
 import { useState } from "react"
 
 const menuGroups = [
-  {
-    label: "采购管理",
-    items: [
-      { label: "我的采购订单", href: "/merchant/orders",       icon: ClipboardList, badge: 3 },
-      { label: "我的采购车",   href: "/portal/cart",           icon: ShoppingCart,  badge: 4 },
-    ],
-  },
   {
     label: "供销严选",
     items: [
@@ -103,10 +96,8 @@ const menuGroups = [
   {
     label: "我的业务",
     items: [
-      { label: "工作台", href: "/merchant", icon: LayoutDashboard },
-      { label: "我的订单", href: "/merchant/orders", icon: Package },
-      { label: "商品管理", href: "/merchant/products", icon: Package },
-      { label: "企业信息", href: "/merchant/profile", icon: Users },
+      { label: "工作台",   href: "/merchant",          icon: LayoutDashboard },
+      { label: "企业信息", href: "/merchant/profile",  icon: Users },
       { label: "账号设置", href: "/merchant/settings", icon: Settings },
     ],
   },

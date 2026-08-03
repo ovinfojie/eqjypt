@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import { Plus, Search, Eye, Edit2, Trash2 } from "lucide-react"
 
 type StatusFilter = "全部" | "采购中" | "已完成" | "已关闭" | "即将结束"
@@ -34,8 +33,7 @@ export default function CaigouListPage() {
   )
 
   return (
-    <MerchantLayout>
-      <div className="max-w-[960px]">
+<div className="max-w-[960px]">
         {/* Header */}
         <div className="flex items-center justify-between mb-5">
           <div>
@@ -137,6 +135,5 @@ export default function CaigouListPage() {
           </table>
         </div>
       </div>
-    </MerchantLayout>
-  )
+)
 }

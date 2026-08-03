@@ -3,7 +3,6 @@
 import { useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import {
   Search, ChevronDown, Package, Truck, CreditCard,
   CheckCircle2, XCircle, Clock, ChevronRight, RefreshCw,
@@ -113,8 +112,7 @@ export default function OrdersPage() {
   })
 
   return (
-    <MerchantLayout>
-      <div className="max-w-[980px] mx-auto space-y-5">
+<div className="max-w-[980px] mx-auto space-y-5">
         <div className="flex items-center justify-between">
           <h1 className="text-[20px] font-bold text-[#1a1a2e]">我的采购订单</h1>
           <Link href="/portal/jicai" className="flex items-center gap-1.5 text-[13px] text-[#1a5fa8] hover:underline">
@@ -259,6 +257,5 @@ export default function OrdersPage() {
           })}
         </div>
       </div>
-    </MerchantLayout>
-  )
+)
 }

@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import { ChevronLeft, Edit2, XCircle, MessageCircle } from "lucide-react"
 
 const DEMAND = {
@@ -69,8 +68,7 @@ export default function CaigouDetailPage() {
   const sc = statusColors[d.status] ?? statusColors["已完成"]
 
   return (
-    <MerchantLayout>
-      <div className="max-w-[900px] space-y-4">
+<div className="max-w-[900px] space-y-4">
         {/* 面包屑 */}
         <div className="flex items-center gap-1.5 text-[13px] text-[#999]">
           <Link href="/merchant/chanxiao/caigou-list" className="flex items-center gap-1 hover:text-[#1a5fa8] transition-colors">
@@ -194,6 +192,5 @@ export default function CaigouDetailPage() {
           </table>
         </Section>
       </div>
-    </MerchantLayout>
-  )
+)
 }

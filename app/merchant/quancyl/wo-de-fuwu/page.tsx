@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import {
   Leaf, Truck, Warehouse, Wheat, MapPin, Factory,
   CheckCircle, Clock, XCircle, AlertCircle, ChevronRight, Plus,
@@ -69,8 +68,7 @@ export default function WoDeFuwuPage() {
     : myServices.filter(s => s.status === activeTab)
 
   return (
-    <MerchantLayout>
-      <div className="flex items-center justify-between mb-6">
+<div className="flex items-center justify-between mb-6">
         <div>
           <h1 className="text-[18px] font-bold text-[#1a1a2e]">我的全产业链服务</h1>
           <p className="text-[13px] text-[#6b7c93] mt-0.5">管理您已入驻的全产业链服务</p>
@@ -181,6 +179,5 @@ export default function WoDeFuwuPage() {
           </div>
         )}
       </div>
-    </MerchantLayout>
-  )
+)
 }

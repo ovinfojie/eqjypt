@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import {
   ShieldCheck, TrendingUp, Clock, CheckCircle, XCircle,
   FileText, ChevronRight, Landmark, AlertCircle,
@@ -31,8 +30,7 @@ export default function XinyongDanganPage() {
   const [activeTab, setActiveTab] = useState<"overview" | "loans" | "history">("overview")
 
   return (
-    <MerchantLayout>
-      <div className="space-y-5">
+<div className="space-y-5">
         {/* Page header */}
         <div className="flex items-center justify-between">
           <div>
@@ -218,6 +216,5 @@ export default function XinyongDanganPage() {
           </div>
         )}
       </div>
-    </MerchantLayout>
-  )
+)
 }

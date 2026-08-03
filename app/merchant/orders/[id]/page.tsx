@@ -3,7 +3,6 @@
 import { Suspense } from "react"
 import Link from "next/link"
 import { useParams } from "next/navigation"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import Image from "next/image"
 import {
   ChevronLeft, Package, Truck, CheckCircle2, XCircle,
@@ -77,8 +76,7 @@ function OrderDetailContent() {
   const StatusIcon = sc.icon
 
   return (
-    <MerchantLayout>
-      <div className="max-w-[920px] space-y-4">
+<div className="max-w-[920px] space-y-4">
         {/* 面包屑 */}
         <div className="flex items-center gap-1.5 text-[13px] text-[#999]">
           <Link href="/merchant/orders" className="flex items-center gap-1 hover:text-[#1a5fa8] transition-colors">
@@ -288,8 +286,7 @@ function OrderDetailContent() {
           </Link>
         </div>
       </div>
-    </MerchantLayout>
-  )
+)
 }
 
 export default function OrderDetailPage() {

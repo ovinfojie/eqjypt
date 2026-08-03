@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import { ChevronLeft, FileText, Edit2, XCircle, Eye } from "lucide-react"
 
 const SUPPLY = {
@@ -74,8 +73,7 @@ export default function GyDetailPage() {
   const pct = Math.round((d.progress / d.total) * 100)
 
   return (
-    <MerchantLayout>
-      <div className="max-w-[900px] space-y-4">
+<div className="max-w-[900px] space-y-4">
         {/* 面包屑 */}
         <div className="flex items-center gap-1.5 text-[13px] text-[#999]">
           <Link href="/merchant/dingdan-nongye/gy-list" className="flex items-center gap-1 hover:text-[#3a8c3f] transition-colors">
@@ -221,6 +219,5 @@ export default function GyDetailPage() {
           </Section>
         )}
       </div>
-    </MerchantLayout>
-  )
+)
 }

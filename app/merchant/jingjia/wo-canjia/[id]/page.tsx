@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import { ChevronLeft, TrendingUp, XCircle, Clock, CheckCircle2, ExternalLink } from "lucide-react"
 
 const BID = {
@@ -75,8 +74,7 @@ export default function BidDetailPage() {
   const StatusIcon = sc.icon
 
   return (
-    <MerchantLayout>
-      <div className="max-w-[900px] space-y-4">
+<div className="max-w-[900px] space-y-4">
         {/* 面包屑 */}
         <div className="flex items-center gap-1.5 text-[13px] text-[#999]">
           <Link href="/merchant/jingjia/wo-canjia" className="flex items-center gap-1 hover:text-[#1a5fa8] transition-colors">
@@ -218,6 +216,5 @@ export default function BidDetailPage() {
           </Link>
         </div>
       </div>
-    </MerchantLayout>
-  )
+)
 }

@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import { ChevronLeft, Plus, Trash2, Upload, CheckCircle2 } from "lucide-react"
 
 const REGIONS = ["江门产地直供中心", "南雄产地直供中心", "茂名产地直供中心", "肇庆产地直供中心", "韶关产地直供中心", "遂溪产地直供中心"]
@@ -47,8 +46,7 @@ export default function FabuShangpinPage() {
 
   if (submitted) {
     return (
-      <MerchantLayout>
-        <div className="max-w-[560px] mx-auto mt-16 text-center">
+<div className="max-w-[560px] mx-auto mt-16 text-center">
           <CheckCircle2 className="w-16 h-16 text-[#1a7a3c] mx-auto mb-4" />
           <h2 className="text-[22px] font-bold text-[#1a1a2e] mb-2">商品已提交审核</h2>
           <p className="text-[14px] text-[#6b7c93] mb-8">
@@ -64,13 +62,11 @@ export default function FabuShangpinPage() {
             </button>
           </div>
         </div>
-      </MerchantLayout>
-    )
+)
   }
 
   return (
-    <MerchantLayout>
-      <div className="mb-5 flex items-center gap-3">
+<div className="mb-5 flex items-center gap-3">
         <Link href="/merchant/yanxuan/shangpin-list" className="flex items-center gap-1 text-[#6b7c93] hover:text-[#1a5fa8] text-[13px]">
           <ChevronLeft className="w-4 h-4" />我的商品列表
         </Link>
@@ -241,6 +237,5 @@ export default function FabuShangpinPage() {
           </Link>
         </div>
       </div>
-    </MerchantLayout>
-  )
+)
 }

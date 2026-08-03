@@ -2,7 +2,6 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { MerchantLayout } from "@/components/merchant/merchant-layout"
 import { ChevronLeft, CheckCircle } from "lucide-react"
 
 const categories = ["粮油", "蔬菜", "水果", "畜禽", "水产", "其他"]
@@ -27,8 +26,7 @@ export default function FabuXiaoshouPage() {
 
   if (submitted) {
     return (
-      <MerchantLayout>
-        <div className="max-w-[560px] mx-auto mt-16 bg-white rounded-xl border border-[#e8edf5] p-10 text-center">
+<div className="max-w-[560px] mx-auto mt-16 bg-white rounded-xl border border-[#e8edf5] p-10 text-center">
           <CheckCircle className="w-14 h-14 text-[#3a8c3f] mx-auto mb-4" />
           <div className="text-[20px] font-bold text-[#333] mb-2">销售信息发布成功</div>
           <div className="text-[14px] text-[#888] mb-8">您的销售信息已提交，买方可在产销对接大厅查看并询价。</div>
@@ -41,13 +39,11 @@ export default function FabuXiaoshouPage() {
             </Link>
           </div>
         </div>
-      </MerchantLayout>
-    )
+)
   }
 
   return (
-    <MerchantLayout>
-      <div className="max-w-[860px]">
+<div className="max-w-[860px]">
         <div className="text-[13px] text-[#999] mb-4 flex items-center gap-1">
           <Link href="/merchant/chanxiao/xiaoshou-list" className="flex items-center gap-1 hover:text-[#1a5fa8]">
             <ChevronLeft className="w-3.5 h-3.5" />产销对接 · 销售管理
@@ -245,6 +241,5 @@ export default function FabuXiaoshouPage() {
           </div>
         </div>
       </div>
-    </MerchantLayout>
-  )
+)
 }
