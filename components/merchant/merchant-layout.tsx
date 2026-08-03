@@ -30,7 +30,8 @@ const menuGroups = [
   {
     label: "商户设置",
     items: [
-      { label: "企业信息",   href: "/merchant/enterprise/info",   icon: Building2  },
+      { label: "商户装修",   href: "/merchant/settings/decoration", icon: Layers     },
+      { label: "企业信息",   href: "/merchant/enterprise/info",     icon: Building2  },
       { label: "员工管理",   href: "/merchant/enterprise/staff",  icon: Users      },
       { label: "子商户管理", href: "/merchant/enterprise/sub",    icon: Users      },
       { label: "角色权限",   href: "/merchant/enterprise/roles",  icon: Settings   },
