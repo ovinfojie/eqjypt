@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation"
 import Image from "next/image"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { ChevronRight, MapPin, Plus, Truck, FileText, MessageSquare, ChevronDown } from "lucide-react"
+import { ChevronRight, MapPin, Plus, Truck, MessageSquare } from "lucide-react"
 
 interface Address {
   id: string
@@ -48,11 +48,9 @@ const deliveryOptions = [
   { id: "d3", label: "平台冷链专送", desc: "全程冷链配送，适合生鲜产品，次日达", price: 80 },
 ]
 
-const invoiceTypes = ["不需要发票", "增值税普通发票", "增值税专用发票"]
-const paymentMethods = [
-  { id: "p1", label: "银行转账", desc: "对公转账，需上传转账凭证" },
-  { id: "p2", label: "平台担保付款", desc: "收货验货后确认放款，资金安全" },
-  { id: "p3", label: "月结授信", desc: "需开通信用额度，按月统一结算" },
+const settlementChannels = [
+  { id: "s1", label: "建行龙存管", desc: "中国建设银行资金存管，安全有保障" },
+  { id: "s2", label: "工行安心付", desc: "中国工商银行担保支付，收货后放款" },
 ]
 
 export default function CheckoutPage() {
@@ -60,10 +58,7 @@ export default function CheckoutPage() {
   const [selectedAddr, setSelectedAddr] = useState("a1")
   const [showAddrPanel, setShowAddrPanel] = useState(false)
   const [selectedDelivery, setSelectedDelivery] = useState("d1")
-  const [selectedPayment, setSelectedPayment] = useState("p2")
-  const [invoiceType, setInvoiceType] = useState("增值税专用发票")
-  const [invoiceTitle, setInvoiceTitle] = useState("")
-  const [taxNo, setTaxNo] = useState("")
+  const [selectedSettlement, setSelectedSettlement] = useState("s1")
   const [remark, setRemark] = useState("")
   const [submitting, setSubmitting] = useState(false)
 
@@ -204,44 +199,16 @@ export default function CheckoutPage() {
                 ))}
               </div>
 
-              {/* 发票信息 */}
+              {/* 结算渠道 */}
               <div className="bg-white rounded-lg border border-[#e8edf5] p-5">
-                <div className="flex items-center gap-2 mb-4">
-                  <FileText className="w-4 h-4 text-[#1a5fa8]" />
-                  <h2 className="text-[15px] font-bold text-[#1a1a2e]">发票信息</h2>
-                </div>
-                <div className="flex items-center gap-3 mb-4 flex-wrap">
-                  {invoiceTypes.map(t => (
-                    <label key={t} className={`flex items-center gap-1.5 px-3 py-2 rounded border cursor-pointer text-[13px] transition-colors ${invoiceType === t ? "border-[#1a5fa8] bg-[#e8f4fd] text-[#1a5fa8] font-medium" : "border-[#e8edf5] text-[#555] hover:border-[#1a5fa8]/40"}`}>
-                      <input type="radio" name="invoice" value={t} checked={invoiceType === t} onChange={() => setInvoiceType(t)} className="accent-[#1a5fa8]" />
-                      {t}
-                    </label>
-                  ))}
-                </div>
-                {invoiceType !== "不需要发票" && (
-                  <div className="grid grid-cols-2 gap-3">
-                    <div>
-                      <label className="block text-[13px] text-[#6b7c93] mb-1">发票抬头</label>
-                      <input value={invoiceTitle} onChange={e => setInvoiceTitle(e.target.value)} placeholder="请输入单位名称" className="w-full border border-[#e8edf5] rounded px-3 py-2 text-[13px] focus:outline-none focus:border-[#1a5fa8]" />
-                    </div>
-                    <div>
-                      <label className="block text-[13px] text-[#6b7c93] mb-1">纳税人识别号</label>
-                      <input value={taxNo} onChange={e => setTaxNo(e.target.value)} placeholder="请输入税号" className="w-full border border-[#e8edf5] rounded px-3 py-2 text-[13px] focus:outline-none focus:border-[#1a5fa8]" />
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* 支付方式 */}
-              <div className="bg-white rounded-lg border border-[#e8edf5] p-5">
-                <h2 className="text-[15px] font-bold text-[#1a1a2e] mb-4">支付方式</h2>
+                <h2 className="text-[15px] font-bold text-[#1a1a2e] mb-4">结算渠道</h2>
                 <div className="space-y-2">
-                  {paymentMethods.map(pm => (
-                    <label key={pm.id} className={`flex items-center gap-3 p-3.5 rounded border cursor-pointer transition-colors ${selectedPayment === pm.id ? "border-[#1a5fa8] bg-[#e8f4fd]" : "border-[#e8edf5] hover:border-[#1a5fa8]/40"}`}>
-                      <input type="radio" name="payment" value={pm.id} checked={selectedPayment === pm.id} onChange={() => setSelectedPayment(pm.id)} className="accent-[#1a5fa8]" />
+                  {settlementChannels.map(sc => (
+                    <label key={sc.id} className={`flex items-center gap-3 p-3.5 rounded border cursor-pointer transition-colors ${selectedSettlement === sc.id ? "border-[#1a5fa8] bg-[#e8f4fd]" : "border-[#e8edf5] hover:border-[#1a5fa8]/40"}`}>
+                      <input type="radio" name="settlement" value={sc.id} checked={selectedSettlement === sc.id} onChange={() => setSelectedSettlement(sc.id)} className="accent-[#1a5fa8]" />
                       <div>
-                        <span className="text-[14px] font-medium text-[#1a1a2e]">{pm.label}</span>
-                        <span className="text-[13px] text-[#6b7c93] ml-3">{pm.desc}</span>
+                        <span className="text-[14px] font-medium text-[#1a1a2e]">{sc.label}</span>
+                        <span className="text-[13px] text-[#6b7c93] ml-3">{sc.desc}</span>
                       </div>
                     </label>
                   ))}

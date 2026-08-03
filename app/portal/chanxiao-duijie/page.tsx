@@ -4,7 +4,7 @@ import { useState, useRef } from "react"
 import Link from "next/link"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
-import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react"
+import { ChevronLeft, ChevronRight, ArrowRight, X, Plus, Minus } from "lucide-react"
 
 /* ─── Types ─── */
 type InfoType = "采购" | "供应"
@@ -42,7 +42,7 @@ const categories: Category[] = [
     name: "粮食",
     totalQty: "10000吨",
     totalAmt: "1000000万元",
-    moreHref: "/portal/chanxiao-duijie?cat=粮食",
+    moreHref: "/portal/chanxiao-duijie/more/粮食",
     subs: [
       { name: "南晶香占", totalQty: "100吨", totalAmt: "100万元" },
       { name: "大豆",     totalQty: "100吨", totalAmt: "100万元" },
@@ -65,7 +65,7 @@ const categories: Category[] = [
     name: "特色农产品",
     totalQty: "10000吨",
     totalAmt: "1000000万元",
-    moreHref: "/portal/chanxiao-duijie?cat=特色农产品",
+    moreHref: "/portal/chanxiao-duijie/more/特色农产品",
     subs: [
       { name: "特色农产品1", totalQty: "100吨", totalAmt: "100万元" },
       { name: "特色农产品2", totalQty: "100吨", totalAmt: "100万元" },
@@ -87,7 +87,7 @@ const categories: Category[] = [
     name: "农资",
     totalQty: "10000吨",
     totalAmt: "1000000万元",
-    moreHref: "/portal/chanxiao-duijie?cat=农资",
+    moreHref: "/portal/chanxiao-duijie/more/农资",
     subs: [
       { name: "BB肥",  totalQty: "100吨", totalAmt: "100万元" },
       { name: "复合肥", totalQty: "100吨", totalAmt: "100万元" },
@@ -107,11 +107,193 @@ const categories: Category[] = [
   },
 ]
 
+/* ─── 加入采购车弹窗 ─── */
+interface CartModalRow {
+  id: string
+  company: string
+  product: string
+  delivery: string
+}
+
+function AddToCartModal({ row, onClose }: { row: CartModalRow; onClose: () => void }) {
+  const [deliveryMethod, setDeliveryMethod] = useState<"卖家配送" | "买家自提">("卖家配送")
+  const [address, setAddress] = useState("")
+  const [settlement, setSettlement] = useState<"建行龙存管" | "工行安心付">("建行龙存管")
+  const [qty, setQty] = useState(0)
+  const [added, setAdded] = useState(false)
+
+  const handleAdd = () => {
+    setAdded(true)
+    setTimeout(() => onClose(), 800)
+  }
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
+      <div
+        className="bg-white rounded-lg w-[680px] max-h-[90vh] overflow-y-auto shadow-2xl"
+        onClick={e => e.stopPropagation()}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8edf5]">
+          <h3 className="text-[16px] font-bold text-[#1a1a2e]">快速加入购物车</h3>
+          <button onClick={onClose} className="text-[#999] hover:text-[#333] transition-colors">
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className="px-6 py-5 space-y-5">
+          {/* 商品基础信息 */}
+          <div>
+            <div className="text-[13px] text-[#6b7c93] mb-1">{row.company}</div>
+            <div className="flex items-center gap-3 mb-1">
+              <span className="text-[20px] font-bold text-[#1a1a2e]">{row.product}</span>
+              <span className="px-2.5 py-0.5 bg-[#e8831a] text-white text-[12px] rounded font-medium">询价</span>
+            </div>
+            <div className="text-[13px] text-[#999]">平台严选优质农产品</div>
+          </div>
+
+          {/* 配送方式 */}
+          <div className="flex items-center gap-4">
+            <span className="text-[13px] text-[#555] w-[72px] shrink-0">配送方式</span>
+            <div className="flex gap-2">
+              {(["卖家配送", "买家自提"] as const).map(m => (
+                <button
+                  key={m}
+                  onClick={() => setDeliveryMethod(m)}
+                  className={`px-4 py-1.5 rounded border text-[13px] transition-colors ${
+                    deliveryMethod === m
+                      ? "border-[#1a5fa8] bg-[#e8f4fd] text-[#1a5fa8] font-medium"
+                      : "border-[#dde3ec] text-[#555] hover:border-[#1a5fa8]/60"
+                  }`}
+                >
+                  {m}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 收货地址 */}
+          {deliveryMethod === "卖家配送" && (
+            <div className="flex items-center gap-4">
+              <span className="text-[13px] text-[#555] w-[72px] shrink-0">收货地址</span>
+              <div className="flex-1 flex gap-2">
+                <select
+                  value={address}
+                  onChange={e => setAddress(e.target.value)}
+                  className="flex-1 border border-[#dde3ec] rounded px-3 py-1.5 text-[13px] focus:outline-none focus:border-[#1a5fa8] text-[#999]"
+                >
+                  <option value="">请选择地址</option>
+                  <option value="a1">广州市天河区珠江新城花城大道88号</option>
+                  <option value="a2">广州市番禺区大石镇石岗路99号冷链仓储中心</option>
+                </select>
+                <button className="px-3 py-1.5 border border-[#1a5fa8] text-[#1a5fa8] text-[13px] rounded hover:bg-[#e8f4fd] transition-colors shrink-0">
+                  新增
+                </button>
+              </div>
+            </div>
+          )}
+
+          {/* 结算渠道 */}
+          <div className="flex items-center gap-4">
+            <span className="text-[13px] text-[#555] w-[72px] shrink-0">结算渠道</span>
+            <div className="flex gap-2">
+              {(["建行龙存管", "工行安心付"] as const).map(s => (
+                <button
+                  key={s}
+                  onClick={() => setSettlement(s)}
+                  className={`px-4 py-1.5 rounded border text-[13px] transition-colors ${
+                    settlement === s
+                      ? "border-[#1a5fa8] bg-[#e8f4fd] text-[#1a5fa8] font-medium"
+                      : "border-[#dde3ec] text-[#555] hover:border-[#1a5fa8]/60"
+                  }`}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* 结算方式 */}
+          <div className="flex items-center gap-4">
+            <span className="text-[13px] text-[#555] w-[72px] shrink-0">结算方式</span>
+            <span className="text-[13px] text-[#333]">全款全货</span>
+          </div>
+
+          {/* 交易方式 */}
+          <div className="flex items-center gap-4">
+            <span className="text-[13px] text-[#555] w-[72px] shrink-0">交易方式</span>
+            <button className="px-4 py-1.5 rounded border border-[#1a5fa8] bg-[#e8f4fd] text-[#1a5fa8] text-[13px] font-medium">
+              担保交易
+            </button>
+          </div>
+
+          {/* 规格明细 */}
+          <div className="border border-[#e8edf5] rounded overflow-hidden">
+            <table className="w-full">
+              <thead>
+                <tr className="bg-[#f5f7fa]">
+                  {["规格", "价格", "预估供应量", "起批量", "数量"].map(h => (
+                    <th key={h} className="px-4 py-2.5 text-left text-[12px] text-[#666] font-semibold">{h}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-t border-[#e8edf5]">
+                  <td className="px-4 py-3 text-[13px] text-[#333]">斤</td>
+                  <td className="px-4 py-3 text-[13px] text-[#333]">1.20元</td>
+                  <td className="px-4 py-3 text-[13px] text-[#333]">100 斤</td>
+                  <td className="px-4 py-3 text-[13px] text-[#333]">1 斤</td>
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-1.5">
+                      <button
+                        onClick={() => setQty(Math.max(0, qty - 1))}
+                        className="w-6 h-6 rounded border border-[#dde3ec] flex items-center justify-center hover:border-[#1a5fa8] transition-colors"
+                      >
+                        <Minus className="w-3 h-3 text-[#555]" />
+                      </button>
+                      <span className="w-10 text-center text-[13px] font-medium">{qty}</span>
+                      <button
+                        onClick={() => setQty(qty + 1)}
+                        className="w-6 h-6 rounded border border-[#dde3ec] flex items-center justify-center hover:border-[#1a5fa8] transition-colors"
+                      >
+                        <Plus className="w-3 h-3 text-[#555]" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className="flex items-center justify-end gap-3 px-6 py-4 border-t border-[#e8edf5]">
+          <button
+            onClick={onClose}
+            className="px-6 py-2 border border-[#dde3ec] text-[#555] text-[14px] rounded hover:border-[#999] transition-colors"
+          >
+            取消
+          </button>
+          <button
+            onClick={handleAdd}
+            disabled={added}
+            className="px-8 py-2 bg-[#1a5fa8] text-white text-[14px] font-semibold rounded hover:bg-[#0d4a8a] transition-colors disabled:opacity-70"
+          >
+            {added ? "已加入" : "加入购物车"}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ─── Sub-component: one category section ─── */
 function CategorySection({ cat }: { cat: Category }) {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [filter, setFilter] = useState<"全部" | "仅看采购信息" | "仅看供应信息">("全部")
   const [keyword, setKeyword] = useState("")
+  const [cartModalRow, setCartModalRow] = useState<CartModalRow | null>(null)
 
   const scroll = (dir: "left" | "right") => {
     if (!scrollRef.current) return
@@ -241,7 +423,12 @@ function CategorySection({ cat }: { cat: Category }) {
                         </Link>
                       ) : (
                         <>
-                          <Link href="/portal/cart" className="text-[#1a5fa8] hover:underline">加入采购车</Link>
+                          <button
+                            onClick={() => setCartModalRow({ id: row.id, company: row.company, product: row.product, delivery: row.delivery })}
+                            className="text-[#1a5fa8] hover:underline text-[12px]"
+                          >
+                            加入采购车
+                          </button>
                           <Link href={`/portal/checkout?id=${row.id}`} className="text-[#e8831a] hover:underline">
                             立即下单
                           </Link>
@@ -265,6 +452,11 @@ function CategorySection({ cat }: { cat: Category }) {
           更多{cat.name}产销信息 <ArrowRight className="w-4 h-4" />
         </Link>
       </div>
+
+      {/* 加入采购车弹窗 */}
+      {cartModalRow && (
+        <AddToCartModal row={cartModalRow} onClose={() => setCartModalRow(null)} />
+      )}
     </section>
   )
 }
