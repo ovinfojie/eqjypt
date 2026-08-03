@@ -7,20 +7,51 @@ import {
   LayoutDashboard, FileText, TrendingUp, ShoppingCart,
   Package, Users, Settings, ChevronRight, ArrowLeft,
   MessageSquare, ChevronDown, Handshake, Star, Gavel, Link2, ShieldCheck,
+  Building2, Layers, ClipboardList, FileSignature, Wallet, Gift, UserCircle,
 } from "lucide-react"
 import { useState } from "react"
 
 const menuGroups = [
+  {
+    label: "工作台",
+    items: [
+      { label: "工作台", href: "/merchant", icon: LayoutDashboard },
+    ],
+  },
+  {
+    label: "商品管理",
+    items: [
+      { label: "商品基础档案", href: "/merchant/product/archive", icon: Package },
+      { label: "新增商品",     href: "/merchant/product/add",     icon: Package },
+      { label: "库存管理",     href: "/merchant/product/stock",   icon: Layers },
+    ],
+  },
+  {
+    label: "交易订单",
+    items: [
+      { label: "我的采购订单", href: "/merchant/trade/caigou-orders",  icon: ShoppingCart },
+      { label: "我的销售订单", href: "/merchant/trade/xiaoshou-orders", icon: ClipboardList },
+      { label: "批次验收",     href: "/merchant/trade/batch-accept",   icon: ClipboardList },
+    ],
+  },
   {
     label: "供销严选",
     items: [
       {
         label: "供销严选", icon: Star,
         children: [
-          { label: "我的商品",   href: "/merchant/yanxuan/shangpin-list" },
-          { label: "发布商品",   href: "/merchant/yanxuan/fabu-shangpin" },
+          { label: "我的商品", href: "/merchant/yanxuan/shangpin-list" },
+          { label: "发布商品", href: "/merchant/yanxuan/fabu-shangpin" },
         ],
       },
+    ],
+  },
+  {
+    label: "集采专区",
+    items: [
+      { label: "集采活动",   href: "/merchant/jicai/huodong-list", icon: Layers },
+      { label: "发布集采",   href: "/merchant/jicai/fabu",         icon: ClipboardList },
+      { label: "集采统单",   href: "/merchant/jicai/tongdan",      icon: ClipboardList },
     ],
   },
   {
@@ -31,6 +62,8 @@ const menuGroups = [
         children: [
           { label: "我参与的竞拍", href: "/merchant/jingjia/wo-canjia" },
           { label: "我发布的竞拍", href: "/merchant/jingjia/wo-fabu" },
+          { label: "中标通知书",   href: "/merchant/jingjia/win-notice" },
+          { label: "保证金管理",   href: "/merchant/jingjia/deposit" },
         ],
       },
     ],
@@ -52,13 +85,14 @@ const menuGroups = [
           { label: "发布销售信息", href: "/merchant/chanxiao/fabu-xiaoshou" },
         ],
       },
+      { label: "订单管理", href: "/merchant/chanxiao/orders", icon: ClipboardList },
     ],
   },
   {
     label: "订单农业",
     items: [
-      { label: "订单种植需求", href: "/merchant/dingdan-nongye/xq-list", icon: FileText },
-      { label: "订单种植供应", href: "/merchant/dingdan-nongye/gy-list", icon: TrendingUp },
+      { label: "订单种植需求", href: "/merchant/dingdan-nongye/xq-list",   icon: FileText },
+      { label: "订单种植供应", href: "/merchant/dingdan-nongye/gy-list",   icon: TrendingUp },
       {
         label: "询报价管理", icon: MessageSquare,
         children: [
@@ -70,13 +104,19 @@ const menuGroups = [
     ],
   },
   {
+    label: "合同管理",
+    items: [
+      { label: "合同列表", href: "/merchant/contract/list", icon: FileSignature },
+    ],
+  },
+  {
     label: "全产业链服务",
     items: [
       {
         label: "全产业链服务", icon: Link2,
         children: [
-          { label: "我的服务",   href: "/merchant/quancyl/wo-de-fuwu" },
-          { label: "申请入驻",   href: "/merchant/quancyl/shenqing" },
+          { label: "我的服务", href: "/merchant/quancyl/wo-de-fuwu" },
+          { label: "申请入驻", href: "/merchant/quancyl/shenqing" },
         ],
       },
     ],
@@ -94,11 +134,38 @@ const menuGroups = [
     ],
   },
   {
-    label: "我的业务",
+    label: "财务管理",
     items: [
-      { label: "工作台",   href: "/merchant",          icon: LayoutDashboard },
-      { label: "企业信息", href: "/merchant/profile",  icon: Users },
-      { label: "账号设置", href: "/merchant/settings", icon: Settings },
+      { label: "结算与对账",   href: "/merchant/finance/settlement",     icon: Wallet },
+      { label: "发票申请管理", href: "/merchant/finance/invoice-apply",  icon: FileText },
+      { label: "发票抬头管理", href: "/merchant/finance/invoice-header", icon: FileText },
+    ],
+  },
+  {
+    label: "会员管理",
+    items: [
+      { label: "客户列表", href: "/merchant/member/list", icon: Users },
+    ],
+  },
+  {
+    label: "营销管理",
+    items: [
+      { label: "营销权益总览", href: "/merchant/marketing/overview", icon: Gift },
+      { label: "红包管理",     href: "/merchant/marketing/hongbao",  icon: Gift },
+      { label: "卡券管理",     href: "/merchant/marketing/coupon",   icon: Gift },
+      { label: "积分管理",     href: "/merchant/marketing/points",   icon: Gift },
+    ],
+  },
+  {
+    label: "企业与账号",
+    items: [
+      { label: "企业信息",   href: "/merchant/enterprise/info",  icon: Building2 },
+      { label: "员工管理",   href: "/merchant/enterprise/staff", icon: Users },
+      { label: "子商户管理", href: "/merchant/enterprise/sub",   icon: Users },
+      { label: "角色权限",   href: "/merchant/enterprise/roles", icon: Settings },
+      { label: "账号信息",   href: "/merchant/account/info",     icon: UserCircle },
+      { label: "签章认证",   href: "/merchant/account/seal-cert", icon: ShieldCheck },
+      { label: "商户设置",   href: "/merchant/settings",          icon: Settings },
     ],
   },
 ]
