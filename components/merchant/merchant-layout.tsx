@@ -100,7 +100,9 @@ const menuGroups = [
           { label: "我收到的", href: "/merchant/xunbaojia/wo-shoudaode" },
         ],
       },
-      { label: "提交订单", href: "/merchant/xiadan", icon: ShoppingCart },
+      { label: "提交订单",   href: "/merchant/xiadan",                               icon: ShoppingCart },
+      { label: "订单变更",   href: "/merchant/dingdan-nongye/change-confirm",        icon: FileSignature },
+      { label: "申请取消",   href: "/merchant/dingdan-nongye/cancel-apply",          icon: ClipboardList },
     ],
   },
   {
