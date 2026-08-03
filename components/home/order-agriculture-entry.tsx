@@ -6,25 +6,25 @@ const features = [
     icon: ClipboardList,
     title: "需求发布",
     desc: "采购方发布农产品采购需求，供应商在线响应报价",
-    href: "/dingdan-nongye/xuqiu",
+    href: "/portal/dingdan-nongye",
   },
   {
     icon: FileText,
     title: "订单签约",
     desc: "买卖双方在线签订采购合同，支持电子签章",
-    href: "/dingdan-nongye/hetong",
+    href: "/portal/dingdan-nongye",
   },
   {
     icon: Search,
     title: "履约追踪",
     desc: "全程可追溯，实时掌握订单执行情况",
-    href: "/dingdan-nongye/lvyue",
+    href: "/portal/dingdan-nongye",
   },
   {
     icon: BarChart2,
     title: "数据分析",
     desc: "多维度数据报表，助力决策优化",
-    href: "/dingdan-nongye/shuju",
+    href: "/portal/dingdan-nongye",
   },
 ]
 
@@ -52,7 +52,7 @@ export function OrderAgricultureEntry() {
           <h2 className="text-[18px] font-bold text-[#1a1a2e]">订单农业服务</h2>
           <span className="text-[13px] text-[#6b7c93] ml-2">产销精准对接，订单全程管理</span>
         </div>
-        <Link href="/dingdan-nongye" className="flex items-center gap-1 text-[13px] text-[#1a5fa8] hover:underline">
+        <Link href="/portal/dingdan-nongye" className="flex items-center gap-1 text-[13px] text-[#1a5fa8] hover:underline">
           进入订单农业 <ArrowRight className="w-3.5 h-3.5" />
         </Link>
       </div>
@@ -82,7 +82,7 @@ export function OrderAgricultureEntry() {
         <div className="col-span-2 bg-white border border-border rounded p-4">
           <div className="flex items-center justify-between mb-3">
             <h4 className="text-[14px] font-semibold text-[#1a1a2e]">最新订单动态</h4>
-            <Link href="/dingdan-nongye" className="text-[12px] text-[#1a5fa8] hover:underline">
+            <Link href="/portal/dingdan-nongye" className="text-[12px] text-[#1a5fa8] hover:underline">
               查看全部
             </Link>
           </div>

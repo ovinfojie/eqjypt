@@ -88,7 +88,7 @@ export function PriceIndexSection() {
           <h3 className="text-[16px] font-bold text-[#1a1a2e]">农产品价格指数走势</h3>
           <span className="text-[12px] text-[#6b7c93] ml-1">基准值 100</span>
         </div>
-        <a href="#" className="text-[13px] text-[#1a5fa8] hover:underline">
+        <a href="/portal/jiage-daping" className="text-[13px] text-[#1a5fa8] hover:underline">
           查看全部 →
         </a>
       </div>

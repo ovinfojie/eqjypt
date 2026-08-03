@@ -105,7 +105,7 @@ export default function JicaiPage() {
             <div className="flex items-center gap-1.5 text-[12px] text-[#6b7c93] mb-4">
               <a href="/" className="hover:text-[#1a5fa8] transition-colors">首页</a>
               <ChevronRight className="w-3 h-3" />
-              <a href="#" className="hover:text-[#1a5fa8] transition-colors">集采专区</a>
+              <Link href="/portal/jicai" className="hover:text-[#1a5fa8] transition-colors">集采专区</Link>
               <ChevronRight className="w-3 h-3" />
               <span className="text-[#1a1a2e]">广东供销农产品股份有限公司</span>
             </div>

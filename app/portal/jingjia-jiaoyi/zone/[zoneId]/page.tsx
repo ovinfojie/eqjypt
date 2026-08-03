@@ -344,7 +344,7 @@ export default function ZonePage() {
                     <span className="w-4 h-4 rounded flex items-center justify-center text-[9px] text-white font-bold" style={{ background: panel.color }}>公</span>
                     <span className="font-semibold text-[#1a1a2e] text-[14px]">{panel.title}</span>
                   </div>
-                  <Link href="#" className="text-[12px] text-[#1a5fa8] hover:underline">全部 →</Link>
+                  <Link href="/portal/jingjia-jiaoyi" className="text-[12px] text-[#1a5fa8] hover:underline">全部 →</Link>
                 </div>
                 <ul className="space-y-2">
                   {panel.items.map((item, i) => (

@@ -32,12 +32,12 @@ const slides = [
 ]
 
 const quickEntries = [
-  { icon: ShoppingCart, label: "采购专区", sub: "采购信息总览", href: "/caigou", color: "#1a5fa8" },
-  { icon: Tag, label: "销售专区", sub: "销售信息总览", href: "/xiaoshou", color: "#1a5fa8" },
-  { icon: Users, label: "集采专区", sub: "集采信息总览", href: "/jicai", color: "#1a5fa8" },
-  { icon: Gavel, label: "竞价中心", sub: "竞拍专场总览", href: "/jingjia", color: "#1a5fa8" },
-  { icon: Truck, label: "供应链服务", sub: "仓储 / 运输 / 加工", href: "/gongyinglian", color: "#1a5fa8" },
-  { icon: Sprout, label: "农业金融服务", sub: "实时行情 / 金融", href: "/jinrong", color: "#1a5fa8" },
+  { icon: ShoppingCart, label: "采购专区",   sub: "采购信息总览",       href: "/portal/caigou",           color: "#1a5fa8" },
+  { icon: Tag,          label: "销售专区",   sub: "销售信息总览",       href: "/portal/chanxiao-duijie",   color: "#1a5fa8" },
+  { icon: Users,        label: "集采专区",   sub: "集采信息总览",       href: "/portal/jicai",             color: "#1a5fa8" },
+  { icon: Gavel,        label: "竞价中心",   sub: "竞拍专场总览",       href: "/portal/jingjia-jiaoyi",    color: "#1a5fa8" },
+  { icon: Truck,        label: "供应链服务", sub: "仓储 / 运输 / 加工", href: "/portal/quanchanyilian",    color: "#1a5fa8" },
+  { icon: Sprout,       label: "农业金融服务", sub: "实时行情 / 金融",  href: "/portal/nongye-xinyong",    color: "#1a5fa8" },
 ]
 
 export function HeroSection() {
@@ -77,7 +77,7 @@ export function HeroSection() {
                 {slides[current].desc}
               </p>
               <Link
-                href="#"
+                href="/portal/kaifang-hezuo"
                 className="inline-flex items-center text-[14px] text-white/80 hover:text-white transition-colors"
               >
                 了解我们的使命 &gt;

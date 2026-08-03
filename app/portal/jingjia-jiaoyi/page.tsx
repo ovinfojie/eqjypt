@@ -313,7 +313,7 @@ export default function JingjiaJiaoyiPage() {
                     <span className="w-4 h-4 bg-[#e8831a] rounded flex items-center justify-center text-[9px] text-white">公</span>
                     竞拍公告
                   </div>
-                  <Link href="#" className="text-[11px] text-white/60 hover:text-white">全部 →</Link>
+                  <Link href="/portal/jingjia-jiaoyi" className="text-[11px] text-white/60 hover:text-white">全部 →</Link>
                 </div>
                 <ul className="space-y-1.5">
                   {NOTICES.map((n, i) => (
@@ -331,7 +331,7 @@ export default function JingjiaJiaoyiPage() {
                     <span className="w-4 h-4 bg-[#3a8c3f] rounded flex items-center justify-center text-[9px] text-white">示</span>
                     中标公示
                   </div>
-                  <Link href="#" className="text-[11px] text-white/60 hover:text-white">全部 →</Link>
+                  <Link href="/portal/jingjia-jiaoyi" className="text-[11px] text-white/60 hover:text-white">全部 →</Link>
                 </div>
                 <ul className="space-y-1.5">
                   {AWARDS.map((n, i) => (

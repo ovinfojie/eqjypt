@@ -101,7 +101,7 @@ export default function NongyeXinyongPage() {
             </p>
             <div className="flex items-center gap-3">
               <Link
-                href="/portal/nongye-xinyong/pinggu"
+                href="/portal/login"
                 className="px-6 py-2.5 bg-[#1a5fa8] text-white rounded text-[14px] font-medium hover:bg-[#1550a0] transition-colors"
               >
                 申请信用评估
@@ -211,7 +211,7 @@ export default function NongyeXinyongPage() {
                   ))}
                 </div>
                 <Link
-                  href="/portal/nongye-xinyong/pinggu"
+                  href="/portal/login"
                   className="mt-5 block w-full text-center py-2.5 bg-white text-[#1a5fa8] rounded-lg text-[14px] font-semibold hover:bg-white/90 transition-colors"
                 >
                   申请我的信用评估
@@ -326,13 +326,13 @@ export default function NongyeXinyongPage() {
           <p className="text-white/70 text-[14px] mb-6">已有 12,800+ 家农业经营主体通过信用评估，获得共计 86 亿元授信支持</p>
           <div className="flex items-center justify-center gap-4">
             <Link
-              href="/portal/nongye-xinyong/pinggu"
+              href="/portal/login"
               className="px-8 py-3 bg-white text-[#1a5fa8] rounded text-[15px] font-semibold hover:bg-white/90 transition-colors"
             >
               申请信用评估
             </Link>
             <Link
-              href="/portal/nongye-xinyong/products"
+              href="/portal/nongye-xinyong"
               className="px-8 py-3 bg-transparent text-white border border-white/50 rounded text-[15px] font-medium hover:bg-white/10 transition-colors"
             >
               查看全部产品

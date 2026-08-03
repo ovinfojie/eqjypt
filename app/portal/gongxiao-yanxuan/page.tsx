@@ -328,7 +328,7 @@ function RegionSection() {
 
       <div className="flex justify-center mt-5">
         <Link
-          href="/portal/gongxiao-yanxuan/regions"
+          href="/portal/gongxiao-yanxuan"
           className="px-8 py-2.5 bg-[#1a5fa8] text-white text-[14px] rounded hover:bg-[#0d4a8a] transition-colors flex items-center gap-1.5"
         >
           查看更多产地 <ArrowRight className="w-4 h-4" />
@@ -406,7 +406,7 @@ export default function GongxiaoYanxuanPage() {
               </div>
               <div className="flex justify-center">
                 <Link
-                  href="/portal/gongxiao-yanxuan/products"
+                  href="/portal/gongxiao-yanxuan/product"
                   className="px-8 py-2.5 bg-[#1a5fa8] text-white text-[14px] rounded hover:bg-[#0d4a8a] transition-colors flex items-center gap-1.5"
                 >
                   查看更多单品 <ArrowRight className="w-4 h-4" />
