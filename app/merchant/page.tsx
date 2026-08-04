@@ -51,8 +51,8 @@ export default function MerchantDashboard() {
       {/* 欢迎栏 */}
       <div className="bg-[#1a5fa8] rounded-xl px-6 py-5 flex items-center justify-between">
         <div>
-          <h1 className="text-white text-[18px] font-bold mb-0.5">欢迎回来，盒马超市采购部</h1>
-          <p className="text-white/70 text-[13px]">企业编号：no.122438 · 认证企业 · 高级会员</p>
+          <h1 className="text-white text-[18px] font-bold mb-0.5">欢迎回来，粤供销小店</h1>
+          <p className="text-white/70 text-[13px]">广州供销数字科技有限公司 · 认证企业 · 高级会员</p>
         </div>
         <div className="flex items-center gap-3">
           <Link href="/merchant/account/info" className="px-4 py-2 bg-white/20 hover:bg-white/30 text-white text-[13px] rounded-lg transition-colors">
@@ -129,7 +129,7 @@ export default function MerchantDashboard() {
         {/* 最近订单 */}
         <div className="col-span-1 bg-white rounded-xl border border-[#e8edf5] p-5">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-[14px] font-semibold text-[#1a1a2e]">最近订单</h2>
+            <h2 className="text-[14px] font-semibold text-[#1a1a2e]">���近订单</h2>
             <Link href="/merchant/trade/caigou-orders" className="text-[12px] text-[#1a5fa8] hover:underline flex items-center gap-0.5">
               查看全部 <ChevronRight className="w-3 h-3" />
             </Link>
