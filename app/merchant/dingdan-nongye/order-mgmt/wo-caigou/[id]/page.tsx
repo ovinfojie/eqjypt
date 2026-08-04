@@ -225,7 +225,7 @@ export default function WoCaigouDetailPage() {
                 <div>
                   <h4 className="text-[13px] font-bold text-[#1a1a2e] border-l-4 border-[#1a5fa8] pl-3 mb-3">订单明细</h4>
                   <div className="grid grid-cols-3 gap-x-8 gap-y-4 text-[13px]">
-                    {[["买方","广东新供销天润粮油集团有限公司"],["商家","南雄市社村合作农业发展有限公司\n(南雄市社村合作农业发展有限公司)"],["供应商","——"],["买方联系人信息","王汉  18978907891"],["商家联系人信息","张悦  15527522832"],["供应商联系人信息","王鹏  15527522832"],["收货计划","2026-06-11 00:00:00 至 2026-06-12 23:59:59"],["配送方式","卖家配送"],["收货人信息","广东省广州市越秀区大东��道荣园东路78号\n陈先生  17878907890"],["定价方式","固定价"],["交易模式","担保交易"],["结算方式","预付款"],["支付渠道","工行安���付"],["买方订单备注","无"]].map(([k,v])=>(
+                    {[["买方","广东新供销天润粮油集团有限公司"],["商家","南雄市社村合作农业发展有限公司\n(南雄市社村合作农业发展有限公司)"],["供应商","——"],["买方联系人信息","王汉  18978907891"],["商家联系人信息","张悦  15527522832"],["供应商联系人���息","王鹏  15527522832"],["收货计划","2026-06-11 00:00:00 至 2026-06-12 23:59:59"],["配送方式","卖家配送"],["收货人信息","广东省广州市越秀区大东��道荣园东路78号\n陈先生  17878907890"],["定价方式","固定价"],["交易模式","担保交易"],["结算方式","预付款"],["支付渠道","工行安���付"],["买方订单备注","无"]].map(([k,v])=>(
                       <div key={k}><div className="text-[#999] mb-0.5">{k}</div><div className="text-[#333] whitespace-pre-line">{v}</div></div>
                     ))}
                   </div>
@@ -243,7 +243,7 @@ export default function WoCaigouDetailPage() {
                       <div className="w-9 h-9 bg-[#e8f4fd] rounded-lg flex items-center justify-center"><FileText className="w-5 h-5 text-[#1a5fa8]" /></div>
                       <div><div className="text-[13px] font-medium">2026年粮食采购合同</div><div className="text-[12px] text-[#999]">HT-2026-06001</div></div>
                     </div>
-                    <button className="px-4 py-1.5 bg-[#1a5fa8] text-white text-[13px] rounded hover:bg-[#0d4a8a]">查看合同</button>
+                    <Link href="/merchant/dingdan-nongye/contract-view" className="px-4 py-1.5 bg-[#1a5fa8] text-white text-[13px] rounded hover:bg-[#0d4a8a]">查看合同</Link>
                   </div>
                   <div className="grid grid-cols-2 gap-3">
                     {[["甲方（买方）","广东新供销天润粮油集团有限公司","待处理"],["乙方（卖方）","南雄市社村合作农业发展有限公司","已签章"]].map(([side,name,status])=>(

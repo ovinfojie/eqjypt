@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Search, Download, X, Upload, FileText, CheckSquare } from "lucide-react"
+import { Search, Download, X, Upload, FileText } from "lucide-react"
 
 /* ─── 模拟数据 ─── */
 const ORDERS = [
@@ -11,39 +11,158 @@ const ORDERS = [
   { id: "2434059405460958", time: "2026-04-20 22:05:48", product: "大豆", spec: "吨", amount: 27000, deposit: 270, source: "订单农业服务", seller: "佛山市社村合作农业发展有限公司（粮油业务部）", receiver: "张翰", phone: "1234567898", address: "广东省肇庆市云顶花园83号", delivery: "卖家配送", planTime: "2026-04-23 00:00:00 至 2026-04-25 23:59:59", settlement: "工行安心付", status: "待发货", action: "终止发货" },
   { id: "2434059405460959", time: "2026-04-20 22:05:48", product: "小麦", spec: "吨", amount: 6000, deposit: 600, source: "订单农业服务", seller: "湛江市社村合作农业发展有限公司（粮油业务部）", receiver: "张含", phone: "13453679768", address: "广州市越秀区荣园东路79号", delivery: "卖家配送", planTime: "2026-04-23 00:00:00 至 2026-04-25 23:59:59", settlement: "工行安心付", status: "待收货", action: "验收" },
   { id: "2434059405460960", time: "2026-04-20 22:05:48", product: "象牙香占", spec: "吨", amount: 7000, deposit: 700, source: "订单农业服务", seller: "汕尾市社村合作农业发展有限公司（粮油业务部）", receiver: "张启明", phone: "13457379768", address: "广州市越秀区荣园东路66号", delivery: "卖家配送", planTime: "2026-04-23 00:00:00 至 2026-04-25 23:59:59", settlement: "工行安心付", status: "待结算", action: "查看对账单" },
-  { id: "2434059405460961", time: "2026-04-20 22:05:48", product: "象牙香占", spec: "吨", amount: 7000, deposit: 700, source: "订单农业服务", seller: "四会市社村合作农业发展有限公司（粮油业务部）", receiver: "张明明", phone: "13457379768", address: "广州市越秀区荣园东路66号", delivery: "卖家配送", planTime: "2026-04-23 00:00:00 至 2026-04-25 23:59:59", settlement: "工行安心付", status: "生产履约", action: "查看履约情况" },
 ]
 
 const STATUS_TABS = ["全部", "待卖方确认", "待付预付款", "待发货", "待收货", "待结算", "已完成", "已关闭"]
 
-/* ─── 种植发货弹窗（仅采购侧查看发货状态） ─── */
-function ShippingViewModal({ onClose }: { onClose: () => void }) {
+/* ─── 终止发货申请弹窗（填写理由 + 上传附件） ─── */
+function TerminateShippingModal({ onClose }: { onClose: () => void }) {
+  const [reason, setReason] = useState("")
+  const [files, setFiles] = useState<string[]>([])
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
-      <div className="bg-white rounded-lg w-[560px] shadow-2xl" onClick={e => e.stopPropagation()}>
+      <div className="bg-white rounded-lg w-[520px] shadow-2xl" onClick={e => e.stopPropagation()}>
         <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8edf5]">
-          <h3 className="text-[15px] font-bold text-[#1a1a2e]">发货信息</h3>
+          <h3 className="text-[15px] font-bold text-[#1a1a2e]">终止发货申请</h3>
           <button onClick={onClose}><X className="w-5 h-5 text-[#999]" /></button>
         </div>
         <div className="px-6 py-5 space-y-4">
-          <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-[13px]">
-            {[["物流公司","天业冷链物流"],["物流单号","WL598760431760"],["发货时间","2026-07-08 10:40:45"],["发货数量","2.00吨"],["发货人","张悦"],["发货人电话","15527522832"],["发货地址","广东省南雄市珠玑镇下冯村委会赤珠塘村879号"],["收货地址","广州市越秀区大东街道荣园东路78号"]].map(([k,v]) => (
-              <div key={k}>
-                <div className="text-[#999] mb-0.5">{k}</div>
-                <div className="text-[#333] font-medium">{v}</div>
-              </div>
-            ))}
+          <div className="bg-[#fff8e6] border border-[#f5d78e] rounded px-4 py-3 text-[13px] text-[#8a6a00]">
+            终止发货为申请操作，提交后需等待卖方及平台确认，确认通过后订单将终止后续发货流程。
           </div>
           <div>
-            <div className="text-[#999] text-[13px] mb-1.5">发货凭证</div>
-            <div className="flex items-center gap-2 px-3 py-2 bg-[#f5f7fa] rounded border border-[#e8edf5] text-[13px] text-[#1a5fa8]">
-              <FileText className="w-4 h-4" />
-              发货凭证.pdf
-            </div>
+            <label className="block text-[13px] font-medium text-[#333] mb-1.5">终止理由 <span className="text-red-500">*</span></label>
+            <textarea value={reason} onChange={e => setReason(e.target.value)} rows={4} maxLength={200}
+              className="w-full border border-[#dde3ec] rounded px-3 py-2 text-[13px] resize-none focus:outline-none focus:border-[#1a5fa8]"
+              placeholder="请填写终止发货的具体理由" />
+            <div className="text-right text-[12px] text-[#999]">{reason.length}/200</div>
+          </div>
+          <div>
+            <label className="block text-[13px] font-medium text-[#333] mb-1.5">上传附件</label>
+            <label className="flex items-center gap-2 px-4 py-4 border-2 border-dashed border-[#dde3ec] rounded-lg cursor-pointer hover:border-[#1a5fa8] hover:bg-[#f8faff] transition-all">
+              <Upload className="w-4 h-4 text-[#aaa]" />
+              <span className="text-[12px] text-[#999]">支持 png/jpg/pdf/word/excel 文件，不超过 100M</span>
+              <input type="file" className="hidden" multiple
+                onChange={e => setFiles(Array.from(e.target.files ?? []).map(f => f.name))} />
+            </label>
+            {files.length > 0 && (
+              <div className="mt-2 space-y-1">
+                {files.map((f, i) => (
+                  <div key={i} className="flex items-center gap-2 px-3 py-1.5 bg-[#f5f7fa] rounded text-[12px] text-[#1a5fa8]">
+                    <FileText className="w-3.5 h-3.5" />{f}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
-        <div className="flex justify-end px-6 py-4 border-t border-[#e8edf5]">
-          <button onClick={onClose} className="px-6 py-2 bg-[#1a5fa8] text-white text-[13px] rounded hover:bg-[#0d4a8a]">关闭</button>
+        <div className="flex justify-end gap-3 px-6 py-4 border-t border-[#e8edf5]">
+          <button onClick={onClose} className="px-5 py-2 border border-[#dde3ec] text-[#555] text-[13px] rounded hover:border-[#999]">取消</button>
+          <button disabled={!reason.trim()} onClick={onClose}
+            className={`px-6 py-2 text-white text-[13px] font-semibold rounded ${reason.trim() ? "bg-[#e04040] hover:bg-[#c03030]" : "bg-[#e0a0a0] cursor-not-allowed"}`}>提交申请</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ─── 批次验收弹窗（按图2样式） ─── */
+const ACCEPT_ROWS = [
+  { inNo: "IN20260720-01", plate: "粤A12345", grade: "一等粮", price: "1000.00", qty: "1吨", total: "1000.00" },
+  { inNo: "IN20260720-02", plate: "粤B67890", grade: "一等粮", price: "1000.00", qty: "1吨", total: "1000.00" },
+  { inNo: "IN20260720-03", plate: "粤B67840", grade: "一等粮", price: "1000.00", qty: "0.5吨", total: "500.00" },
+  { inNo: "IN20260720-04", plate: "粤B67790", grade: "二等粮", price: "900.00", qty: "0.5吨", total: "450.00" },
+]
+function BatchAcceptModal({ onClose }: { onClose: () => void }) {
+  const [checked, setChecked] = useState<Set<number>>(new Set())
+  const [reject, setReject] = useState<"yes" | "no" | "">("")
+  const allChecked = checked.size === ACCEPT_ROWS.length
+  const toggleAll = () => setChecked(allChecked ? new Set() : new Set(ACCEPT_ROWS.map((_, i) => i)))
+  const toggle = (i: number) => {
+    const next = new Set(checked)
+    next.has(i) ? next.delete(i) : next.add(i)
+    setChecked(next)
+  }
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
+      <div className="bg-white rounded-lg w-[900px] max-h-[90vh] overflow-y-auto shadow-2xl" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8edf5]">
+          <h3 className="text-[18px] font-bold text-[#1a1a2e]">批次验收</h3>
+          <button onClick={onClose}><X className="w-5 h-5 text-[#999]" /></button>
+        </div>
+        <div className="px-6 py-5">
+          <div className="flex items-center justify-between mb-4">
+            <div className="flex gap-8 text-[13px] text-[#666]">
+              <span>批次单编号：<span className="text-[#333]">PB489238696064</span></span>
+              <span>交易订单编号：<span className="text-[#333]">YFK495341494400</span></span>
+            </div>
+            <select className="border border-[#dde3ec] rounded px-3 py-1.5 text-[13px] text-[#333] focus:outline-none focus:border-[#1a5fa8]">
+              <option>按单价和总价验收</option>
+              <option>按总价验收</option>
+            </select>
+          </div>
+          <h4 className="text-[14px] font-bold text-[#1a5fa8] border-l-4 border-[#1a5fa8] pl-2 mb-3">验收信息</h4>
+          <table className="w-full text-[13px] border border-[#e8edf5] mb-3">
+            <thead className="bg-[#f5f7fa]">
+              <tr>
+                <th className="px-3 py-2.5 text-left font-semibold text-[#666]">
+                  <label className="flex items-center gap-1.5 cursor-pointer">
+                    <input type="checkbox" checked={allChecked} onChange={toggleAll} className="accent-[#1a5fa8]" />全选
+                  </label>
+                </th>
+                {["入库单号", "车牌号", "质检等级", "验收单价(单位)", "验收数量(单位)", "验收总价(元)"].map(h => (
+                  <th key={h} className="px-3 py-2.5 text-left font-semibold text-[#666]">{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {ACCEPT_ROWS.map((r, i) => (
+                <tr key={r.inNo} className="border-t border-[#e8edf5]">
+                  <td className="px-3 py-3"><input type="checkbox" checked={checked.has(i)} onChange={() => toggle(i)} className="accent-[#1a5fa8]" /></td>
+                  <td className="px-3 py-3 text-[#333]">{r.inNo}</td>
+                  <td className="px-3 py-3 text-[#333]">{r.plate}</td>
+                  <td className="px-3 py-3 text-[#333]">{r.grade}</td>
+                  <td className="px-3 py-3">
+                    <div className="flex items-center gap-1">
+                      <input defaultValue={r.price} className="w-20 border border-[#dde3ec] rounded px-2 py-1 text-[13px] text-center focus:outline-none focus:border-[#1a5fa8]" />
+                      <span className="text-[12px] text-[#999]">元/吨</span>
+                    </div>
+                  </td>
+                  <td className="px-3 py-3 text-[#333]">{r.qty}</td>
+                  <td className="px-3 py-3"><input defaultValue={r.total} className="w-24 border border-[#dde3ec] rounded px-2 py-1 text-[13px] text-center focus:outline-none focus:border-[#1a5fa8]" /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <div className="text-right text-[13px] mb-5">
+            本次验收数量合计：<span className="text-[#e04040] font-semibold">3吨</span>　验收金额合计：<span className="text-[#e04040] font-semibold">¥2950.00</span>
+          </div>
+          <div className="flex items-start gap-4 mb-4">
+            <label className="text-[13px] text-[#555] w-[72px] shrink-0 pt-1">上传凭证</label>
+            <div>
+              <label className="inline-flex items-center gap-2 px-4 py-2 border border-[#dde3ec] rounded cursor-pointer hover:border-[#1a5fa8] text-[13px] text-[#555]">
+                <Upload className="w-4 h-4" />上传附件
+                <input type="file" className="hidden" multiple />
+              </label>
+              <span className="ml-3 text-[12px] text-[#999]">支持png/jpg/pdf/word/excel文件等，不超过100M</span>
+            </div>
+          </div>
+          <div className="flex items-start gap-4 mb-4">
+            <label className="text-[13px] text-[#555] w-[72px] shrink-0 pt-1">验收备注</label>
+            <textarea rows={3} placeholder="请输入" className="flex-1 border border-[#dde3ec] rounded px-3 py-2 text-[13px] resize-none focus:outline-none focus:border-[#1a5fa8]" />
+          </div>
+          <div className="flex items-center gap-6 mb-2">
+            <label className="text-[13px] text-[#555]">是否拒收本批次：</label>
+            {[["yes", "是"], ["no", "否"]].map(([v, l]) => (
+              <label key={v} className="flex items-center gap-1.5 text-[13px] text-[#444] cursor-pointer">
+                <input type="radio" name="reject_batch" checked={reject === v} onChange={() => setReject(v as "yes" | "no")} className="accent-[#1a5fa8]" />{l}
+              </label>
+            ))}
+          </div>
+        </div>
+        <div className="flex justify-center gap-4 px-6 py-5 border-t border-[#e8edf5]">
+          <button onClick={onClose} className="px-10 py-2.5 border border-[#dde3ec] text-[#555] text-[14px] rounded hover:border-[#999]">取消</button>
+          <button onClick={onClose} className="px-10 py-2.5 bg-[#1a5fa8] text-white text-[14px] font-semibold rounded hover:bg-[#0d4a8a]">确认验收</button>
         </div>
       </div>
     </div>
@@ -203,7 +322,7 @@ function ContractModal({ onClose }: { onClose: () => void }) {
                     <select className="flex-1 border border-[#dde3ec] rounded px-3 py-2 text-[13px] focus:outline-none focus:border-[#1a5fa8] text-[#999]">
                       <option value="">请选择</option>
                       <option>2026年粮食采购合同模板</option>
-                      <option>农产品购销合同���板</option>
+                      <option>农产品购销合同�����板</option>
                     </select>
                     <button className="px-3 py-2 border border-[#1a5fa8] text-[#1a5fa8] text-[13px] rounded hover:bg-[#e8f4fd]">新增</button>
                   </div>
@@ -282,58 +401,6 @@ function ContractModal({ onClose }: { onClose: () => void }) {
         <div className="flex justify-end gap-3 px-6 py-4 border-t border-[#e8edf5]">
           <button onClick={onClose} className="px-5 py-2 border border-[#dde3ec] text-[#555] text-[13px] rounded hover:border-[#999]">取消</button>
           <button className="px-6 py-2 bg-[#1a5fa8] text-white text-[13px] font-semibold rounded hover:bg-[#0d4a8a]">确定</button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-/* ─── 订单变更弹窗 ─── */
-function OrderChangeModal({ onClose }: { onClose: () => void }) {
-  const [reason, setReason] = useState("")
-  const [qty, setQty] = useState("")
-  const [price, setPrice] = useState("")
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
-      <div className="bg-white rounded-lg w-[520px] shadow-2xl" onClick={e => e.stopPropagation()}>
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8edf5]">
-          <h3 className="text-[15px] font-bold text-[#1a1a2e]">订单变更</h3>
-          <button onClick={onClose}><X className="w-5 h-5 text-[#999]" /></button>
-        </div>
-        <div className="px-6 py-5 space-y-4">
-          <div className="bg-[#f5f7fa] rounded p-3 text-[13px] space-y-1">
-            <div className="flex gap-4"><span className="text-[#999] w-[72px]">订单编号</span><span className="text-[#333]">2434059405460958</span></div>
-            <div className="flex gap-4"><span className="text-[#999] w-[72px]">商品</span><span className="text-[#333]">大豆（吨）</span></div>
-            <div className="flex gap-4"><span className="text-[#999] w-[72px]">当前数量</span><span className="text-[#333]">27000吨</span></div>
-          </div>
-          <div>
-            <label className="block text-[13px] font-medium text-[#333] mb-1.5">变更原因 <span className="text-red-500">*</span></label>
-            <div className="space-y-2">
-              {["数量变更", "价格调整", "交货时间变更", "其他原因"].map(r => (
-                <label key={r} className="flex items-center gap-2 text-[13px] text-[#444] cursor-pointer">
-                  <input type="radio" name="change_reason" value={r} onChange={() => setReason(r)} className="accent-[#1a5fa8]" />{r}
-                </label>
-              ))}
-            </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="block text-[13px] font-medium text-[#333] mb-1.5">变更后数量</label>
-              <input value={qty} onChange={e => setQty(e.target.value)} className="w-full border border-[#dde3ec] rounded px-3 py-1.5 text-[13px] focus:outline-none focus:border-[#1a5fa8]" placeholder="请输入（吨）" />
-            </div>
-            <div>
-              <label className="block text-[13px] font-medium text-[#333] mb-1.5">变更后单价</label>
-              <input value={price} onChange={e => setPrice(e.target.value)} className="w-full border border-[#dde3ec] rounded px-3 py-1.5 text-[13px] focus:outline-none focus:border-[#1a5fa8]" placeholder="请输入（元/吨）" />
-            </div>
-          </div>
-          <div>
-            <label className="block text-[13px] font-medium text-[#333] mb-1.5">补充说明</label>
-            <textarea rows={3} className="w-full border border-[#dde3ec] rounded px-3 py-2 text-[13px] resize-none focus:outline-none focus:border-[#1a5fa8]" placeholder="请输入补充说明（选填）" />
-          </div>
-        </div>
-        <div className="flex justify-end gap-3 px-6 py-4 border-t border-[#e8edf5]">
-          <button onClick={onClose} className="px-5 py-2 border border-[#dde3ec] text-[#555] text-[13px] rounded hover:border-[#999]">取消</button>
-          <button className="px-6 py-2 bg-[#1a5fa8] text-white text-[13px] font-semibold rounded hover:bg-[#0d4a8a]">提交变更</button>
         </div>
       </div>
     </div>
@@ -605,6 +672,108 @@ function BatchDetailDrawerInline({ onClose }: { onClose: () => void }) {
   )
 }
 
+/* ──────────────────────────────────────────────
+   对账记录列表
+   ────────────────────────────────────────────── */
+const RECONCILE_RECORDS = [
+  { no: "CSOA462125430374", orderNo: "PO637075481616", batchNo: "PB457559072784", product: "丝苗米", seller: "南雄市社村合作农业发展有限公司", acceptQty: "2.00吨", acceptAmt: "6000.00", prepaid: "3000.00", balance: "3000.00", settlement: "工行安心付", time: "2026-08-03 22:52:20", status: "待买家确认" },
+  { no: "CSOA462125430375", orderNo: "PO637075481617", batchNo: "PB457559072785", product: "象牙香占", seller: "汕尾市社村合作农业发展有限公司", acceptQty: "5.00吨", acceptAmt: "35000.00", prepaid: "700.00", balance: "34300.00", settlement: "建行龙存管", time: "2026-08-01 10:12:30", status: "已确认" },
+  { no: "CSOA462125430376", orderNo: "PO637075481618", batchNo: "PB457559072786", product: "大豆", seller: "佛山市社村合作农业发展有限公司", acceptQty: "8.00吨", acceptAmt: "21600.00", prepaid: "270.00", balance: "21330.00", settlement: "工行安心付", time: "2026-07-28 16:40:05", status: "待卖家发起" },
+]
+const RECONCILE_STATUS: Record<string, string> = { "待买家确认": "text-[#e8831a]", "已确认": "text-[#16a34a]", "待卖家发起": "text-[#1a5fa8]" }
+
+function ReconcileRecordList() {
+  return (
+    <div className="bg-white rounded-lg border border-[#e8edf5] overflow-hidden">
+      <div className="px-4 py-3 border-b border-[#e8edf5] flex items-center gap-3">
+        <div className="flex items-center gap-2 border border-[#e8edf5] rounded px-3 py-1.5 w-[260px]">
+          <Search className="w-3.5 h-3.5 text-[#aaa]" />
+          <input placeholder="搜索对账单号/订单号/卖方" className="flex-1 text-[13px] outline-none placeholder:text-[#aaa]" />
+        </div>
+        <button className="px-4 py-1.5 border border-[#dde3ec] text-[#555] text-[13px] rounded hover:border-[#999] flex items-center gap-1.5 ml-auto"><Download className="w-3.5 h-3.5" />导出</button>
+      </div>
+      <table className="w-full text-[12px]">
+        <thead className="bg-[#f5f7fa] border-b border-[#e8edf5]">
+          <tr>{["对账单号", "关联订单", "批次单号", "商品", "卖方", "已验收数量", "已验收金额(元)", "预付款(元)", "待结算尾款(元)", "结算渠道", "对账时间", "状态", "操作"].map(h => <th key={h} className="px-3 py-2.5 text-left font-semibold text-[#666] whitespace-nowrap">{h}</th>)}</tr>
+        </thead>
+        <tbody>
+          {RECONCILE_RECORDS.map(r => (
+            <tr key={r.no} className="border-b border-[#e8edf5] last:border-0 hover:bg-[#fafbfc]">
+              <td className="px-3 py-3 text-[#1a5fa8] font-medium">{r.no}</td>
+              <td className="px-3 py-3 text-[#1a5fa8]">{r.orderNo}</td>
+              <td className="px-3 py-3 text-[#666]">{r.batchNo}</td>
+              <td className="px-3 py-3 text-[#1a1a2e] font-medium">{r.product}</td>
+              <td className="px-3 py-3 text-[#666]">{r.seller}</td>
+              <td className="px-3 py-3 text-[#333]">{r.acceptQty}</td>
+              <td className="px-3 py-3 text-[#333]">¥{r.acceptAmt}</td>
+              <td className="px-3 py-3 text-[#333]">¥{r.prepaid}</td>
+              <td className="px-3 py-3 text-[#e8831a] font-medium">¥{r.balance}</td>
+              <td className="px-3 py-3 text-[#666]">{r.settlement}</td>
+              <td className="px-3 py-3 text-[#999]">{r.time}</td>
+              <td className="px-3 py-3"><span className={`font-medium ${RECONCILE_STATUS[r.status] ?? "text-[#666]"}`}>{r.status}</span></td>
+              <td className="px-3 py-3"><button className="text-[#1a5fa8] hover:underline">查看对账单</button></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="flex items-center justify-between px-4 py-3 border-t border-[#e8edf5]">
+        <span className="text-[13px] text-[#999]">共 {RECONCILE_RECORDS.length} 条记录</span>
+        <button className="w-7 h-7 rounded text-[13px] bg-[#1a5fa8] text-white">1</button>
+      </div>
+    </div>
+  )
+}
+
+/* ──────────────────────────────────────────────
+   结算记录列表
+   ────────────────────────────────────────────── */
+const SETTLEMENT_RECORDS = [
+  { no: "SO491851817104", orderNo: "PO637075481616", reconcileNo: "CSOA462125430374", product: "丝苗米", seller: "南雄市社村合作农业发展有限公司", amount: "6000.00", type: "尾款结算", channel: "工行安心付", payTime: "2026-08-03 22:53:42", status: "已结算" },
+  { no: "SO491851817105", orderNo: "PO637075481617", reconcileNo: "CSOA462125430375", product: "象牙香占", seller: "汕尾市社村合作农业发展有限公司", amount: "35000.00", type: "尾款结算", channel: "建行龙存管", payTime: "2026-08-01 11:05:18", status: "已结算" },
+  { no: "SO491851817106", orderNo: "PO637075481618", reconcileNo: "CSOA462125430376", product: "大豆", seller: "佛山市社村合作农业发展有限公司", amount: "21600.00", type: "预付款", channel: "工行安心付", payTime: "", status: "待付款" },
+]
+const SETTLEMENT_STATUS: Record<string, string> = { "已结算": "text-[#16a34a]", "待付款": "text-[#e8831a]" }
+
+function SettlementRecordList() {
+  return (
+    <div className="bg-white rounded-lg border border-[#e8edf5] overflow-hidden">
+      <div className="px-4 py-3 border-b border-[#e8edf5] flex items-center gap-3">
+        <div className="flex items-center gap-2 border border-[#e8edf5] rounded px-3 py-1.5 w-[260px]">
+          <Search className="w-3.5 h-3.5 text-[#aaa]" />
+          <input placeholder="搜索结算单号/订单号/卖方" className="flex-1 text-[13px] outline-none placeholder:text-[#aaa]" />
+        </div>
+        <button className="px-4 py-1.5 border border-[#dde3ec] text-[#555] text-[13px] rounded hover:border-[#999] flex items-center gap-1.5 ml-auto"><Download className="w-3.5 h-3.5" />导出</button>
+      </div>
+      <table className="w-full text-[12px]">
+        <thead className="bg-[#f5f7fa] border-b border-[#e8edf5]">
+          <tr>{["结算单号", "关联订单", "对账单号", "商品", "卖方", "结算金额(元)", "结算类型", "结算渠道", "支付时间", "状态", "操作"].map(h => <th key={h} className="px-3 py-2.5 text-left font-semibold text-[#666] whitespace-nowrap">{h}</th>)}</tr>
+        </thead>
+        <tbody>
+          {SETTLEMENT_RECORDS.map(r => (
+            <tr key={r.no} className="border-b border-[#e8edf5] last:border-0 hover:bg-[#fafbfc]">
+              <td className="px-3 py-3 text-[#1a5fa8] font-medium">{r.no}</td>
+              <td className="px-3 py-3 text-[#1a5fa8]">{r.orderNo}</td>
+              <td className="px-3 py-3 text-[#666]">{r.reconcileNo}</td>
+              <td className="px-3 py-3 text-[#1a1a2e] font-medium">{r.product}</td>
+              <td className="px-3 py-3 text-[#666]">{r.seller}</td>
+              <td className="px-3 py-3 text-[#1a1a2e] font-medium">¥{r.amount}</td>
+              <td className="px-3 py-3 text-[#666]">{r.type}</td>
+              <td className="px-3 py-3 text-[#666]">{r.channel}</td>
+              <td className="px-3 py-3 text-[#999]">{r.payTime || "-"}</td>
+              <td className="px-3 py-3"><span className={`font-medium ${SETTLEMENT_STATUS[r.status] ?? "text-[#666]"}`}>{r.status}</span></td>
+              <td className="px-3 py-3"><button className="text-[#1a5fa8] hover:underline">查看结算单</button></td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <div className="flex items-center justify-between px-4 py-3 border-t border-[#e8edf5]">
+        <span className="text-[13px] text-[#999]">共 {SETTLEMENT_RECORDS.length} 条记录</span>
+        <button className="w-7 h-7 rounded text-[13px] bg-[#1a5fa8] text-white">1</button>
+      </div>
+    </div>
+  )
+}
+
 /* ─── 主页面 ─── */
 const MAIN_TABS = ["商品订单", "批次单", "对账记录", "结算记录"] as const
 type MainTab = typeof MAIN_TABS[number]
@@ -612,27 +781,25 @@ type MainTab = typeof MAIN_TABS[number]
 export default function WoCaigouPage() {
   const [mainTab, setMainTab] = useState<MainTab>("商品订单")
   const [activeTab, setActiveTab] = useState("全部")
-  const [shippingModal, setShippingModal] = useState(false)
+  const [terminateModal, setTerminateModal] = useState(false)
+  const [acceptModal, setAcceptModal] = useState(false)
   const [reconcileModal, setReconcileModal] = useState(false)
   const [contractModal, setContractModal] = useState(false)
-  const [changeModal, setChangeModal] = useState(false)
   const [applyCancelModal, setApplyCancelModal] = useState(false)
 
   // 主操作按钮（按状态显示）
   const getMainBtn = (order: typeof ORDERS[0]) => {
     const map: Record<string, { label: string; color: string; onClick: () => void }> = {
       "付预付款":     { label: "付预付款",     color: "text-[#e8831a]", onClick: () => {}                      },
-      "终止发货":     { label: "终止发货",     color: "text-[#e04040]", onClick: () => setShippingModal(true)  },
-      "验收":         { label: "验收",         color: "text-[#1a5fa8]", onClick: () => {}                      },
+      "终止发货":     { label: "终止发货",     color: "text-[#e04040]", onClick: () => setTerminateModal(true) },
+      "验收":         { label: "验收",         color: "text-[#1a5fa8]", onClick: () => setAcceptModal(true)    },
       "查看对账单":   { label: "查看对账单",   color: "text-[#1a5fa8]", onClick: () => setReconcileModal(true) },
-      "查看履约情况": { label: "查看履约情况", color: "text-[#1a5fa8]", onClick: () => {}                      },
     }
     return map[order.action] ?? null
   }
 
-  // 哪些状态允许"订单变更"和"申请取消"
-  const CHANGEABLE_STATUSES  = new Set(["待卖方确认", "待付预付款", "待发货", "生产履约"])
-  const CANCELABLE_STATUSES  = new Set(["待卖方确认", "待付预付款", "待发货", "生产履约"])
+  // 哪些状态允许"申请取消"
+  const CANCELABLE_STATUSES  = new Set(["待卖方确认", "待付预付款", "待发货"])
 
   return (
     <div>
@@ -653,12 +820,8 @@ export default function WoCaigouPage() {
       </div>
 
       {mainTab === "批次单" && <BatchDanList />}
-      {mainTab === "对账记录" && (
-        <div className="bg-white rounded-lg border border-[#e8edf5] py-16 text-center text-[14px] text-[#999]">对账记录功能建设中</div>
-      )}
-      {mainTab === "结算记录" && (
-        <div className="bg-white rounded-lg border border-[#e8edf5] py-16 text-center text-[14px] text-[#999]">结算记录功能建设中</div>
-      )}
+      {mainTab === "对账记录" && <ReconcileRecordList />}
+      {mainTab === "结算记录" && <SettlementRecordList />}
       {mainTab === "商品订单" && <>
 
       {/* 搜索栏 */}
@@ -725,7 +888,6 @@ export default function WoCaigouPage() {
         {/* 订单列表 */}
         {ORDERS.map(order => {
           const mainBtn = getMainBtn(order)
-          const canChange = CHANGEABLE_STATUSES.has(order.status)
           const canCancel = CANCELABLE_STATUSES.has(order.status)
           return (
             <div key={order.id} className="border-b border-[#e8edf5] last:border-0">
@@ -758,14 +920,11 @@ export default function WoCaigouPage() {
                 <div className="px-3 py-3 text-[11px] text-[#666]">{order.planTime}</div>
                 <div className="px-3 py-3 text-[#666]">{order.settlement}</div>
                 <div className="px-3 py-3">
-                  <span className={`text-[11px] font-medium ${order.status==="生产履约"?"text-[#1a5fa8]":"text-[#666]"}`}>{order.status}</span>
+                  <span className="text-[11px] font-medium text-[#666]">{order.status}</span>
                 </div>
                 <div className="px-3 py-3 flex flex-col gap-1">
                   {mainBtn && (
                     <button onClick={mainBtn.onClick} className={`${mainBtn.color} hover:underline text-[12px] text-left`}>{mainBtn.label}</button>
-                  )}
-                  {canChange && (
-                    <button onClick={() => setChangeModal(true)} className="text-[#1a5fa8] hover:underline text-[12px] text-left">订单变更</button>
                   )}
                   {canCancel && (
                     <button onClick={() => setApplyCancelModal(true)} className="text-[#e04040] hover:underline text-[12px] text-left">申请取消</button>
@@ -777,10 +936,10 @@ export default function WoCaigouPage() {
         })}
       </div>
 
-      {shippingModal    && <ShippingViewModal onClose={() => setShippingModal(false)} />}
+      {terminateModal   && <TerminateShippingModal onClose={() => setTerminateModal(false)} />}
+      {acceptModal      && <BatchAcceptModal onClose={() => setAcceptModal(false)} />}
       {reconcileModal   && <ReconciliationModal onClose={() => setReconcileModal(false)} />}
       {contractModal    && <ContractModal onClose={() => setContractModal(false)} />}
-      {changeModal      && <OrderChangeModal onClose={() => setChangeModal(false)} />}
       {applyCancelModal && <ApplyCancelModal onClose={() => setApplyCancelModal(false)} />}
       </>}
     </div>
