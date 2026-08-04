@@ -37,6 +37,10 @@ function ShippingModal({ onClose }: { onClose: () => void }) {
             <label className="flex items-center gap-1.5 cursor-pointer"><input type="radio" name="multi" value="yes" checked={multiAccept==="yes"} onChange={()=>setMultiAccept("yes")} className="accent-[#1a5fa8]" />是</label>
             <label className="flex items-center gap-1.5 cursor-pointer"><input type="radio" name="multi" value="no" checked={multiAccept==="no"} onChange={()=>setMultiAccept("no")} className="accent-[#1a5fa8]" />否</label>
           </div>
+          <div className="text-[12px] text-[#888] leading-5 -mt-2">
+            <span className="font-medium text-[#555]">是：</span>发货单与批次单为一对多关系，货物入库后由粮库系统自动同步批次单；
+            <span className="font-medium text-[#555] ml-3">否：</span>发货单与批次单为一对一关系，发货时即自动创建对应批次单。
+          </div>
 
           {/* 发货商品数量 */}
           <div>
