@@ -182,7 +182,7 @@ export default function GyListPage() {
                   </td>
                   <td className="px-4 py-3">
                     <div className="flex flex-col gap-1">
-                      <Link href={`/merchant/dingdan-nongye/gy-xunjia?id=${row.id}`}
+                      <Link href="/merchant/xunbaojia/wo-shoudaode?tab=caigou"
                         className="text-[12px] text-[#1a5fa8] hover:underline">查看询价</Link>
                       <Link href={`/merchant/dingdan-nongye/gy-list/${row.id}`} className="text-[12px] text-[#666] hover:text-[#1a5fa8] text-left">查看详情</Link>
                     </div>

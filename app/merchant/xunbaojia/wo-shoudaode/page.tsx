@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, Suspense } from "react"
+import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 import { Search, Eye, X } from "lucide-react"
 
@@ -131,8 +132,10 @@ const STATUS_LABELS: Record<string, { label: string; color: string; bg: string }
   expired: { label: "已过期", color: "#dc2626", bg: "#fff1f1" },
 }
 
-export default function WoShoudaodePage() {
-  const [tab, setTab] = useState<Tab>("caigou")
+function WoShoudaodeContent() {
+  const searchParams = useSearchParams()
+  const initialTab: Tab = searchParams.get("tab") === "gongying" ? "gongying" : "caigou"
+  const [tab, setTab] = useState<Tab>(initialTab)
   const [status, setStatus] = useState<Status>("all")
   const [submitOrderModal, setSubmitOrderModal] = useState(false)
 
@@ -333,5 +336,13 @@ export default function WoShoudaodePage() {
 
       {submitOrderModal && <SubmitOrderModal onClose={() => setSubmitOrderModal(false)} />}
     </div>
+  )
+}
+
+export default function WoShoudaodePage() {
+  return (
+    <Suspense fallback={<div className="max-w-[1100px] p-5 text-[13px] text-[#999]">加载中...</div>}>
+      <WoShoudaodeContent />
+    </Suspense>
   )
 }
