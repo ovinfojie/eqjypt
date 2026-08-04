@@ -89,7 +89,14 @@ const shopMenuGroups = [
   {
     label: "合同",
     items: [
-      { label: "合同列表", href: "/merchant/contract/list", icon: FileSignature },
+      {
+        label: "合同管理", icon: FileSignature,
+        children: [
+          { label: "我发起的", href: "/merchant/contract/list/wo-faqide"    },
+          { label: "我收到的", href: "/merchant/contract/list/wo-shoudaode" },
+        ],
+      },
+      { label: "合同模板管理", href: "/merchant/contract/template", icon: FileText },
     ],
   },
 
