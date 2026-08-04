@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import {
@@ -10,6 +11,8 @@ import {
   ShoppingCart,
   ChevronDown,
   Volume2,
+  Check,
+  X,
 } from "lucide-react"
 
 /* ─── Types ─── */
@@ -20,21 +23,21 @@ type PriceType = "全部" | "固定价" | "竞价"
 const categoryBanners = [
   {
     id: "veg",
-    label: "蔬菜品类集采",
+    title: "蔬菜品类集采",
     period: "2026.06.23 - 2026.07.08",
     tag: "新鲜直供 · 批量优选",
-    desc: "本次集采涵盖50+农产品品类",
-    color: "#2d8a4e",
-    bg: "#e8f5e9",
+    sub: "本次集采涵盖50+农产品品类",
+    img: "/images/jicai-veg-banner.png",
+    tagBg: "rgba(255,255,255,0.25)",
   },
   {
     id: "fruit",
-    label: "水果品类集采活动",
-    period: "2026.06.23 - 2026.07.15",
+    title: "水果品类集采活动",
+    period: "2026.07.01 - 2026.12.31",
     tag: "产地直采 · 新鲜直达",
-    desc: "荔枝、苹果、芒果等当季水果",
-    color: "#e8831a",
-    bg: "#fff3e0",
+    sub: "",
+    img: "/images/jicai-fruit-banner.png",
+    tagBg: "rgba(255,255,255,0.25)",
   },
 ]
 
@@ -86,7 +89,15 @@ export default function JicaiDetailPage({ params }: { params: { id: string } }) 
   const [activePriceType, setActivePriceType] = useState<PriceType>("全部")
   const [activeCategory, setActiveCategory] = useState("全部店铺")
   const [keyword, setKeyword] = useState("")
-  const [cartCount] = useState(2)
+  const [cartCount, setCartCount] = useState(2)
+  const [cartSuccessProduct, setCartSuccessProduct] = useState<Product | null>(null)
+
+  function handleAddCart(product: Product, e: React.MouseEvent) {
+    e.stopPropagation()
+    e.preventDefault()
+    setCartCount((c) => c + 1)
+    setCartSuccessProduct(product)
+  }
 
   const filteredProducts = products.filter((p) => {
     const matchPrice = activePriceType === "全部" || p.priceType === activePriceType
@@ -176,25 +187,27 @@ export default function JicaiDetailPage({ params }: { params: { id: string } }) 
         {/* ── Category Activity Banners ── */}
         <div className="max-w-[1400px] mx-auto px-6 py-4">
           <div className="grid grid-cols-2 gap-4">
-            {categoryBanners.map((banner) => (
-              <div
-                key={banner.id}
-                className="rounded overflow-hidden relative h-[180px] cursor-pointer group"
-                style={{ backgroundColor: banner.color }}
-              >
-                <div className="absolute inset-0 p-6 flex flex-col justify-between z-10">
+            {categoryBanners.map((b) => (
+              <div key={b.id} className="relative rounded-lg overflow-hidden h-[180px] cursor-pointer group">
+                <Image
+                  src={b.img}
+                  alt={b.title}
+                  fill
+                  className="object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-transparent" />
+                <div className="relative z-10 p-5 h-full flex flex-col justify-between">
                   <div>
-                    <div className="text-[20px] font-bold text-white mb-1">{banner.label}</div>
-                    <div className="text-[13px] text-white/80">活动时间 {banner.period}</div>
+                    <div className="text-[22px] font-bold text-white drop-shadow">{b.title}</div>
+                    <div className="text-[12px] text-white/85 mt-1">活动时间 {b.period}</div>
                   </div>
-                  <div>
-                    <div className="inline-block bg-white/20 border border-white/40 text-white text-[12px] px-3 py-1 rounded mb-2">
-                      {banner.tag}
-                    </div>
-                    <div className="text-[12px] text-white/70">{banner.desc}</div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-[13px] font-semibold text-white px-3 py-1 rounded-full border border-white/40" style={{ background: b.tagBg }}>
+                      {b.tag}
+                    </span>
+                    {b.sub && <span className="text-[12px] text-white/80">{b.sub}</span>}
                   </div>
                 </div>
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
               </div>
             ))}
           </div>
@@ -278,9 +291,10 @@ export default function JicaiDetailPage({ params }: { params: { id: string } }) 
           {/* Product grid */}
           <div className="grid grid-cols-4 gap-4 mb-8">
             {filteredProducts.map((product) => (
-              <div
+              <Link
                 key={product.id}
-                className="bg-white border border-border rounded overflow-hidden hover:shadow-md hover:border-[#1a5fa8]/30 transition-all cursor-pointer group"
+                href={`/portal/jicai/${params.id}/product/${product.id}`}
+                className="bg-white border border-border rounded overflow-hidden hover:shadow-md hover:border-[#1a5fa8]/30 transition-all cursor-pointer group block"
               >
                 <div className="aspect-square overflow-hidden bg-[#f5f7fa]">
                   <img
@@ -310,11 +324,14 @@ export default function JicaiDetailPage({ params }: { params: { id: string } }) 
                     <span className="w-3 h-3 bg-[#6b7c93] rounded-sm inline-block shrink-0" />
                     {product.dept}
                   </div>
-                  <button className="w-full py-1.5 bg-[#1a5fa8] text-white text-[12px] rounded hover:bg-[#0d4a8a] transition-colors">
+                  <button
+                    onClick={(e) => handleAddCart(product, e)}
+                    className="w-full py-1.5 bg-[#1a5fa8] text-white text-[12px] rounded hover:bg-[#0d4a8a] transition-colors"
+                  >
                     加入采购车
                   </button>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
 
@@ -371,6 +388,51 @@ export default function JicaiDetailPage({ params }: { params: { id: string } }) 
           </div>
         </div>
       </main>
+
+      {/* ── Cart success modal ── */}
+      {cartSuccessProduct && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={() => setCartSuccessProduct(null)}>
+          <div className="bg-white rounded-lg w-[360px] shadow-2xl p-6" onClick={(e) => e.stopPropagation()}>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2">
+                <div className="w-8 h-8 rounded-full bg-[#e8f5e9] flex items-center justify-center">
+                  <Check className="w-5 h-5 text-[#3a8c3f]" />
+                </div>
+                <span className="text-[15px] font-bold text-[#1a1a2e]">已加入采购车</span>
+              </div>
+              <button onClick={() => setCartSuccessProduct(null)}>
+                <X className="w-5 h-5 text-[#999]" />
+              </button>
+            </div>
+            <div className="flex items-center gap-3 mb-5 p-3 bg-[#f5f7fa] rounded">
+              <img src={cartSuccessProduct.image} alt={cartSuccessProduct.name} className="w-14 h-14 object-cover rounded" />
+              <div>
+                <div className="text-[13px] font-medium text-[#1a1a2e]">{cartSuccessProduct.name}</div>
+                <div className="text-[12px] text-[#6b7c93] mt-0.5">单价：¥{cartSuccessProduct.price.toFixed(2)} 起</div>
+              </div>
+            </div>
+            <div className="text-[12px] text-[#6b7c93] text-center mb-4">
+              采购车中共 <span className="font-bold text-[#1a5fa8]">{cartCount}</span> 件商品
+            </div>
+            <div className="flex gap-3">
+              <button
+                onClick={() => setCartSuccessProduct(null)}
+                className="flex-1 py-2.5 border border-[#dde3ec] text-[#555] text-[13px] rounded hover:border-[#999] transition-colors"
+              >
+                继续浏览
+              </button>
+              <Link
+                href="/portal/cart"
+                className="flex-1 py-2.5 bg-[#1a5fa8] text-white text-[13px] rounded text-center font-semibold hover:bg-[#0d4a8a] transition-colors"
+                onClick={() => setCartSuccessProduct(null)}
+              >
+                去采购车
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
+
       <SiteFooter />
     </div>
   )

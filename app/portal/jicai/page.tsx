@@ -41,7 +41,7 @@ const advantages = [
   },
   {
     icon: Eye,
-    title: "阳光透明",
+    title: "阳光采购",
     desc: "招标公开透明，采购环节全程留证可溯，杜绝暗箱操作",
     highlight: "启动透明公示流程",
     color: "#1a5fa8",
@@ -49,9 +49,9 @@ const advantages = [
   },
   {
     icon: CheckCircle,
-    title: "优质供应",
-    desc: "严控供应商准入门槛，国内外优质资源双轨并轨，遴选品质产品",
-    highlight: "供销严选的供应商来源",
+    title: "高效便捷",
+    desc: "一键提交需求，系统智能匹配优质供应商，快速完成采购全流程",
+    highlight: "平均采购周期缩短60%",
     color: "#e8831a",
     bg: "#fff3e0",
   },
@@ -175,7 +175,7 @@ export default function JicaiPage() {
                 <ChevronRight className="w-3 h-3" />
                 <span>集采专区</span>
               </div>
-              <h1 className="text-[32px] font-bold mb-2">集采专区</h1>
+              <h1 className="text-[32px] font-bold mb-2">集采��区</h1>
               <p className="text-[14px] text-white/75 mb-6">
                 企业联合采购专区，汇聚多方需求统一议价集采，共享规模优化与履约保障
               </p>
@@ -203,39 +203,6 @@ export default function JicaiPage() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-
-        {/* ── Category Banners ── */}
-        <div className="max-w-[1200px] mx-auto px-6 py-6">
-          <div className="grid grid-cols-2 gap-4">
-            {categoryBanners.map((b) => (
-              <div key={b.id} className="relative rounded-lg overflow-hidden h-[180px] cursor-pointer group">
-                <Image
-                  src={b.img}
-                  alt={b.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                {/* overlay */}
-                <div className="absolute inset-0 bg-gradient-to-r from-black/55 via-black/20 to-transparent" />
-                <div className="relative z-10 p-5 h-full flex flex-col justify-between">
-                  <div>
-                    <div className="text-[22px] font-bold text-white drop-shadow">{b.title}</div>
-                    <div className="text-[12px] text-white/85 mt-1">活动时间 {b.period}</div>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className="text-[13px] font-semibold text-white px-3 py-1 rounded-full border border-white/40"
-                      style={{ background: b.tagBg }}
-                    >
-                      {b.tag}
-                    </span>
-                    {b.sub && <span className="text-[12px] text-white/80">{b.sub}</span>}
-                  </div>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
 
