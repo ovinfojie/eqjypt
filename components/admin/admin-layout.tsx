@@ -47,6 +47,13 @@ const menuGroups = [
     ],
   },
   {
+    label: "订单农业",
+    items: [
+      { label: "平台终止需求", href: "/admin/dingdan-nongye/zhongzhi-xq", icon: ClipboardList },
+      { label: "平台终止供应", href: "/admin/dingdan-nongye/zhongzhi-gy", icon: Package       },
+    ],
+  },
+  {
     label: "全产业链服务",
     items: [
       { label: "服务机构管理", href: "/admin/quancyl/jigou-list", icon: Building2   },
