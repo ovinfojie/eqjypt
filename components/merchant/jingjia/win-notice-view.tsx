@@ -25,7 +25,7 @@ const ROWS: Row[] = [
   { id: "ZQ-5040492b2ad12c8355e", demand: "组合销售", winner: "广东汕头潮阳天润粮油有限公司(粮油业务部)", title: "天润汕尾库库区3000吨粮食竞拍销售", product: "南晶香占、大豆 等4种", winTime: "2026-05-12 09:12:45", orderStatus: "none", canOrder: true },
 ]
 
-export function WinNoticeView({ role }: { role: "fabu" | "baoming" }) {
+export default function WinNoticeView({ role }: { role: "fabu" | "baoming" }) {
   const [detail, setDetail] = useState<Row | null>(null)
 
   return (

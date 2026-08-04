@@ -19,7 +19,7 @@ const statCards = [
 const quickLinks = [
   { label: "发布采购需求",  href: "/merchant/chanxiao/fabu-caigou",          icon: ShoppingCart, color: "#1a5fa8", bg: "#e8f4fd" },
   { label: "发布销售信息",  href: "/merchant/chanxiao/fabu-xiaoshou",         icon: TrendingUp,   color: "#3a8c3f", bg: "#e8f5e9" },
-  { label: "发布竞拍活动",  href: "/merchant/jingjia/wo-fabu",               icon: Gavel,        color: "#7c3aed", bg: "#f3e8ff" },
+  { label: "发布竞拍活动",  href: "/merchant/jingjia/fabu/list",             icon: Gavel,        color: "#7c3aed", bg: "#f3e8ff" },
   { label: "上架供销严选",  href: "/merchant/yanxuan/fabu-shangpin",          icon: Star,         color: "#e8831a", bg: "#fff8f0" },
   { label: "发布订单农业",  href: "/merchant/dingdan-nongye/fabu-xq",         icon: FileText,     color: "#0891b2", bg: "#e0f7fa" },
   { label: "查看合同",      href: "/merchant/contract/list",                  icon: FileText,     color: "#6b7c93", bg: "#f5f7fa" },
