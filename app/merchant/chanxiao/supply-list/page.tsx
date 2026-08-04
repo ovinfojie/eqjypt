@@ -155,9 +155,9 @@ export default function SupplyListPage() {
 
           {/* 操作按钮 */}
           <div className="mb-4">
-            <button className="flex items-center gap-1.5 h-8 px-4 bg-[#1a5fa8] text-white text-[13px] rounded hover:bg-[#0d4a8a]">
+            <Link href="/merchant/chanxiao/fabu-xiaoshou" className="inline-flex items-center gap-1.5 h-8 px-4 bg-[#1a5fa8] text-white text-[13px] rounded hover:bg-[#0d4a8a]">
               <Plus className="w-3.5 h-3.5" />发布供应信息
-            </button>
+            </Link>
           </div>
 
           {/* 状态 Tab */}
