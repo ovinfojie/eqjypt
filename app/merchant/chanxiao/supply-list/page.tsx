@@ -155,9 +155,9 @@ export default function SupplyListPage() {
 
           {/* 操作按钮 */}
           <div className="mb-4">
-            <button className="flex items-center gap-1.5 h-8 px-4 bg-[#1a5fa8] text-white text-[13px] rounded hover:bg-[#0d4a8a]">
+            <Link href="/merchant/chanxiao/fabu-xiaoshou" className="inline-flex items-center gap-1.5 h-8 px-4 bg-[#1a5fa8] text-white text-[13px] rounded hover:bg-[#0d4a8a]">
               <Plus className="w-3.5 h-3.5" />发布供应信息
-            </button>
+            </Link>
           </div>
 
           {/* 状态 Tab */}
@@ -180,7 +180,7 @@ export default function SupplyListPage() {
             <table className="w-full text-[13px] border-collapse">
               <thead>
                 <tr className="bg-[#f5f7fa] text-[#444]">
-                  {["编号","发布方(卖方)","商品","预估供应量","供应进度","供应价","计划供应时间","联系人","联系电话","状态","创建时间","平台审核时间","操作"].map(h => (
+                  {["编号","商品","预估供应量","供应进度","供应价","计划供应时间","联系人","联系电话","状态","创建时间","平台审核时间","操作"].map(h => (
                     <th key={h} className="px-3 py-2.5 text-left font-semibold border border-[#e8edf5] whitespace-nowrap">{h}</th>
                   ))}
                 </tr>
@@ -192,7 +192,6 @@ export default function SupplyListPage() {
                   return (
                     <tr key={i} className="border-b border-[#e8edf5] hover:bg-[#fafbfd]">
                       <td className="px-3 py-3 text-[#1a5fa8] font-mono text-[12px]">{row.id}</td>
-                      <td className="px-3 py-3 max-w-[140px]"><div className="text-[#1a1a2e] leading-tight">{row.company}</div></td>
                       <td className="px-3 py-3 whitespace-nowrap">{row.products}</td>
                       <td className="px-3 py-3 whitespace-nowrap">{row.estQty}</td>
                       <td className="px-3 py-3">

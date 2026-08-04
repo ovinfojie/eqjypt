@@ -1,24 +1,38 @@
 "use client"
 
 import { useState } from "react"
-import { Search, X } from "lucide-react"
+import { Search, X, Eye, Pencil, ShoppingCart, XCircle } from "lucide-react"
 
 type Tab = "caigou" | "gongying"
-type Status = "all" | "unordered" | "ordered" | "closed"
+type Status = "all" | "pending" | "quoted" | "ordered" | "notordered" | "expired" | "closed"
 
 const STATUS_MAP: Record<string, { label: string; color: string; bg: string }> = {
-  unordered: { label: "未下单", color: "#e8831a", bg: "#fff8f0" },
-  ordered:   { label: "已下单", color: "#16a34a", bg: "#f0fdf4" },
-  closed:    { label: "已关闭", color: "#999",    bg: "#f5f5f5" },
+  pending:    { label: "待报价", color: "#e8831a", bg: "#fff8f0" },
+  quoted:     { label: "已报价", color: "#1a5fa8", bg: "#e8f4fd" },
+  ordered:    { label: "已下单", color: "#16a34a", bg: "#f0fdf4" },
+  notordered: { label: "未下单", color: "#e8831a", bg: "#fff8f0" },
+  expired:    { label: "已过期", color: "#dc2626", bg: "#fff1f1" },
+  closed:     { label: "已关闭", color: "#999",    bg: "#f5f5f5" },
 }
 
-const STATUS_TABS: { key: Status; label: string }[] = [
-  { key: "all",       label: "全部"   },
-  { key: "unordered", label: "未下单" },
-  { key: "ordered",   label: "已下单" },
-  { key: "closed",    label: "已关闭" },
+// 状态 Tab 随主 Tab 切换
+const CAIGOU_STATUS_TABS: { key: Status; label: string }[] = [
+  { key: "all",     label: "全部"   },
+  { key: "pending", label: "待报价" },
+  { key: "quoted",  label: "已报价" },
+  { key: "ordered", label: "已下单" },
+  { key: "expired", label: "已过期" },
+  { key: "closed",  label: "已关闭" },
+]
+const GONGYING_STATUS_TABS: { key: Status; label: string }[] = [
+  { key: "all",        label: "全部"   },
+  { key: "notordered", label: "未下单" },
+  { key: "ordered",    label: "已下单" },
+  { key: "closed",     label: "已关闭" },
+  { key: "expired",    label: "已过期" },
 ]
 
+// 我收到的采购需求报价（我作为供应方收到采购方发来的需求，我来报价）
 const CAIGOU_ROWS = [
   {
     quoteNo: "q793247234897", quoteTime: "2026-06-01 20:42:12",
@@ -26,56 +40,75 @@ const CAIGOU_ROWS = [
     products: "韭菜、杀虫、测试等4种商品",
     total: 255.00, delivery: "买家自提", settlement: "建行龙存管",
     validStart: "2026-06-01 20:42:12", validEnd: "2026-06-25 23:59:59",
-    status: "ordered" as const, orderedCount: 3,
-    actions: ["查看详情", "下采购单"],
+    status: "ordered" as Status, orderedCount: 3,
   },
   {
-    quoteNo: "q793247234897", quoteTime: "2026-06-01 20:42:12",
+    quoteNo: "q793247234898", quoteTime: "2026-05-21 15:45:41",
     shop: "字鹏1", company: "字鹏互联网科技(上海)有限公司",
     products: "桂味荔枝",
     total: 34.00, delivery: "卖家配送", settlement: "建行龙存管",
     validStart: "2026-05-21 15:45:41", validEnd: "2026-05-22 23:59:59",
-    status: "unordered" as const, orderedCount: 0,
-    actions: ["查看详情", "下采购单"],
+    status: "pending" as Status, orderedCount: 0,
   },
   {
-    quoteNo: "q793247234897", quoteTime: "2026-06-01 20:42:12",
+    quoteNo: "q793247234899", quoteTime: "2026-05-18 10:05:16",
     shop: "字鹏1", company: "字鹏互联网科技(上海)有限公司",
     products: "韭菜、杀虫、测试等4种商品",
     total: 222.00, delivery: "卖家配送", settlement: "建行龙存管",
     validStart: "2026-05-18 10:05:16", validEnd: "2026-05-19 23:59:59",
-    status: "unordered" as const, orderedCount: 0,
-    actions: ["查看详情", "下采购单"],
+    status: "quoted" as Status, orderedCount: 0,
   },
   {
-    quoteNo: "q793247234897", quoteTime: "2026-06-01 20:42:12",
+    quoteNo: "q793247234900", quoteTime: "2026-05-15 21:19:11",
     shop: "饶平种植专业合作社", company: "矩阵信息技术(上海)有限公司",
-    products: "茂名妇子笑",
+    products: "茂名妃子笑",
     total: 120.00, delivery: "卖家配送", settlement: "建行龙存管",
     validStart: "2026-05-15 21:19:11", validEnd: "2026-05-30 23:59:59",
-    status: "closed" as const, orderedCount: 0,
-    actions: ["查看详情"],
+    status: "expired" as Status, orderedCount: 0,
+  },
+  {
+    quoteNo: "q793247234901", quoteTime: "2026-05-10 09:11:20",
+    shop: "饶平种植专业合作社", company: "矩阵信息技术(上海)有限公司",
+    products: "沙糖桔",
+    total: 88.00, delivery: "卖家配送", settlement: "工行安心付",
+    validStart: "2026-05-10 09:11:20", validEnd: "2026-05-12 23:59:59",
+    status: "closed" as Status, orderedCount: 0,
   },
 ]
 
+// 我收到的供应信息报价（我作为需求方收到供应方提交的报价，我来提交订单）
 const GONGYING_ROWS = [
   {
-    quoteNo: "q793247234897", quoteTime: "2026-06-01 20:42:12",
+    quoteNo: "q893247234801", quoteTime: "2026-06-01 20:42:12",
     shop: "字鹏1", company: "字鹏互联网科技(上海)有限公司",
     products: "韭菜、杀虫、测试等4种商品",
     total: 255.00, delivery: "买家自提", settlement: "建行龙存管",
     validStart: "2026-06-01 20:42:12", validEnd: "2026-06-25 23:59:59",
-    status: "ordered" as const, orderedCount: 2,
-    actions: ["查看详情"],
+    status: "ordered" as Status, orderedCount: 2,
   },
   {
-    quoteNo: "q793247234897", quoteTime: "2026-06-01 20:42:12",
+    quoteNo: "q893247234802", quoteTime: "2026-05-21 15:45:41",
     shop: "饶平种植专业合作社", company: "矩阵信息技术(上海)有限公司",
     products: "怪味荔枝",
     total: 10000.00, delivery: "卖家配送", settlement: "建行龙存管",
     validStart: "2026-05-21 15:45:41", validEnd: "2026-05-22 23:59:59",
-    status: "unordered" as const, orderedCount: 0,
-    actions: ["查看详情", "下采购单"],
+    status: "notordered" as Status, orderedCount: 0,
+  },
+  {
+    quoteNo: "q893247234803", quoteTime: "2026-05-16 11:20:08",
+    shop: "饶平种植专业合作社", company: "矩阵信息技术(上海)有限公司",
+    products: "茂名妃子笑",
+    total: 120.00, delivery: "卖家配送", settlement: "建行龙存管",
+    validStart: "2026-05-16 11:20:08", validEnd: "2026-05-28 23:59:59",
+    status: "closed" as Status, orderedCount: 0,
+  },
+  {
+    quoteNo: "q893247234804", quoteTime: "2026-05-08 14:33:50",
+    shop: "饶平种植专业合作社", company: "矩阵信息技术(上海)有限公司",
+    products: "沙糖桔",
+    total: 88.00, delivery: "卖家配送", settlement: "工行安心付",
+    validStart: "2026-05-08 14:33:50", validEnd: "2026-05-10 23:59:59",
+    status: "expired" as Status, orderedCount: 0,
   },
 ]
 
@@ -245,8 +278,10 @@ export default function ChanxiaoXunbaojiaShoudaodePage() {
   const [tab, setTab] = useState<Tab>("caigou")
   const [statusTab, setStatusTab] = useState<Status>("all")
   const [orderModal, setOrderModal] = useState<{ open: boolean; shop: string }>({ open: false, shop: "" })
+  const [cancelNo, setCancelNo] = useState<string | null>(null)
 
   const rows = tab === "caigou" ? CAIGOU_ROWS : GONGYING_ROWS
+  const statusTabs = tab === "caigou" ? CAIGOU_STATUS_TABS : GONGYING_STATUS_TABS
   const filtered = statusTab === "all" ? rows : rows.filter(r => r.status === statusTab)
 
   return (
@@ -329,7 +364,7 @@ export default function ChanxiaoXunbaojiaShoudaodePage() {
 
           {/* 状态 Tab */}
           <div className="flex border-b border-[#dde3ec] mb-4">
-            {STATUS_TABS.map(t => (
+            {statusTabs.map(t => (
               <button
                 key={t.key}
                 onClick={() => setStatusTab(t.key)}
@@ -385,21 +420,40 @@ export default function ChanxiaoXunbaojiaShoudaodePage() {
                             <td className="w-[100px] align-top py-1 px-3">
                               <div className="flex flex-col gap-0.5">
                                 <span className="px-2 py-0.5 rounded text-[11px] font-medium w-fit" style={{ color: s.color, background: s.bg }}>
-                                  {s.label}{row.orderedCount > 0 ? `(${row.orderedCount}次)` : ""}
+                                  {s.label}{row.status === "ordered" && row.orderedCount > 0 ? `(${row.orderedCount}次)` : ""}
                                 </span>
+                                {row.status === "ordered" && row.orderedCount > 0 && (
+                                  <button className="text-[12px] text-[#1a5fa8] hover:underline text-left">查看订单</button>
+                                )}
                               </div>
                             </td>
-                            <td className="w-[120px] align-top py-1 px-3">
+                            <td className="w-[130px] align-top py-1 px-3">
                               <div className="flex flex-col gap-1">
-                                {row.actions.map(a => (
-                                  <button
-                                    key={a}
-                                    onClick={() => a === "下采购单" ? setOrderModal({ open: true, shop: row.shop }) : undefined}
-                                    className="text-[12px] text-[#1a5fa8] hover:underline text-left"
-                                  >
-                                    {a}
+                                <button className="flex items-center gap-1 text-[12px] text-[#1a5fa8] hover:underline text-left">
+                                  <Eye className="w-3.5 h-3.5" />查看详情
+                                </button>
+                                {/* 采购需求报价：待报价可去报价；已报价可修改价格/取消报价 */}
+                                {tab === "caigou" && row.status === "pending" && (
+                                  <button className="flex items-center gap-1 text-[12px] text-[#e8831a] hover:underline text-left">
+                                    <Pencil className="w-3.5 h-3.5" />去报价
                                   </button>
-                                ))}
+                                )}
+                                {tab === "caigou" && row.status === "quoted" && (
+                                  <>
+                                    <button className="flex items-center gap-1 text-[12px] text-[#e8831a] hover:underline text-left">
+                                      <Pencil className="w-3.5 h-3.5" />修改价格
+                                    </button>
+                                    <button onClick={() => setCancelNo(row.quoteNo)} className="flex items-center gap-1 text-[12px] text-[#dc2626] hover:underline text-left">
+                                      <XCircle className="w-3.5 h-3.5" />取消报价
+                                    </button>
+                                  </>
+                                )}
+                                {/* 供应信息报价：未下单可提交订单 */}
+                                {tab === "gongying" && row.status === "notordered" && (
+                                  <button onClick={() => setOrderModal({ open: true, shop: row.shop })} className="flex items-center gap-1 text-[12px] text-[#16a34a] hover:underline text-left">
+                                    <ShoppingCart className="w-3.5 h-3.5" />提交订单
+                                  </button>
+                                )}
                               </div>
                             </td>
                           </tr>
@@ -424,6 +478,25 @@ export default function ChanxiaoXunbaojiaShoudaodePage() {
 
       {orderModal.open && (
         <PlaceOrderModal shop={orderModal.shop} onClose={() => setOrderModal({ open: false, shop: "" })} />
+      )}
+
+      {/* 取消报价确认弹窗 */}
+      {cancelNo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={() => setCancelNo(null)}>
+          <div className="bg-white rounded-lg w-[420px] shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8edf5]">
+              <h3 className="text-[15px] font-bold text-[#1a1a2e]">取消报价</h3>
+              <button onClick={() => setCancelNo(null)}><X className="w-5 h-5 text-[#999]" /></button>
+            </div>
+            <div className="px-6 py-6 text-[13px] text-[#555] leading-relaxed">
+              确认取消报价单 <b className="text-[#1a1a2e]">{cancelNo}</b> 吗？取消后该报价将失效，买方将无法基于此报价下单。
+            </div>
+            <div className="flex justify-end gap-3 px-6 py-4 border-t border-[#e8edf5]">
+              <button onClick={() => setCancelNo(null)} className="px-5 py-2 border border-[#dde3ec] text-[#555] text-[13px] rounded hover:border-[#999]">再想想</button>
+              <button onClick={() => setCancelNo(null)} className="px-6 py-2 bg-[#dc2626] text-white text-[13px] font-semibold rounded hover:bg-[#b91c1c]">确认取消报价</button>
+            </div>
+          </div>
+        </div>
       )}
     </div>
   )

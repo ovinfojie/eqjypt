@@ -135,7 +135,7 @@ export default function WoCaigouDetailPage() {
   return (
     <div>
       <div className="flex items-center gap-2 text-[13px] text-[#999] mb-4">
-        <Link href="/merchant/dingdan-nongye/order-mgmt/wo-caigou" className="hover:text-[#1a5fa8] flex items-center gap-1"><ChevronLeft className="w-3.5 h-3.5" />我采购</Link>
+        <Link href="/merchant/chanxiao/orders/wo-caigou" className="hover:text-[#1a5fa8] flex items-center gap-1"><ChevronLeft className="w-3.5 h-3.5" />我采购</Link>
         <span>/</span>
         <span className="text-[#1a5fa8] font-medium">订单详情</span>
       </div>
@@ -225,7 +225,7 @@ export default function WoCaigouDetailPage() {
                 <div>
                   <h4 className="text-[13px] font-bold text-[#1a1a2e] border-l-4 border-[#1a5fa8] pl-3 mb-3">订单明细</h4>
                   <div className="grid grid-cols-3 gap-x-8 gap-y-4 text-[13px]">
-                    {[["买方","广东新供销天润粮油集团有限公司"],["商家","南雄市社村合作农业发展有限公司\n(南雄市社村合作农业发展有限公司)"],["供应商","——"],["买方联系人信息","王汉  18978907891"],["商家联系人信息","张悦  15527522832"],["供应商联系人���息","王鹏  15527522832"],["收货计划","2026-06-11 00:00:00 至 2026-06-12 23:59:59"],["配送方式","卖家配送"],["收货人信息","广东省广州市越秀区大东��道荣园东路78号\n陈先生  17878907890"],["定价方式","固定价"],["交易模式","担保交易"],["结算方式","预付款"],["支付渠道","工行安���付"],["买方订单备注","无"]].map(([k,v])=>(
+                    {[["买方","广东新供销天润粮油集团有限公司"],["商家","南雄市社村合作农业发展有限公司\n(南雄市社村合作农业发展有限公司)"],["供应商","——"],["买方联系人信息","王汉  18978907891"],["商家联系人信息","张悦  15527522832"],["供应商联系人�����息","王鹏  15527522832"],["收货计划","2026-06-11 00:00:00 至 2026-06-12 23:59:59"],["配送方式","卖家配送"],["收货人信息","广东省广州市越秀区大东��道荣园东路78号\n陈先生  17878907890"],["定价方式","固定价"],["交易模式","担保交易"],["结算方式","预付款"],["支付渠道","工行安���付"],["买方订单备注","无"]].map(([k,v])=>(
                       <div key={k}><div className="text-[#999] mb-0.5">{k}</div><div className="text-[#333] whitespace-pre-line">{v}</div></div>
                     ))}
                   </div>

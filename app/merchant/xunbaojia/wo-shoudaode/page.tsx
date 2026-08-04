@@ -1,11 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useState, Suspense } from "react"
+import { useSearchParams } from "next/navigation"
 import Link from "next/link"
-import { Search, Eye, X } from "lucide-react"
+import { Search, Eye, X, Pencil, ShoppingCart, XCircle } from "lucide-react"
 
 type Tab = "caigou" | "gongying"
-type Status = "all" | "pending" | "ordered" | "closed" | "expired"
+type Status = "all" | "pending" | "quoted" | "ordered" | "notordered" | "closed" | "expired"
 
 // 我收到的采购询价 = 供应方收到采购方发来的询价
 const CAIGOU_ROWS = [
@@ -31,7 +32,7 @@ const CAIGOU_ROWS = [
     product: "兔牙香占", spec: "公斤", qty: "5000公斤",
     buyer: "平远新供销天润粮油有限公司（粮油业务部）",
     seller: "茂名市社村合作农业发展有限公司（农产品服务部）",
-    quoteTime: "2026-06-01 20:42:12", status: "pending" as const,
+    quoteTime: "2026-06-01 20:42:12", status: "quoted" as const,
   },
 ]
 
@@ -43,7 +44,7 @@ const GONGYING_ROWS = [
     product: "丝苗米", unitPrice: "80元/公斤",
     buyer: "平远新供销天润粮油有限公司（粮油业务部）",
     seller: "南雄市社村合作农业发展有限公司（南雄市社村合作农业发展有限公司）",
-    quoteTime: "2026-06-01 20:42:12", status: "pending" as const,
+    quoteTime: "2026-06-01 20:42:12", status: "notordered" as const,
   },
   {
     id: "BJ20260601002", needId: "ID0001120x",
@@ -55,94 +56,38 @@ const GONGYING_ROWS = [
   },
 ]
 
-/* ─── 提交订单弹窗 ─── */
-function SubmitOrderModal({ onClose }: { onClose: () => void }) {
-  const [qty, setQty] = useState(100)
-  const [address, setAddress] = useState("")
-  const [settlement, setSettlement] = useState("建行龙存管")
-  const [delivery, setDelivery] = useState("卖家配送")
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
-      <div className="bg-white rounded-lg w-[560px] max-h-[90vh] overflow-y-auto shadow-2xl" onClick={e => e.stopPropagation()}>
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8edf5]">
-          <h3 className="text-[15px] font-bold text-[#1a1a2e]">提交订单</h3>
-          <button onClick={onClose}><X className="w-5 h-5 text-[#999]" /></button>
-        </div>
-        <div className="px-6 py-5 space-y-4">
-          <div className="bg-[#f5f7fa] rounded p-4 text-[13px] space-y-1.5">
-            <div className="flex gap-4"><span className="text-[#999] w-[80px]">报价单号</span><span className="text-[#333] font-medium">BJ20260601001</span></div>
-            <div className="flex gap-4"><span className="text-[#999] w-[80px]">供应商品</span><span className="text-[#333] font-medium">丝苗米</span></div>
-            <div className="flex gap-4"><span className="text-[#999] w-[80px]">报价单价</span><span className="text-[#1a5fa8] font-medium">3000元/吨</span></div>
-            <div className="flex gap-4"><span className="text-[#999] w-[80px]">报价企业</span><span className="text-[#333]">南雄市社村合作农业发展有限公司</span></div>
-          </div>
-          <div className="flex items-center gap-3">
-            <label className="text-[13px] text-[#555] w-[72px] shrink-0">采购数量</label>
-            <div className="flex items-center gap-1.5">
-              <button onClick={() => setQty(Math.max(1, qty - 1))} className="w-7 h-7 border border-[#dde3ec] rounded flex items-center justify-center hover:border-[#1a5fa8] text-[#555]">−</button>
-              <input value={qty} onChange={e => setQty(Number(e.target.value))} className="w-20 border border-[#dde3ec] rounded px-2 py-1.5 text-[13px] text-center focus:outline-none focus:border-[#1a5fa8]" />
-              <button onClick={() => setQty(qty + 1)} className="w-7 h-7 border border-[#dde3ec] rounded flex items-center justify-center hover:border-[#1a5fa8] text-[#555]">+</button>
-              <span className="text-[13px] text-[#999]">吨</span>
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <label className="text-[13px] text-[#555] w-[72px] shrink-0">配送方式</label>
-            <div className="flex gap-2">
-              {["卖家配送","买家自提"].map(m => (
-                <button key={m} onClick={() => setDelivery(m)} className={`px-4 py-1.5 rounded border text-[13px] transition-colors ${delivery===m?"border-[#1a5fa8] bg-[#e8f4fd] text-[#1a5fa8] font-medium":"border-[#dde3ec] text-[#555] hover:border-[#1a5fa8]/60"}`}>{m}</button>
-              ))}
-            </div>
-          </div>
-          {delivery === "卖家配送" && (
-            <div className="flex items-center gap-3">
-              <label className="text-[13px] text-[#555] w-[72px] shrink-0">收货地址</label>
-              <select value={address} onChange={e => setAddress(e.target.value)} className="flex-1 border border-[#dde3ec] rounded px-3 py-1.5 text-[13px] focus:outline-none focus:border-[#1a5fa8] text-[#999]">
-                <option value="">请选择地址</option>
-                <option value="a1">广州市越秀区荣园东路80号</option>
-                <option value="a2">上海市浦东新区市镇区2888号</option>
-              </select>
-            </div>
-          )}
-          <div className="flex items-center gap-3">
-            <label className="text-[13px] text-[#555] w-[72px] shrink-0">结算渠道</label>
-            <div className="flex gap-2">
-              {["建行龙存管","工行安心付"].map(s => (
-                <button key={s} onClick={() => setSettlement(s)} className={`px-4 py-1.5 rounded border text-[13px] transition-colors ${settlement===s?"border-[#1a5fa8] bg-[#e8f4fd] text-[#1a5fa8] font-medium":"border-[#dde3ec] text-[#555] hover:border-[#1a5fa8]/60"}`}>{s}</button>
-              ))}
-            </div>
-          </div>
-          <div className="flex items-center gap-3">
-            <label className="text-[13px] text-[#555] w-[72px] shrink-0">预计金额</label>
-            <span className="text-[#e8831a] font-semibold text-[15px]">¥{(qty * 3000).toLocaleString()}.00</span>
-          </div>
-        </div>
-        <div className="flex justify-end gap-3 px-6 py-4 border-t border-[#e8edf5]">
-          <button onClick={onClose} className="px-5 py-2 border border-[#dde3ec] text-[#555] text-[13px] rounded hover:border-[#999]">取消</button>
-          <button className="px-6 py-2 bg-[#1a5fa8] text-white text-[13px] font-semibold rounded hover:bg-[#0d4a8a]">确认提交</button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 const STATUS_LABELS: Record<string, { label: string; color: string; bg: string }> = {
-  pending: { label: "未下单", color: "#e8831a", bg: "#fff8f0" },
-  ordered: { label: "已下单", color: "#16a34a", bg: "#f0fdf4" },
-  closed:  { label: "已关闭", color: "#999",    bg: "#f5f5f5" },
-  expired: { label: "已过期", color: "#dc2626", bg: "#fff1f1" },
+  pending:    { label: "待报价", color: "#e8831a", bg: "#fff8f0" },
+  quoted:     { label: "已报价", color: "#1a5fa8", bg: "#e8f4fd" },
+  ordered:    { label: "已下单", color: "#16a34a", bg: "#f0fdf4" },
+  notordered: { label: "未下单", color: "#e8831a", bg: "#fff8f0" },
+  closed:     { label: "已关闭", color: "#999",    bg: "#f5f5f5" },
+  expired:    { label: "已过期", color: "#dc2626", bg: "#fff1f1" },
 }
 
-export default function WoShoudaodePage() {
-  const [tab, setTab] = useState<Tab>("caigou")
+function WoShoudaodeContent() {
+  const searchParams = useSearchParams()
+  const initialTab: Tab = searchParams.get("tab") === "gongying" ? "gongying" : "caigou"
+  const [tab, setTab] = useState<Tab>(initialTab)
   const [status, setStatus] = useState<Status>("all")
-  const [submitOrderModal, setSubmitOrderModal] = useState(false)
+  const [cancelId, setCancelId] = useState<string | null>(null)
 
-  const statusTabs: { key: Status; label: string }[] = [
-    { key: "all",     label: "全部" },
-    { key: "pending", label: "未下单" },
-    { key: "ordered", label: "已下单" },
-    { key: "closed",  label: "已关闭" },
-    { key: "expired", label: "已过期" },
-  ]
+  const statusTabs: { key: Status; label: string }[] = tab === "caigou"
+    ? [
+        { key: "all",     label: "全部" },
+        { key: "pending", label: "待报价" },
+        { key: "quoted",  label: "已报价" },
+        { key: "ordered", label: "已下单" },
+        { key: "expired", label: "已过期" },
+        { key: "closed",  label: "已关闭" },
+      ]
+    : [
+        { key: "all",        label: "全部" },
+        { key: "notordered", label: "未下单" },
+        { key: "ordered",    label: "已下单" },
+        { key: "closed",     label: "已关闭" },
+        { key: "expired",    label: "已过期" },
+      ]
 
   return (
     <div className="max-w-[1100px]">
@@ -268,7 +213,19 @@ export default function WoShoudaodePage() {
                             <Eye className="w-3.5 h-3.5" />查看
                           </Link>
                           {row.status === "pending" && (
-                            <button onClick={() => setSubmitOrderModal(true)} className="text-[#e8831a] hover:underline text-[12px] text-left">提交订单</button>
+                            <Link href="/merchant/dingdan-nongye/gy-xunjia/detail?from=shoudaode&action=baojia" className="flex items-center gap-1 text-[#e8831a] hover:underline text-[12px]">
+                              <Pencil className="w-3.5 h-3.5" />去报价
+                            </Link>
+                          )}
+                          {row.status === "quoted" && (
+                            <>
+                              <Link href="/merchant/dingdan-nongye/gy-xunjia/detail?from=shoudaode&action=edit" className="flex items-center gap-1 text-[#e8831a] hover:underline text-[12px]">
+                                <Pencil className="w-3.5 h-3.5" />修改价格
+                              </Link>
+                              <button onClick={() => setCancelId(row.id)} className="flex items-center gap-1 text-[#dc2626] hover:underline text-[12px]">
+                                <XCircle className="w-3.5 h-3.5" />取消报价
+                              </button>
+                            </>
                           )}
                         </div>
                       </td>
@@ -309,8 +266,10 @@ export default function WoShoudaodePage() {
                           <Link href="/merchant/dingdan-nongye/xq-baojia/detail?from=shoudaode" className="flex items-center gap-1 text-[#1a5fa8] hover:underline text-[12px]">
                             <Eye className="w-3.5 h-3.5" />查看
                           </Link>
-                          {row.status === "pending" && (
-                            <button onClick={() => setSubmitOrderModal(true)} className="text-[#e8831a] hover:underline text-[12px] text-left">提交订单</button>
+                          {row.status === "notordered" && (
+                            <Link href="/merchant/xunbaojia/xiadan" className="flex items-center gap-1 text-[#16a34a] hover:underline text-[12px]">
+                              <ShoppingCart className="w-3.5 h-3.5" />提交订单
+                            </Link>
                           )}
                         </div>
                       </td>
@@ -331,7 +290,32 @@ export default function WoShoudaodePage() {
         </div>
       </div>
 
-      {submitOrderModal && <SubmitOrderModal onClose={() => setSubmitOrderModal(false)} />}
+      {/* 取消报价确认弹窗 */}
+      {cancelId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={() => setCancelId(null)}>
+          <div className="bg-white rounded-lg w-[420px] shadow-2xl" onClick={e => e.stopPropagation()}>
+            <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8edf5]">
+              <h3 className="text-[15px] font-bold text-[#1a1a2e]">取消报价</h3>
+              <button onClick={() => setCancelId(null)}><X className="w-5 h-5 text-[#999]" /></button>
+            </div>
+            <div className="px-6 py-6 text-[13px] text-[#555] leading-relaxed">
+              确认取消询价单 <b className="text-[#1a1a2e]">{cancelId}</b> 的报价吗？取消后该报价将失效，采购方将无法基于此报价下单。
+            </div>
+            <div className="flex justify-end gap-3 px-6 py-4 border-t border-[#e8edf5]">
+              <button onClick={() => setCancelId(null)} className="px-5 py-2 border border-[#dde3ec] text-[#555] text-[13px] rounded hover:border-[#999]">再想想</button>
+              <button onClick={() => setCancelId(null)} className="px-6 py-2 bg-[#dc2626] text-white text-[13px] font-semibold rounded hover:bg-[#b91c1c]">确认取消报价</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
+  )
+}
+
+export default function WoShoudaodePage() {
+  return (
+    <Suspense fallback={<div className="max-w-[1100px] p-5 text-[13px] text-[#999]">加载中...</div>}>
+      <WoShoudaodeContent />
+    </Suspense>
   )
 }
