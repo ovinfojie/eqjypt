@@ -287,16 +287,21 @@ export default function WoXiaoshouPage() {
   const [changeModal, setChangeModal] = useState(false)
   const [applyCancelModal, setApplyCancelModal] = useState(false)
 
-  const getActionBtn = (order: typeof ORDERS[0]) => {
+  const getMainBtn = (order: typeof ORDERS[0]) => {
     const map: Record<string, { label: string; color: string; onClick: () => void }> = {
-      "确认订单":     { label: "确认订单",   color: "text-[#1a5fa8]", onClick: () => {} },
-      "提醒":         { label: "提醒",       color: "text-[#e8831a]", onClick: () => {} },
-      "发货":         { label: "发货",       color: "text-[#1a5fa8]", onClick: () => setShippingModal(true) },
-      "发起对账":     { label: "发起对账",   color: "text-[#1a5fa8]", onClick: () => {} },
-      "查看履约情况": { label: "查看履约情况",color: "text-[#1a5fa8]",onClick: () => {} },
+      "确认订单":     { label: "确认订单",     color: "text-[#1a5fa8]", onClick: () => {}                     },
+      "提醒":         { label: "提醒付款",     color: "text-[#e8831a]", onClick: () => {}                     },
+      "发货":         { label: "发货",         color: "text-[#1a5fa8]", onClick: () => setShippingModal(true) },
+      "发起对账":     { label: "发起对账",     color: "text-[#1a5fa8]", onClick: () => {}                     },
+      "查看履约情况": { label: "查看履约情况", color: "text-[#1a5fa8]", onClick: () => {}                     },
     }
     return order.action ? (map[order.action] ?? null) : null
   }
+
+  // 卖方：待付预付款/待发货/生产履约 才允许变更和申请取消；
+  // 待卖方确认直接确认或拒绝，无需变更/取消；待收货/待结算订单已履行不可取消
+  const CHANGEABLE_STATUSES = new Set(["待付预付款", "待发货", "生产履约"])
+  const CANCELABLE_STATUSES = new Set(["待付预付款", "待发货", "生产履约"])
 
   return (
     <div>
@@ -366,7 +371,9 @@ export default function WoXiaoshouPage() {
         </div>
 
         {ORDERS.map(order => {
-          const actionBtn = getActionBtn(order)
+          const mainBtn = getMainBtn(order)
+          const canChange = CHANGEABLE_STATUSES.has(order.status)
+          const canCancel = CANCELABLE_STATUSES.has(order.status)
           return (
             <div key={order.id} className="border-b border-[#e8edf5] last:border-0">
               <div className="px-4 py-2 bg-[#fafbfc] flex items-center gap-4 text-[12px] text-[#666]">
@@ -394,9 +401,13 @@ export default function WoXiaoshouPage() {
                 <div className="px-3 py-3 text-[#666]">{order.settlement}</div>
                 <div className="px-3 py-3"><span className={`text-[11px] font-medium ${order.status==="生产履约"?"text-[#1a5fa8]":order.status==="待发货"?"text-[#e8831a]":"text-[#666]"}`}>{order.status}</span></div>
                 <div className="px-3 py-3 flex flex-col gap-1">
-                  {actionBtn && <button onClick={actionBtn.onClick} className={`${actionBtn.color} hover:underline text-[12px] text-left`}>{actionBtn.label}</button>}
-                  <button onClick={() => setChangeModal(true)} className="text-[#1a5fa8] hover:underline text-[12px] text-left">订单变更</button>
-                  <button onClick={() => setApplyCancelModal(true)} className="text-[#e04040] hover:underline text-[12px] text-left">申请取消</button>
+                  {mainBtn && <button onClick={mainBtn.onClick} className={`${mainBtn.color} hover:underline text-[12px] text-left`}>{mainBtn.label}</button>}
+                  {canChange && (
+                    <button onClick={() => setChangeModal(true)} className="text-[#1a5fa8] hover:underline text-[12px] text-left">订单变更</button>
+                  )}
+                  {canCancel && (
+                    <button onClick={() => setApplyCancelModal(true)} className="text-[#e04040] hover:underline text-[12px] text-left">申请取消</button>
+                  )}
                 </div>
               </div>
             </div>

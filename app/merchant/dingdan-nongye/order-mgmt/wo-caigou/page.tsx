@@ -16,45 +16,6 @@ const ORDERS = [
 
 const STATUS_TABS = ["全部", "待卖方确认", "待付预付款", "待发货", "待收货", "待结算", "已完成", "已关闭"]
 
-/* ─── 取消订单弹窗 ─── */
-function CancelModal({ onClose }: { onClose: () => void }) {
-  const [reason, setReason] = useState("")
-  return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
-      <div className="bg-white rounded-lg w-[480px] shadow-2xl" onClick={e => e.stopPropagation()}>
-        <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8edf5]">
-          <h3 className="text-[15px] font-bold text-[#1a1a2e]">取消订单</h3>
-          <button onClick={onClose}><X className="w-5 h-5 text-[#999]" /></button>
-        </div>
-        <div className="px-6 py-5 space-y-4">
-          <div className="bg-[#fff8e6] border border-[#f5d78e] rounded px-4 py-3 text-[13px] text-[#8a6a00]">
-            取消订单后，预付款将在3个工作日内原路退回。
-          </div>
-          <div>
-            <label className="block text-[13px] font-medium text-[#333] mb-1.5">取消原因 <span className="text-red-500">*</span></label>
-            <div className="space-y-2">
-              {["价格变动，重新协商", "货源不足，无法履约", "买方要求取消", "其他原因"].map(r => (
-                <label key={r} className="flex items-center gap-2 text-[13px] text-[#444] cursor-pointer">
-                  <input type="radio" name="cancel_reason" value={r} onChange={() => setReason(r)} className="accent-[#1a5fa8]" />
-                  {r}
-                </label>
-              ))}
-            </div>
-          </div>
-          <div>
-            <label className="block text-[13px] font-medium text-[#333] mb-1.5">备注说明</label>
-            <textarea className="w-full border border-[#dde3ec] rounded px-3 py-2 text-[13px] resize-none focus:outline-none focus:border-[#1a5fa8]" rows={3} placeholder="请输入备注（选填）" />
-          </div>
-        </div>
-        <div className="flex justify-end gap-3 px-6 py-4 border-t border-[#e8edf5]">
-          <button onClick={onClose} className="px-5 py-2 border border-[#dde3ec] text-[#555] text-[13px] rounded hover:border-[#999]">取消</button>
-          <button className="px-6 py-2 bg-[#1a5fa8] text-white text-[13px] font-semibold rounded hover:bg-[#0d4a8a]">确认取消</button>
-        </div>
-      </div>
-    </div>
-  )
-}
-
 /* ─── 种植发货弹窗（仅采购侧查看发货状态） ─── */
 function ShippingViewModal({ onClose }: { onClose: () => void }) {
   return (
@@ -206,7 +167,7 @@ function ContractModal({ onClose }: { onClose: () => void }) {
                 发票信息
               </h4>
               <div className="grid grid-cols-3 gap-x-6 gap-y-3 text-[13px]">
-                {[["发票抬头","广东新供销天润粮油集团有限公司"],["纳税人识别号","91440101MA5D0F0E0K"],["发票类型","增值税专用发票"],["联系电话","020-88886666"],["注册地址","广东省广州市天河区天河路198号"],["��户银行","中国工商银行股份有限公司广州天河支行"],["银行账号","440000800015"],["接收邮箱","168722@qq.com"]].map(([k,v]) => (
+                {[["发票抬头","广东新供销天润粮油集团有限公司"],["纳税人识别号","91440101MA5D0F0E0K"],["发票类型","增值税专用发票"],["联系电话","020-88886666"],["注册地址","广东省广州市天河区天河路198号"],["���户银行","中国工商银行股份有限公司广州天河支行"],["银行账号","440000800015"],["接收邮箱","168722@qq.com"]].map(([k,v]) => (
                   <div key={k}>
                     <div className="text-[#999] mb-0.5">{k}</div>
                     <div className="text-[#333] font-medium">{v}</div>
@@ -419,24 +380,27 @@ function ApplyCancelModal({ onClose }: { onClose: () => void }) {
 /* ─── 主页面 ─── */
 export default function WoCaigouPage() {
   const [activeTab, setActiveTab] = useState("全部")
-  const [cancelModal, setCancelModal] = useState(false)
   const [shippingModal, setShippingModal] = useState(false)
   const [reconcileModal, setReconcileModal] = useState(false)
   const [contractModal, setContractModal] = useState(false)
   const [changeModal, setChangeModal] = useState(false)
   const [applyCancelModal, setApplyCancelModal] = useState(false)
 
-  const getActionBtn = (order: typeof ORDERS[0]) => {
+  // 主操作按钮（按状态显示）
+  const getMainBtn = (order: typeof ORDERS[0]) => {
     const map: Record<string, { label: string; color: string; onClick: () => void }> = {
-      "取消订单":     { label: "取消订单",   color: "text-[#e04040]", onClick: () => setCancelModal(true)    },
-      "付预付款":     { label: "付预付款",   color: "text-[#e8831a]", onClick: () => {}                      },
-      "终止发货":     { label: "终止发货",   color: "text-[#e04040]", onClick: () => setShippingModal(true)  },
-      "验收":         { label: "验收",       color: "text-[#1a5fa8]", onClick: () => {}                      },
-      "查看对账单":   { label: "查看对账单", color: "text-[#1a5fa8]", onClick: () => setReconcileModal(true) },
-      "查看履约情况": { label: "查看履约情况",color: "text-[#1a5fa8]",onClick: () => {}                      },
+      "付预付款":     { label: "付预付款",     color: "text-[#e8831a]", onClick: () => {}                      },
+      "终止发货":     { label: "终止发货",     color: "text-[#e04040]", onClick: () => setShippingModal(true)  },
+      "验收":         { label: "验收",         color: "text-[#1a5fa8]", onClick: () => {}                      },
+      "查看对账单":   { label: "查看对账单",   color: "text-[#1a5fa8]", onClick: () => setReconcileModal(true) },
+      "查看履约情况": { label: "查看履约情况", color: "text-[#1a5fa8]", onClick: () => {}                      },
     }
     return map[order.action] ?? null
   }
+
+  // 哪些状态允许"订单变更"和"申请取消"
+  const CHANGEABLE_STATUSES  = new Set(["待卖方确认", "待付预付款", "待发货", "生产履约"])
+  const CANCELABLE_STATUSES  = new Set(["待卖方确认", "待付预付款", "待发货", "生产履约"])
 
   return (
     <div>
@@ -509,7 +473,9 @@ export default function WoCaigouPage() {
 
         {/* 订单列表 */}
         {ORDERS.map(order => {
-          const actionBtn = getActionBtn(order)
+          const mainBtn = getMainBtn(order)
+          const canChange = CHANGEABLE_STATUSES.has(order.status)
+          const canCancel = CANCELABLE_STATUSES.has(order.status)
           return (
             <div key={order.id} className="border-b border-[#e8edf5] last:border-0">
               <div className="px-4 py-2 bg-[#fafbfc] flex items-center gap-4 text-[12px] text-[#666]">
@@ -544,11 +510,15 @@ export default function WoCaigouPage() {
                   <span className={`text-[11px] font-medium ${order.status==="生产履约"?"text-[#1a5fa8]":"text-[#666]"}`}>{order.status}</span>
                 </div>
                 <div className="px-3 py-3 flex flex-col gap-1">
-                  {actionBtn && (
-                    <button onClick={actionBtn.onClick} className={`${actionBtn.color} hover:underline text-[12px] text-left`}>{actionBtn.label}</button>
+                  {mainBtn && (
+                    <button onClick={mainBtn.onClick} className={`${mainBtn.color} hover:underline text-[12px] text-left`}>{mainBtn.label}</button>
                   )}
-                  <button onClick={() => setChangeModal(true)} className="text-[#1a5fa8] hover:underline text-[12px] text-left">订单变更</button>
-                  <button onClick={() => setApplyCancelModal(true)} className="text-[#e04040] hover:underline text-[12px] text-left">申请取消</button>
+                  {canChange && (
+                    <button onClick={() => setChangeModal(true)} className="text-[#1a5fa8] hover:underline text-[12px] text-left">订单变更</button>
+                  )}
+                  {canCancel && (
+                    <button onClick={() => setApplyCancelModal(true)} className="text-[#e04040] hover:underline text-[12px] text-left">申请取消</button>
+                  )}
                 </div>
               </div>
             </div>
@@ -556,7 +526,6 @@ export default function WoCaigouPage() {
         })}
       </div>
 
-      {cancelModal      && <CancelModal onClose={() => setCancelModal(false)} />}
       {shippingModal    && <ShippingViewModal onClose={() => setShippingModal(false)} />}
       {reconcileModal   && <ReconciliationModal onClose={() => setReconcileModal(false)} />}
       {contractModal    && <ContractModal onClose={() => setContractModal(false)} />}
