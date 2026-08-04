@@ -115,10 +115,10 @@ const shopMenuGroups = [
   {
     label: "集采",
     items: [
-      { label: "集采活动", href: "/merchant/jicai/huodong-list", icon: Layers        },
-      { label: "发布集采", href: "/merchant/jicai/fabu",         icon: ClipboardList },
-      { label: "集采统单", href: "/merchant/jicai/tongdan",      icon: ClipboardList },
-      { label: "客户分组", href: "/merchant/jicai/kehu-fenzu",   icon: Users         },
+      { label: "集采活动", href: "/merchant/jicai/huodong-list",  icon: Layers        },
+      { label: "我销售",   href: "/merchant/jicai/wo-xiaoshou",   icon: ClipboardList },
+      { label: "我采购",   href: "/merchant/jicai/wo-caigou",     icon: ClipboardList },
+      { label: "客户分组", href: "/merchant/jicai/kehu-fenzu",    icon: Users         },
     ],
   },
 
