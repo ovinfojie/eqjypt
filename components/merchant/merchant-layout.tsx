@@ -119,23 +119,29 @@ const shopMenuGroups = [
     label: "产销",
     items: [
       {
-        label: "采购管理", icon: ShoppingCart,
+        label: "发布管理", icon: FileText,
         children: [
-          { label: "我的采购需求", href: "/merchant/chanxiao/caigou-list" },
-          { label: "发布采购需求", href: "/merchant/chanxiao/fabu-caigou" },
+          { label: "采购需求", href: "/merchant/chanxiao/caigou-list"   },
+          { label: "供应信息", href: "/merchant/chanxiao/supply-list"   },
         ],
       },
       {
-        label: "销售管理", icon: Handshake,
+        label: "询报价管理", icon: MessageSquare,
         children: [
-          { label: "我的销售信息", href: "/merchant/chanxiao/xiaoshou-list" },
-          { label: "发布销售信息", href: "/merchant/chanxiao/fabu-xiaoshou" },
+          { label: "我发起的", href: "/merchant/chanxiao/xunbaojia/wo-faqide"    },
+          { label: "我收到的", href: "/merchant/chanxiao/xunbaojia/wo-shoudaode" },
         ],
       },
-      { label: "订单管理",      href: "/merchant/chanxiao/orders",         icon: ClipboardList },
-      { label: "撤回需求/信息", href: "/merchant/chanxiao/withdraw",        icon: XCircle       },
-      { label: "撤回报价",      href: "/merchant/chanxiao/quote-withdraw",  icon: XCircle       },
-      { label: "我的收藏",      href: "/merchant/chanxiao/favorites",       icon: Bookmark      },
+      {
+        label: "订单管理", icon: ClipboardList,
+        children: [
+          { label: "我采购", href: "/merchant/chanxiao/orders/wo-caigou"   },
+          { label: "我销售", href: "/merchant/chanxiao/orders/wo-xiaoshou" },
+        ],
+      },
+      { label: "撤回需求/信息", href: "/merchant/chanxiao/withdraw",       icon: XCircle  },
+      { label: "撤回报价",      href: "/merchant/chanxiao/quote-withdraw", icon: XCircle  },
+      { label: "我的收藏",      href: "/merchant/chanxiao/favorites",      icon: Bookmark },
     ],
   },
 
