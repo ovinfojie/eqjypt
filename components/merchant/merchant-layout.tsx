@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils"
 import {
   LayoutDashboard, FileText, TrendingUp, ShoppingCart,
   Package, Users, Settings, ChevronRight, ArrowLeft,
-  MessageSquare, ChevronDown, Handshake, Star, Gavel, Link2, ShieldCheck,
-  Building2, Layers, ClipboardList, FileSignature, Wallet, Gift, UserCircle,
+  MessageSquare, ChevronDown, Handshake, Star, Gavel, Link2,
+  Layers, ClipboardList, FileSignature, Wallet, Gift, UserCircle,
   Bookmark, Bell, XCircle,
 } from "lucide-react"
 import { useState } from "react"
@@ -30,14 +30,7 @@ const menuGroups = [
   {
     label: "商户设置",
     items: [
-      { label: "商户装修",   href: "/merchant/settings/decoration", icon: Layers     },
-      { label: "企业信息",   href: "/merchant/enterprise/info",     icon: Building2  },
-      { label: "员工管理",   href: "/merchant/enterprise/staff",  icon: Users      },
-      { label: "子商户管理", href: "/merchant/enterprise/sub",    icon: Users      },
-      { label: "角色权限",   href: "/merchant/enterprise/roles",  icon: Settings   },
-      { label: "账号信息",   href: "/merchant/account/info",      icon: UserCircle },
-      { label: "签章认证",   href: "/merchant/account/seal-cert", icon: ShieldCheck},
-      { label: "商户设置",   href: "/merchant/settings",          icon: Settings   },
+      { label: "商户装修", href: "/merchant/settings/decoration", icon: Layers },
     ],
   },
 
@@ -194,7 +187,7 @@ export function MerchantLayout({ children }: { children: React.ReactNode }) {
           总控台
         </Link>
         <span className="text-white/30">|</span>
-        <span className="text-white font-semibold text-[14px]">商家中心</span>
+        <span className="text-white font-semibold text-[14px]">商���中心</span>
         <span className="ml-auto text-[12px] text-white/50">盒马超市采购部（no.122438）</span>
       </header>
 
