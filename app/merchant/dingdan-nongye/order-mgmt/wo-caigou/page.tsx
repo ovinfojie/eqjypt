@@ -356,7 +356,7 @@ function ContractModal({ onClose }: { onClose: () => void }) {
                     <input className="w-full border border-[#e8edf5] bg-[#f5f7fa] rounded px-3 py-2 text-[13px] text-[#999]" placeholder="根据所选订单自动获取" readOnly />
                   </div>
                   <div>
-                    <label className="block text-[13px] font-medium text-[#333] mb-1.5">乙方（卖方）</label>
+                    <label className="block text-[13px] font-medium text-[#333] mb-1.5">乙方（卖��）</label>
                     <input className="w-full border border-[#e8edf5] bg-[#f5f7fa] rounded px-3 py-2 text-[13px] text-[#999]" placeholder="根据所选订单自动获取" readOnly />
                   </div>
                 </div>
@@ -447,7 +447,7 @@ function ApplyCancelModal({ onClose }: { onClose: () => void }) {
 /* ──────────────────────────────────────────────
    批次单列表组件
    ────────────────────────────────────────────── */
-const BATCH_STATUS_TABS = ["全部","待买家验收","待卖家确认验收结果","待卖家发起对账","待买家确认对账","待买家付款","待卖家确认收款","已完成","已关闭"]
+  const BATCH_STATUS_TABS = ["全部","待买家验收","待卖家发起对账","待买家确认对账","待买家付款","待卖家确认收款","已完成","已关闭"]
 
 const BATCH_DATA = [
   {
@@ -672,7 +672,7 @@ function BatchDetailDrawerInline({ onClose }: { onClose: () => void }) {
   )
 }
 
-/* ──────────────────────────────────────────────
+/* ───────────────────────────────────���──────────
    对账记录列表
    ────────────────────────────────────────────── */
 const RECONCILE_RECORDS = [
