@@ -104,10 +104,24 @@ const shopMenuGroups = [
   {
     label: "竞价",
     items: [
-      { label: "我参与的竞拍", href: "/merchant/jingjia/wo-canjia",  icon: Gavel         },
-      { label: "我发布的竞拍", href: "/merchant/jingjia/wo-fabu",    icon: Gavel         },
-      { label: "中标通知书",   href: "/merchant/jingjia/win-notice", icon: FileText      },
-      { label: "保证金管理",   href: "/merchant/jingjia/deposit",    icon: Wallet        },
+      {
+        label: "我发布的竞拍", icon: Gavel,
+        children: [
+          { label: "竞拍列表",   href: "/merchant/jingjia/fabu/list"       },
+          { label: "中标通知书", href: "/merchant/jingjia/fabu/win-notice" },
+          { label: "缴纳记录",   href: "/merchant/jingjia/fabu/deposit"    },
+          { label: "退款申请",   href: "/merchant/jingjia/fabu/refund"     },
+        ],
+      },
+      {
+        label: "我报名的竞拍", icon: ClipboardList,
+        children: [
+          { label: "报名记录",   href: "/merchant/jingjia/baoming/list"       },
+          { label: "中标通知书", href: "/merchant/jingjia/baoming/win-notice" },
+          { label: "缴纳记录",   href: "/merchant/jingjia/baoming/deposit"    },
+          { label: "退款申请",   href: "/merchant/jingjia/baoming/refund"     },
+        ],
+      },
     ],
   },
 

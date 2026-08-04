@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Link from "next/link"
 import { FileText, Plus, ChevronLeft, ChevronRight } from "lucide-react"
 
 const CONTRACTS = [
@@ -280,7 +281,7 @@ export default function ContractWoFaqidePage() {
                     <td className="px-3 py-2.5 text-[#999] whitespace-nowrap">{c.created}</td>
                     <td className="px-3 py-2.5">
                       <div className="flex gap-2 whitespace-nowrap">
-                        <button className="text-[#1a5fa8] hover:underline">详情</button>
+                        <Link href="/merchant/dingdan-nongye/contract-view" className="text-[#1a5fa8] hover:underline">详情</Link>
                         {c.contractStatus === "待我方签章" && <button className="text-[#1a5fa8] hover:underline">签章</button>}
                         {(c.contractStatus === "待我方签章" || c.contractStatus === "待对方签章") && (
                           <button className="text-[#1a5fa8] hover:underline">修改合同</button>

@@ -23,24 +23,6 @@ export function SiteHeader() {
       <div className="max-w-[1400px] mx-auto px-6 h-16 flex items-center gap-8">
         {/* Logo + Platform Name */}
         <Link href="/portal" className="flex items-center gap-3 shrink-0">
-          <div className="flex items-center gap-1.5">
-            {/* China CO-OP logo placeholder */}
-            <div className="w-10 h-10 flex items-center justify-center">
-              <svg viewBox="0 0 40 40" fill="none" className="w-10 h-10">
-                <circle cx="20" cy="20" r="19" stroke="#3a8c3f" strokeWidth="2" fill="white" />
-                <text x="20" y="15" textAnchor="middle" fontSize="7" fill="#3a8c3f" fontWeight="bold">中国供销</text>
-                <text x="20" y="24" textAnchor="middle" fontSize="6" fill="#3a8c3f">合作社社</text>
-                <text x="20" y="32" textAnchor="middle" fontSize="5" fill="#3a8c3f">CHINA CO-OP</text>
-              </svg>
-            </div>
-            <div className="w-10 h-10 flex items-center justify-center">
-              <svg viewBox="0 0 40 40" fill="none" className="w-10 h-10">
-                <rect width="40" height="40" rx="4" fill="#e8831a" />
-                <text x="20" y="26" textAnchor="middle" fontSize="16" fill="white" fontWeight="bold">粤</text>
-                <text x="20" y="35" textAnchor="middle" fontSize="6" fill="white">供销</text>
-              </svg>
-            </div>
-          </div>
           <div className="leading-tight">
             <div className="text-[13px] font-bold text-[#1a5fa8]">粤供销公共型农产品</div>
             <div className="text-[13px] font-bold text-[#1a5fa8]">产地交易服务平台</div>
