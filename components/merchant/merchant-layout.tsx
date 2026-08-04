@@ -8,7 +8,7 @@ import {
   Package, Users, Settings, ChevronRight, ArrowLeft,
   MessageSquare, ChevronDown, Handshake, Star, Gavel, Link2,
   Layers, ClipboardList, FileSignature, Wallet, Gift, UserCircle,
-  Bookmark, Bell, XCircle, Building2, ShieldCheck, Store,
+  Bell, Building2, ShieldCheck, Store,
 } from "lucide-react"
 import { useState } from "react"
 
@@ -147,9 +147,6 @@ const shopMenuGroups = [
           { label: "我销售", href: "/merchant/chanxiao/orders/wo-xiaoshou" },
         ],
       },
-      { label: "撤回需求/信息", href: "/merchant/chanxiao/withdraw",       icon: XCircle  },
-      { label: "撤回报价",      href: "/merchant/chanxiao/quote-withdraw", icon: XCircle  },
-      { label: "我的收藏",      href: "/merchant/chanxiao/favorites",      icon: Bookmark },
     ],
   },
 
