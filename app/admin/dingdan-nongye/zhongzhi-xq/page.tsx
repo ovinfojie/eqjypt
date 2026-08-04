@@ -78,7 +78,7 @@ export default function ZhongzhiXqPage() {
       {/* 页头 */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-[20px] font-bold text-[#1a1a2e]">平台终止需求</h1>
+          <h1 className="text-[20px] font-bold text-[#1a1a2e]">订单种植需求</h1>
           <p className="text-[13px] text-[#6b7c93] mt-0.5">审核商家提交的订单种植需求终止申请，驳回需填写撤回理由</p>
         </div>
         <button className="flex items-center gap-2 px-4 py-2 border border-[#dde3ec] rounded text-[13px] text-[#444] hover:border-[#1a5fa8] hover:text-[#1a5fa8] transition-colors">
