@@ -172,26 +172,24 @@ export default function WoCaigouDetailPage() {
         {/* Tab内容 */}
         <div className="bg-white rounded-lg border border-[#e8edf5]">
 
-          {/* Tab切换按钮 */}
-          <div className="flex border-b border-[#e8edf5]">
-            {([["info","订单信息"],["contract","合同、发票"],["production","生产履约情况"]] as const).map(([t,l])=>(
-              <button key={t} onClick={()=>setActiveTab(t)} className={`px-5 py-3 text-[13px] border-b-2 transition-colors ${activeTab===t?"border-[#1a5fa8] text-[#1a5fa8] font-semibold":"border-transparent text-[#666] hover:text-[#1a5fa8]"}`}>{l}</button>
-            ))}
+          {/* Tab切换按钮 + 收起/展开 */}
+          <div className="flex items-center border-b border-[#e8edf5]">
+            <div className="flex flex-1">
+              {([["info","订单信息"],["contract","合同、发票"],["production","生产履约情况"]] as const).map(([t,l])=>(
+                <button key={t} onClick={()=>setActiveTab(t)} className={`px-5 py-3 text-[13px] border-b-2 transition-colors ${activeTab===t?"border-[#1a5fa8] text-[#1a5fa8] font-semibold":"border-transparent text-[#666] hover:text-[#1a5fa8]"}`}>{l}</button>
+              ))}
+            </div>
+            <button
+              onClick={() => setOrderInfoCollapsed(c => !c)}
+              className="flex items-center gap-1 mr-4 text-[13px] text-[#1a5fa8] hover:opacity-80 transition-opacity"
+            >
+              {orderInfoCollapsed ? <><ChevronDown className="w-4 h-4" />展开</> : <><ChevronUp className="w-4 h-4" />收起</>}
+            </button>
           </div>
 
           <div className="p-5 space-y-6">
             {activeTab === "info" && (
               <>
-                {/* 折叠/展开控制行 */}
-                <div className="flex items-center justify-between -mt-1 mb-1">
-                  <span className="text-[13px] font-semibold text-[#1a1a2e]">订单信息</span>
-                  <button
-                    onClick={() => setOrderInfoCollapsed(c => !c)}
-                    className="flex items-center gap-1 text-[13px] text-[#1a5fa8] hover:opacity-80 transition-opacity"
-                  >
-                    {orderInfoCollapsed ? <><ChevronDown className="w-4 h-4" />展开</> : <><ChevronUp className="w-4 h-4" />收起</>}
-                  </button>
-                </div>
                 {!orderInfoCollapsed && <>
                 {/* 商品信息 */}
                 <div>
@@ -220,7 +218,7 @@ export default function WoCaigouDetailPage() {
                 <div>
                   <h4 className="text-[13px] font-bold text-[#1a1a2e] border-l-4 border-[#1a5fa8] pl-3 mb-3">订单明细</h4>
                   <div className="grid grid-cols-3 gap-x-8 gap-y-4 text-[13px]">
-                    {[["买方","广东新供销天润粮油集团有限公司"],["商家","南雄市社村合作农业发展有限公司\n(南雄市社村合作农业发展有限公司)"],["供应商","——"],["买方联系人信息","王汉  18978907891"],["商家联系人信息","张悦  15527522832"],["供应商联系人信息","王鹏  15527522832"],["收货计划","2026-06-11 00:00:00 至 2026-06-12 23:59:59"],["配送方式","卖家配送"],["收货人信息","广东省广州市越秀区大东街道荣园东路78号\n陈先生  17878907890"],["定价方式","固定价"],["交易模式","担保交易"],["结算方式","预付款"],["支付渠道","工行安心付"],["买方订单备注","无"]].map(([k,v])=>(
+                    {[["买方","广东新供销天润粮油集团有限公司"],["商家","南雄市社村合作农业发展有限公司\n(南雄市社村合作农业发展有限公司)"],["供应商","——"],["买方联系人信息","王汉  18978907891"],["商家联系人信息","张悦  15527522832"],["供应商联系人信息","王鹏  15527522832"],["收货计划","2026-06-11 00:00:00 至 2026-06-12 23:59:59"],["配送方式","卖家配送"],["收货人信息","广东省广州市越秀区大东��道荣园东路78号\n陈先生  17878907890"],["定价方式","固定价"],["交易模式","担保交易"],["结算方式","预付款"],["支付渠道","工行安心付"],["买方订单备注","无"]].map(([k,v])=>(
                       <div key={k}><div className="text-[#999] mb-0.5">{k}</div><div className="text-[#333] whitespace-pre-line">{v}</div></div>
                     ))}
                   </div>
@@ -318,7 +316,7 @@ export default function WoCaigouDetailPage() {
                         <td className="px-4 py-3">{t.paid}</td>
                         <td className="px-4 py-3 text-[12px] text-[#666]">{t.period}</td>
                         <td className="px-4 py-3"><span className={`text-[12px] font-medium ${t.status==="已完成"?"text-[#0a7a45]":t.status==="已逾期"?"text-[#e04040]":t.status==="收购中"?"text-[#1a5fa8]":"text-[#666]"}`}>{t.status}</span></td>
-                        <td className="px-4 py-3">{t.status!=="待作业"?<button className="text-[#1a5fa8] text-[12px] hover:underline">查看服务详情</button>:<span className="text-[#ccc]">——</span>}</td>
+                        <td className="px-4 py-3">{t.status!=="待��业"?<button className="text-[#1a5fa8] text-[12px] hover:underline">查看服务详情</button>:<span className="text-[#ccc]">——</span>}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -473,6 +471,13 @@ function BatchPanel() {
         <div className="px-5 py-4">
           {activeTab === "batch" && (
             synced ? (
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 px-4 py-3 bg-[#f0f7ff] border border-[#c6deff] rounded-lg text-[13px] text-[#3a6fa8]">
+                  <svg className="w-4 h-4 shrink-0 text-[#1a5fa8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                  <span>货物正在入库处理中，批次单将在入库完成后自动同步至此，请稍后查看。</span>
+                </div>
               <div className="overflow-x-auto">
                 <table className="w-full text-[12px] border border-[#e8edf5]">
                   <thead className="bg-[#f5f7fa]">
@@ -503,6 +508,7 @@ function BatchPanel() {
                     ))}
                   </tbody>
                 </table>
+              </div>
               </div>
             ) : (
               <div className="flex items-center gap-3 px-4 py-3 bg-[#f0f7ff] border border-[#c6deff] rounded-lg text-[13px] text-[#3a6fa8]">
