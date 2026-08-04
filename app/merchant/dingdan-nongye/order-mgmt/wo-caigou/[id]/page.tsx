@@ -12,10 +12,6 @@ const FARMER_TASKS = [
   { id:"ZZRW1781072816713", name:"程晓",   area:50,  supply:2,  paid:0,  period:"2026-06-11 至 2026-06-12", status:"已逾期" },
   { id:"ZZRW1781072816714", name:"宋玉",   area:50,  supply:2,  paid:1,  period:"2026-06-11 至 2026-06-12", status:"收购中" },
 ]
-const BATCHES = [
-  { id:"PB489238696064", time:"2026-07-08 10:40:45", logistics:"天业冷链物流", trackNo:"WL598760431760", product:"丝苗米", batchStatus:"待卖家确认验收", accountNo:"CSOA46125430 3744", settlementNo:"SO5903718236 32", qty:"2.00吨", total:"3000.00", checked:"3000.00" },
-  { id:"PB489238696065", time:"2026-07-08 10:40:45", logistics:"天业冷链物流", trackNo:"WL598760431760", product:"丝苗米", batchStatus:"待卖家确认验收", accountNo:"CSOA46125430 3744", settlementNo:"SO5903718236 32", qty:"2.00吨", total:"3000.00", checked:"3000.00" },
-]
 
 /* ─── 批次验收弹窗 ─── */
 function BatchAcceptModal({ onClose }: { onClose: () => void }) {
@@ -169,41 +165,11 @@ export default function WoCaigouDetailPage() {
           </div>
         </div>
 
+        {/* 批次单 / 对账单 / 结算单 — 始终显示 */}
+        <BatchPanel />
+
         {/* Tab内容 */}
         <div className="bg-white rounded-lg border border-[#e8edf5]">
-          {activeTab === "production" && (
-            <div className="border-b border-[#e8edf5] mb-0">
-              <div className="flex gap-1 px-5 pt-3">
-                {(["批次单列表","关联对账单","关联结算单"] as const).map(t => (
-                  <button key={t} className="px-4 py-2 text-[13px] border-b-2 border-[#1a5fa8] text-[#1a5fa8] font-semibold mr-1">{t}</button>
-                ))}
-              </div>
-              <div className="px-5 pb-3">
-                <button onClick={()=>setBatchModal(true)} className="mt-3 px-4 py-1.5 bg-[#1a5fa8] text-white text-[13px] rounded hover:bg-[#0d4a8a]">创建批次验收</button>
-                <table className="w-full text-[12px] mt-3 border border-[#e8edf5]">
-                  <thead className="bg-[#f5f7fa]"><tr>{["批次单编号","发货时间","快递/物流公司","物流单号","商品","批次状态","关联对账单","关联结算单","发货数量(单位)","发货总金额(元)","验收总金额(元)","操作"].map(h=><th key={h} className="px-2 py-2 text-left font-semibold text-[#666] whitespace-nowrap">{h}</th>)}</tr></thead>
-                  <tbody>
-                    {BATCHES.map(b=>(
-                      <tr key={b.id} className="border-t border-[#e8edf5]">
-                        <td className="px-2 py-2.5 text-[#1a1a2e]">{b.id}</td>
-                        <td className="px-2 py-2.5 text-[#666]">{b.time}</td>
-                        <td className="px-2 py-2.5 text-[#666]">{b.logistics}</td>
-                        <td className="px-2 py-2.5 text-[#1a5fa8]">{b.trackNo}</td>
-                        <td className="px-2 py-2.5 text-[#666]">{b.product}</td>
-                        <td className="px-2 py-2.5 text-[#e8831a]">{b.batchStatus}</td>
-                        <td className="px-2 py-2.5 text-[#666]">{b.accountNo}</td>
-                        <td className="px-2 py-2.5 text-[#666]">{b.settlementNo}</td>
-                        <td className="px-2 py-2.5 text-[#1a1a2e]">{b.qty}</td>
-                        <td className="px-2 py-2.5 text-[#1a1a2e]">{b.total}</td>
-                        <td className="px-2 py-2.5 text-[#1a1a2e]">{b.checked}</td>
-                        <td className="px-2 py-2.5"><button onClick={()=>setBatchModal(true)} className="text-[#1a5fa8] hover:underline">详情</button></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
 
           {/* Tab切换按钮 */}
           <div className="flex border-b border-[#e8edf5]">
@@ -350,6 +316,51 @@ export default function WoCaigouDetailPage() {
         </div>
       </div>
       {batchModal && <BatchAcceptModal onClose={()=>setBatchModal(false)} />}
+    </div>
+  )
+}
+
+/* ─── 批次单/对账单/结算单 独立区块 ─── */
+function BatchPanel() {
+  const [activeTab, setActiveTab] = useState<"batch"|"account"|"settlement">("batch")
+  const tabs = [
+    { key: "batch" as const,      label: "批次单列表"  },
+    { key: "account" as const,    label: "关联对账单"  },
+    { key: "settlement" as const, label: "关联结算单"  },
+  ]
+  return (
+    <div className="bg-white rounded-lg border border-[#e8edf5]">
+      <div className="flex border-b border-[#e8edf5] px-5 pt-1">
+        {tabs.map(t => (
+          <button
+            key={t.key}
+            onClick={() => setActiveTab(t.key)}
+            className={`px-4 py-2.5 text-[13px] border-b-2 mr-1 transition-colors ${
+              activeTab === t.key
+                ? "border-[#1a5fa8] text-[#1a5fa8] font-semibold"
+                : "border-transparent text-[#666] hover:text-[#1a5fa8]"
+            }`}
+          >
+            {t.label}
+          </button>
+        ))}
+      </div>
+      <div className="px-5 py-5">
+        {activeTab === "batch" && (
+          <div className="flex items-center gap-3 px-4 py-3 bg-[#f0f7ff] border border-[#c6deff] rounded-lg text-[13px] text-[#3a6fa8]">
+            <svg className="w-4 h-4 shrink-0 text-[#1a5fa8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+            </svg>
+            <span>货物正在入库处理中，批次单将在入库完成后自动同步至此，请稍后查看。</span>
+          </div>
+        )}
+        {activeTab === "account" && (
+          <div className="text-[13px] text-[#999] text-center py-6">暂无关联对账单</div>
+        )}
+        {activeTab === "settlement" && (
+          <div className="text-[13px] text-[#999] text-center py-6">暂无关联结算单</div>
+        )}
+      </div>
     </div>
   )
 }
