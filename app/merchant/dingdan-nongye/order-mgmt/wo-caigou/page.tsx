@@ -203,7 +203,7 @@ function ContractModal({ onClose }: { onClose: () => void }) {
                     <select className="flex-1 border border-[#dde3ec] rounded px-3 py-2 text-[13px] focus:outline-none focus:border-[#1a5fa8] text-[#999]">
                       <option value="">请选择</option>
                       <option>2026年粮食采购合同模板</option>
-                      <option>农产品购销合同模板</option>
+                      <option>农产品购销合同���板</option>
                     </select>
                     <button className="px-3 py-2 border border-[#1a5fa8] text-[#1a5fa8] text-[13px] rounded hover:bg-[#e8f4fd]">新增</button>
                   </div>
@@ -377,8 +377,240 @@ function ApplyCancelModal({ onClose }: { onClose: () => void }) {
   )
 }
 
+/* ──────────────────────────────────────────────
+   批次单列表组件
+   ────────────────────────────────────────────── */
+const BATCH_STATUS_TABS = ["全部","待买家验收","待卖家确认验收结果","待卖家发起对账","待买家确认对账","待买家付款","待卖家确认收款","已完成","已关闭"]
+
+const BATCH_DATA = [
+  {
+    batchNo: "PB457559072784", shipTime: "2026-08-03 22:49:39", orderNo: "PO637075481616",
+    product: "核桃", img: "/images/hetao.jpg",
+    shipAmt: "¥1.00", acceptAmt: "¥1.00",
+    delivery: "买家自提", settlement: "工行安心付",
+    buyer: "创正信息技术有限公司\n创正信息技术有限公司", seller: "矩正1\n矩正信息技术（上海）有限公司",
+    expectTime: "2026-08-13 23:59:59", tradeMode: "担保交易", orderStatus: "待买家付款",
+    accountNo: "CSOA622047207568", accountTime: "2026-08-03 22:52:20",
+    settlementNo: "SO491851817104", settlementTime: "2026-08-03 22:53:42",
+  },
+  {
+    batchNo: "PB457559072768", shipTime: "2026-08-03 22:49:33", orderNo: "PO637075481616",
+    product: "丝苗米", img: "",
+    shipAmt: "¥3000.00", acceptAmt: "¥3000.00",
+    delivery: "卖家配送", settlement: "建行龙存管",
+    buyer: "广东新供销天润粮油集团有限公司", seller: "南雄市社村合作农业发展有限公司",
+    expectTime: "2026-08-20 23:59:59", tradeMode: "担保交易", orderStatus: "待买家验收",
+    accountNo: "", accountTime: "",
+    settlementNo: "", settlementTime: "",
+  },
+]
+
+function BatchDanList() {
+  const [statusTab, setStatusTab] = useState("全部")
+  const [batchDetailOpen, setBatchDetailOpen] = useState(false)
+
+  return (
+    <div>
+      {/* 搜索区 */}
+      <div className="bg-white rounded-lg border border-[#e8edf5] p-4 mb-4 space-y-3">
+        <div className="grid grid-cols-4 gap-3">
+          {[["采购订单编号","请输入采购订单编号"],["商品名称","请输入商品名称"],["批次单编号","请输入批次单编号"],["买家","请输入"]].map(([label, ph]) => (
+            <div key={label} className="flex items-center gap-2">
+              <label className="text-[13px] text-[#555] whitespace-nowrap shrink-0">{label}：</label>
+              <input className="flex-1 border border-[#dde3ec] rounded px-2.5 py-1.5 text-[13px] focus:outline-none focus:border-[#1a5fa8] min-w-0" placeholder={ph} />
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-4 gap-3">
+          {[["卖家","请输入"],["对账单编号","请输入对账单编号"],["结算单编号","请输入结算单编号"]].map(([label, ph]) => (
+            <div key={label} className="flex items-center gap-2">
+              <label className="text-[13px] text-[#555] whitespace-nowrap shrink-0">{label}：</label>
+              <input className="flex-1 border border-[#dde3ec] rounded px-2.5 py-1.5 text-[13px] focus:outline-none focus:border-[#1a5fa8] min-w-0" placeholder={ph} />
+            </div>
+          ))}
+          <div className="flex items-center gap-2">
+            <label className="text-[13px] text-[#555] whitespace-nowrap shrink-0">交易模式：</label>
+            <select className="flex-1 border border-[#dde3ec] rounded px-2.5 py-1.5 text-[13px] focus:outline-none focus:border-[#1a5fa8] text-[#999] min-w-0">
+              <option value="">请选择交易模式</option>
+              <option>担保交易</option><option>非担保交易</option>
+            </select>
+          </div>
+        </div>
+        <div className="grid grid-cols-4 gap-3">
+          <div className="flex items-center gap-2">
+            <label className="text-[13px] text-[#555] whitespace-nowrap shrink-0">数据来源：</label>
+            <select className="flex-1 border border-[#dde3ec] rounded px-2.5 py-1.5 text-[13px] focus:outline-none focus:border-[#1a5fa8] text-[#999] min-w-0">
+              <option value="">请选择数据来源</option>
+              <option>订单农业</option><option>电商平台</option>
+            </select>
+          </div>
+          <div className="flex items-center gap-2">
+            <label className="text-[13px] text-[#555] whitespace-nowrap shrink-0">结算渠道：</label>
+            <select className="flex-1 border border-[#dde3ec] rounded px-2.5 py-1.5 text-[13px] focus:outline-none focus:border-[#1a5fa8] text-[#999] min-w-0">
+              <option value="">请选择结算渠道</option>
+              <option>建行龙存管</option><option>工行安心付</option>
+            </select>
+          </div>
+          <div className="flex items-center gap-2 col-span-2">
+            <label className="text-[13px] text-[#555] whitespace-nowrap shrink-0">时间：</label>
+            <div className="flex-1 flex items-center gap-1">
+              <input type="date" className="flex-1 border border-[#dde3ec] rounded px-2 py-1.5 text-[13px] focus:outline-none focus:border-[#1a5fa8] min-w-0" />
+              <span className="text-[#999] shrink-0">-</span>
+              <input type="date" className="flex-1 border border-[#dde3ec] rounded px-2 py-1.5 text-[13px] focus:outline-none focus:border-[#1a5fa8] min-w-0" />
+            </div>
+          </div>
+        </div>
+        <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
+            <label className="text-[13px] text-[#555] whitespace-nowrap shrink-0">期望收货时间：</label>
+            <div className="flex items-center gap-1">
+              <input type="datetime-local" className="border border-[#dde3ec] rounded px-2 py-1.5 text-[13px] focus:outline-none focus:border-[#1a5fa8]" />
+              <span className="text-[#999]">-</span>
+              <input type="datetime-local" className="border border-[#dde3ec] rounded px-2 py-1.5 text-[13px] focus:outline-none focus:border-[#1a5fa8]" />
+            </div>
+          </div>
+          <div className="ml-auto flex gap-2">
+            <button className="px-4 py-1.5 bg-[#1a5fa8] text-white text-[13px] rounded hover:bg-[#0d4a8a] flex items-center gap-1.5"><Search className="w-3.5 h-3.5" />查询</button>
+            <button className="px-4 py-1.5 border border-[#dde3ec] text-[#555] text-[13px] rounded hover:border-[#999]">清空</button>
+            <button className="px-4 py-1.5 border border-[#dde3ec] text-[#555] text-[13px] rounded hover:border-[#999] flex items-center gap-1.5"><Download className="w-3.5 h-3.5" />导出</button>
+          </div>
+        </div>
+      </div>
+
+      {/* 状态 Tab */}
+      <div className="bg-white rounded-lg border border-[#e8edf5]">
+        <div className="flex border-b border-[#e8edf5] overflow-x-auto">
+          {BATCH_STATUS_TABS.map(t => (
+            <button key={t} onClick={() => setStatusTab(t)}
+              className={`px-4 py-3 text-[12px] whitespace-nowrap border-b-2 transition-colors ${statusTab===t?"border-[#1a5fa8] text-[#1a5fa8] font-semibold":"border-transparent text-[#666] hover:text-[#1a5fa8]"}`}>
+              {t}
+            </button>
+          ))}
+        </div>
+
+        {/* 列表表头 */}
+        <div className="grid text-[12px] font-semibold text-[#666] bg-[#f5f7fa] border-b border-[#e8edf5]"
+          style={{gridTemplateColumns:"1.8fr 1fr 1fr 1fr 1fr 1.4fr 1.4fr 1.2fr 1fr 1fr 1fr"}}>
+          {["商品","批次发货总额(元)","批次验收总额(元)","配送方式","结算渠道","买家","卖家","期望收货时间","交易模式","订单状态","操作"].map(h=>(
+            <div key={h} className="px-3 py-2.5">{h}</div>
+          ))}
+        </div>
+
+        {/* 批次单列表 */}
+        {BATCH_DATA.map((b) => (
+          <div key={b.batchNo} className="border-b border-[#e8edf5] last:border-0">
+            {/* 批次单头行 */}
+            <div className="px-4 py-2 bg-[#fafbfc] flex items-center gap-6 text-[12px] text-[#666]">
+              <span>批次单编号：<span className="font-medium text-[#1a1a2e]">{b.batchNo}</span></span>
+              <span>发货时间：{b.shipTime}</span>
+              <span className="ml-auto">采购订单编号：<span className="text-[#1a5fa8] cursor-pointer hover:underline">{b.orderNo}</span></span>
+            </div>
+            {/* 主数据行 */}
+            <div className="grid items-center text-[12px]"
+              style={{gridTemplateColumns:"1.8fr 1fr 1fr 1fr 1fr 1.4fr 1.4fr 1.2fr 1fr 1fr 1fr"}}>
+              <div className="px-3 py-3 flex items-center gap-2">
+                <div className="w-12 h-12 shrink-0 rounded overflow-hidden bg-[#e8f4fd] flex items-center justify-center text-[#1a5fa8] text-[10px] font-bold">
+                  {b.img ? <img src={b.img} alt={b.product} className="w-full h-full object-cover" /> : b.product.slice(0,2)}
+                </div>
+                <span className="font-medium text-[#1a1a2e]">{b.product}</span>
+              </div>
+              <div className="px-3 py-3 text-[#1a1a2e]">{b.shipAmt}</div>
+              <div className="px-3 py-3 text-[#1a1a2e]">{b.acceptAmt}</div>
+              <div className="px-3 py-3 text-[#666]">{b.delivery}</div>
+              <div className="px-3 py-3 text-[#666]">{b.settlement}</div>
+              <div className="px-3 py-3 text-[11px] text-[#666] whitespace-pre-line">{b.buyer}</div>
+              <div className="px-3 py-3 text-[11px] text-[#666] whitespace-pre-line">{b.seller}</div>
+              <div className="px-3 py-3 text-[11px] text-[#666]">{b.expectTime}</div>
+              <div className="px-3 py-3 text-[#666]">{b.tradeMode}</div>
+              <div className="px-3 py-3 text-[#1a5fa8] font-medium text-[11px]">{b.orderStatus}</div>
+              <div className="px-3 py-3 flex flex-col gap-1">
+                <button onClick={() => setBatchDetailOpen(true)} className="text-[#1a5fa8] hover:underline text-left">查看详情</button>
+                {b.orderStatus === "待买家验收" && (
+                  <button className="text-[#e8831a] hover:underline text-left font-medium">批量验收</button>
+                )}
+              </div>
+            </div>
+            {/* 对账单/结算单行 */}
+            {(b.accountNo || b.settlementNo) && (
+              <div className="px-4 pb-3 flex items-center gap-8 text-[12px]">
+                {b.accountNo && (
+                  <div className="flex items-center gap-3 ml-auto">
+                    <span className="text-[#999]">{b.accountTime}</span>
+                    <span className="text-[#999]">对账单编号：<span className="font-medium text-[#333]">{b.accountNo}</span></span>
+                    <button className="px-3 py-1 bg-[#1a5fa8] text-white text-[12px] rounded hover:bg-[#0d4a8a]">查看对账单</button>
+                  </div>
+                )}
+                {b.settlementNo && (
+                  <div className="flex items-center gap-3">
+                    <span className="text-[#999]">{b.settlementTime}</span>
+                    <span className="text-[#999]">结算单编号：<span className="font-medium text-[#333]">{b.settlementNo}</span></span>
+                    <button className="px-3 py-1 bg-[#1a5fa8] text-white text-[12px] rounded hover:bg-[#0d4a8a]">查看结算单</button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+
+      {batchDetailOpen && <BatchDetailDrawerInline onClose={() => setBatchDetailOpen(false)} />}
+    </div>
+  )
+}
+
+/* 复用批次详情抽屉（inline版，避免跨文件依赖） */
+function BatchDetailDrawerInline({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-50 flex" onClick={onClose}>
+      <div className="flex-1 bg-black/30" />
+      <div className="w-[780px] bg-white h-full overflow-y-auto shadow-2xl" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8edf5] sticky top-0 bg-white z-10">
+          <h2 className="text-[18px] font-bold text-[#1a1a2e]">批次详情</h2>
+          <button onClick={onClose}><X className="w-5 h-5 text-[#999] hover:text-[#333]" /></button>
+        </div>
+        <div className="px-6 py-5 space-y-5">
+          <div className="border border-[#e8edf5] rounded-lg p-5">
+            <h3 className="text-[14px] font-bold text-[#1a5fa8] mb-4">基本信息</h3>
+            <div className="grid grid-cols-3 gap-x-8 gap-y-4 text-[13px]">
+              {[["批次单编号","PB457559072784"],["交易订单号","PO637075481616"],["批次状态","待买家验收"],["买家","广东新供销天润粮油集团有限公司"],["商家","南雄市社村合作农业发展有限公司"],["交易方式","担保交易"],["批次验收总金额","¥ 3000.00"],["批次发货总金额","¥ 3000.00"],["结算渠道","工行安心付"]].map(([k,v])=>(
+                <div key={k}><div className="text-[#999] text-[12px] mb-0.5">{k}</div><div className="text-[#1a1a2e] font-medium">{v}</div></div>
+              ))}
+            </div>
+          </div>
+          <div className="border border-[#e8edf5] rounded-lg p-5">
+            <h3 className="text-[14px] font-bold text-[#1a5fa8] mb-4">批次验收信息</h3>
+            <table className="w-full text-[13px] border border-[#e8edf5]">
+              <thead className="bg-[#f5f7fa]"><tr>{["商品","批次发货信息","批次验收信息","操作"].map(h=><th key={h} className="px-4 py-2.5 text-center font-semibold text-[#666]">{h}</th>)}</tr></thead>
+              <tbody>
+                <tr className="border-t border-[#e8edf5]">
+                  <td className="px-4 py-3"><div className="flex items-center gap-2"><div className="w-12 h-12 bg-[#e8f4fd] rounded flex items-center justify-center text-[#1a5fa8] text-[10px] font-bold shrink-0">核桃</div><div><div className="text-[#1a1a2e] font-medium">核桃</div><div className="text-[12px] text-[#999]">规格：吨</div></div></div></td>
+                  <td className="px-4 py-3 text-[13px] text-[#555]"><div>单价：¥1.00</div><div>数量：1(吨)</div><div>总价：¥1.00</div></td>
+                  <td className="px-4 py-3 text-[13px] text-[#555]"><div>单价：¥1.00</div><div>数量：1(吨)</div><div>总价：¥1.00</div></td>
+                  <td className="px-4 py-3 text-center"><button className="text-[#1a5fa8] text-[13px] hover:underline">详情</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div className="border border-[#e8edf5] rounded-lg p-5">
+            <h3 className="text-[14px] font-bold text-[#1a5fa8] mb-4">其他相关信息</h3>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-[13px]">
+              {[["发货时间","2026-08-03 22:49:39"],["物流信息","无"],["快递/物流公司","广东天业冷链物流有限公司"],["物流单号","WL598760431760"],["收货人信息","广东省广州市越秀区菜园东路78号  张悦  155****2732"],[""],["装货时间","2026-08-01 00:00:00"],["到货时间","2026-08-13 00:00:00"],["运输要求","常温"],["发货备注","-"]].map(([k,v],i)=>(
+                k ? <div key={i}><span className="text-[#999]">{k}：</span><span className="text-[#333]">{v}</span></div> : <div key={i} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ─── 主页面 ─── */
+const MAIN_TABS = ["商品订单", "批次单", "对账记录", "结算记录"] as const
+type MainTab = typeof MAIN_TABS[number]
+
 export default function WoCaigouPage() {
+  const [mainTab, setMainTab] = useState<MainTab>("商品订单")
   const [activeTab, setActiveTab] = useState("全部")
   const [shippingModal, setShippingModal] = useState(false)
   const [reconcileModal, setReconcileModal] = useState(false)
@@ -409,6 +641,25 @@ export default function WoCaigouPage() {
         <span>/</span>
         <span className="text-[#1a5fa8] font-medium">我采购</span>
       </div>
+
+      {/* 主 Tab 切换 */}
+      <div className="flex border-b border-[#e8edf5] mb-5 bg-white rounded-t-lg">
+        {MAIN_TABS.map(t => (
+          <button key={t} onClick={() => setMainTab(t)}
+            className={`px-6 py-3 text-[14px] border-b-2 transition-colors font-medium ${mainTab===t?"border-[#1a5fa8] text-[#1a5fa8]":"border-transparent text-[#666] hover:text-[#1a5fa8]"}`}>
+            {t}
+          </button>
+        ))}
+      </div>
+
+      {mainTab === "批次单" && <BatchDanList />}
+      {mainTab === "对账记录" && (
+        <div className="bg-white rounded-lg border border-[#e8edf5] py-16 text-center text-[14px] text-[#999]">对账记录功能建设中</div>
+      )}
+      {mainTab === "结算记录" && (
+        <div className="bg-white rounded-lg border border-[#e8edf5] py-16 text-center text-[14px] text-[#999]">结算记录功能建设中</div>
+      )}
+      {mainTab === "商品订单" && <>
 
       {/* 搜索栏 */}
       <div className="bg-white rounded-lg border border-[#e8edf5] p-4 mb-4 space-y-3">
@@ -531,6 +782,7 @@ export default function WoCaigouPage() {
       {contractModal    && <ContractModal onClose={() => setContractModal(false)} />}
       {changeModal      && <OrderChangeModal onClose={() => setChangeModal(false)} />}
       {applyCancelModal && <ApplyCancelModal onClose={() => setApplyCancelModal(false)} />}
+      </>}
     </div>
   )
 }

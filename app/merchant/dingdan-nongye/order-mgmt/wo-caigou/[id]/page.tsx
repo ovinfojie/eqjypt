@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { ChevronLeft, X, CheckSquare, Upload, FileText, Download } from "lucide-react"
+import { ChevronLeft, X, CheckSquare, Upload, FileText, Download, ChevronDown, ChevronUp, RefreshCw } from "lucide-react"
 
 const STEPS = ["提交订单","商家确认","付预付款","生产履约","发货","收货","对账结算","订单完成"]
 const FARMER_TASKS = [
@@ -111,7 +111,7 @@ function BatchAcceptModal({ onClose }: { onClose: () => void }) {
 
         <div className="flex justify-center gap-6 px-6 py-5 border-t border-[#e8edf5]">
           <button onClick={onClose} className="px-10 py-2.5 border border-[#dde3ec] text-[#555] text-[14px] rounded hover:border-[#999]">取消</button>
-          <button className="px-10 py-2.5 bg-[#1a5fa8] text-white text-[14px] font-semibold rounded hover:bg-[#0d4a8a]">确认验收</button>
+          <button className="px-10 py-2.5 bg-[#1a5fa8] text-white text-[14px] font-semibold rounded hover:bg-[#0d4a8a]">确认��收</button>
         </div>
       </div>
     </div>
@@ -122,6 +122,7 @@ export default function WoCaigouDetailPage() {
   const [activeTab, setActiveTab] = useState<"info"|"contract"|"production">("info")
   const [farmerFilter, setFarmerFilter] = useState("全部")
   const [batchModal, setBatchModal] = useState(false)
+  const [orderInfoCollapsed, setOrderInfoCollapsed] = useState(false)
   const currentStep = 4
 
   return (
@@ -171,16 +172,25 @@ export default function WoCaigouDetailPage() {
         {/* Tab内容 */}
         <div className="bg-white rounded-lg border border-[#e8edf5]">
 
-          {/* Tab切换按钮 */}
-          <div className="flex border-b border-[#e8edf5]">
-            {([["info","订单信息"],["contract","合同、发票"],["production","生产履约情况"]] as const).map(([t,l])=>(
-              <button key={t} onClick={()=>setActiveTab(t)} className={`px-5 py-3 text-[13px] border-b-2 transition-colors ${activeTab===t?"border-[#1a5fa8] text-[#1a5fa8] font-semibold":"border-transparent text-[#666] hover:text-[#1a5fa8]"}`}>{l}</button>
-            ))}
+          {/* Tab切换按钮 + 收起/展开 */}
+          <div className="flex items-center border-b border-[#e8edf5]">
+            <div className="flex flex-1">
+              {([["info","订单信息"],["contract","合同、发票"],["production","生产履约情况"]] as const).map(([t,l])=>(
+                <button key={t} onClick={()=>setActiveTab(t)} className={`px-5 py-3 text-[13px] border-b-2 transition-colors ${activeTab===t?"border-[#1a5fa8] text-[#1a5fa8] font-semibold":"border-transparent text-[#666] hover:text-[#1a5fa8]"}`}>{l}</button>
+              ))}
+            </div>
+            <button
+              onClick={() => setOrderInfoCollapsed(c => !c)}
+              className="flex items-center gap-1 mr-4 text-[13px] text-[#1a5fa8] hover:opacity-80 transition-opacity"
+            >
+              {orderInfoCollapsed ? <><ChevronDown className="w-4 h-4" />展开</> : <><ChevronUp className="w-4 h-4" />收起</>}
+            </button>
           </div>
 
           <div className="p-5 space-y-6">
             {activeTab === "info" && (
               <>
+                {!orderInfoCollapsed && <>
                 {/* 商品信息 */}
                 <div>
                   <h4 className="text-[13px] font-bold text-[#1a1a2e] border-l-4 border-[#1a5fa8] pl-3 mb-3">商品信息</h4>
@@ -208,11 +218,12 @@ export default function WoCaigouDetailPage() {
                 <div>
                   <h4 className="text-[13px] font-bold text-[#1a1a2e] border-l-4 border-[#1a5fa8] pl-3 mb-3">订单明细</h4>
                   <div className="grid grid-cols-3 gap-x-8 gap-y-4 text-[13px]">
-                    {[["买方","广东新供销天润粮油集团有限公司"],["商家","南雄市社村合作农业发展有限公司\n(南雄市社村合作农业发展有限公司)"],["供应商","——"],["买方联系人信息","王汉  18978907891"],["商家联系人信息","张悦  15527522832"],["供应商联系人信息","王鹏  15527522832"],["收货计划","2026-06-11 00:00:00 至 2026-06-12 23:59:59"],["配送方式","卖家配送"],["收货人信息","广东省广州市越秀区大东街道荣园东路78号\n陈先生  17878907890"],["定价方式","固定价"],["交易模式","担保交易"],["结算方式","预付款"],["支付渠道","工行安心付"],["买方订单备注","无"]].map(([k,v])=>(
+                    {[["买方","广东新供销天润粮油集团有限公司"],["商家","南雄市社村合作农业发展有限公司\n(南雄市社村合作农业发展有限公司)"],["供应商","——"],["买方联系人信息","王汉  18978907891"],["商家联系人信息","张悦  15527522832"],["供应商联系人信息","王鹏  15527522832"],["收货计划","2026-06-11 00:00:00 至 2026-06-12 23:59:59"],["配送方式","卖家配送"],["收货人信息","广东省广州市越秀区大东��道荣园东路78号\n陈先生  17878907890"],["定价方式","固定价"],["交易模式","担保交易"],["结算方式","预付款"],["支付渠道","工行安心付"],["买方订单备注","无"]].map(([k,v])=>(
                       <div key={k}><div className="text-[#999] mb-0.5">{k}</div><div className="text-[#333] whitespace-pre-line">{v}</div></div>
                     ))}
                   </div>
                 </div>
+                </>}
               </>
             )}
 
@@ -305,7 +316,7 @@ export default function WoCaigouDetailPage() {
                         <td className="px-4 py-3">{t.paid}</td>
                         <td className="px-4 py-3 text-[12px] text-[#666]">{t.period}</td>
                         <td className="px-4 py-3"><span className={`text-[12px] font-medium ${t.status==="已完成"?"text-[#0a7a45]":t.status==="已逾期"?"text-[#e04040]":t.status==="收购中"?"text-[#1a5fa8]":"text-[#666]"}`}>{t.status}</span></td>
-                        <td className="px-4 py-3">{t.status!=="待作业"?<button className="text-[#1a5fa8] text-[12px] hover:underline">查看服务详情</button>:<span className="text-[#ccc]">——</span>}</td>
+                        <td className="px-4 py-3">{t.status!=="待��业"?<button className="text-[#1a5fa8] text-[12px] hover:underline">查看服务详情</button>:<span className="text-[#ccc]">——</span>}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -320,47 +331,203 @@ export default function WoCaigouDetailPage() {
   )
 }
 
+const BATCH_ROWS = [
+  { id:"PB489238696064", time:"2026-07-08\n10:40:45", logistics:"天业冷链物流", trackNo:"WL598760431760", product:"丝苗米\n规格：吨", status:"待卖家确认验收", accountNo:"CSOA46125430 3744", settlementNo:"SO5903718236 32", qty:"2.00吨", total:"3000.00", checked:"3000.00" },
+  { id:"PB489238696065", time:"2026-07-08\n10:40:45", logistics:"天业冷链物流", trackNo:"WL598760431760", product:"丝苗米\n规格：吨", status:"待卖家确认验收", accountNo:"CSOA46125430 3744", settlementNo:"SO5903718236 32", qty:"2.00吨", total:"3000.00", checked:"3000.00" },
+]
+
+/* ─── 批次详情抽屉 ─── */
+function BatchDetailDrawer({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-50 flex" onClick={onClose}>
+      <div className="flex-1 bg-black/30" />
+      <div className="w-[780px] bg-white h-full overflow-y-auto shadow-2xl" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8edf5] sticky top-0 bg-white z-10">
+          <h2 className="text-[18px] font-bold text-[#1a1a2e]">批次详情</h2>
+          <button onClick={onClose}><X className="w-5 h-5 text-[#999] hover:text-[#333]" /></button>
+        </div>
+        <div className="px-6 py-5 space-y-5">
+          {/* 基本信息 */}
+          <div className="border border-[#e8edf5] rounded-lg p-5">
+            <h3 className="text-[14px] font-bold text-[#1a5fa8] mb-4">基本信息</h3>
+            <div className="grid grid-cols-3 gap-x-8 gap-y-4 text-[13px]">
+              {[["批次单编号","P6489238630528"],["交易订单号","YFK48604141712"],["批次状态","待卖家确认验收结果"],["买家","广东新供销天润粮油集团有限公司"],["商家","南雄市社村合作农业发展有限公司"],["交易方式","担保交易"],["批次验收总金额","¥ 10000.00"],["批次发货总金额","¥ 10000.00"],["结算渠道","建行龙存管"]].map(([k,v])=>(
+                <div key={k}><div className="text-[#999] text-[12px] mb-0.5">{k}</div><div className="text-[#1a1a2e] font-medium">{v}</div></div>
+              ))}
+            </div>
+          </div>
+          {/* 批次验收信息 */}
+          <div className="border border-[#e8edf5] rounded-lg p-5">
+            <h3 className="text-[14px] font-bold text-[#1a5fa8] mb-4">批次验收信息</h3>
+            <table className="w-full text-[13px] border border-[#e8edf5]">
+              <thead className="bg-[#f5f7fa]">
+                <tr>{["商品","批次发货信息","批次验收信息","操作"].map(h=><th key={h} className="px-4 py-2.5 text-center font-semibold text-[#666]">{h}</th>)}</tr>
+              </thead>
+              <tbody>
+                <tr className="border-t border-[#e8edf5] bg-[#fafbfc]">
+                  <td colSpan={4} className="px-4 py-2 text-[12px] text-[#666]">
+                    <div className="flex items-center gap-2">
+                      <span className="font-medium">南雄市社村合作农业发展有限公司</span>
+                      <span className="w-4 h-4 rounded-full bg-[#e8f4fd] text-[#1a5fa8] text-[10px] flex items-center justify-center cursor-pointer">↻</span>
+                    </div>
+                  </td>
+                </tr>
+                <tr className="border-t border-[#e8edf5]">
+                  <td className="px-4 py-3">
+                    <div className="flex items-center gap-2">
+                      <div className="w-12 h-12 bg-[#e8f4fd] rounded flex items-center justify-center text-[#1a5fa8] text-[10px] font-bold shrink-0">丝苗米</div>
+                      <div><div className="text-[#1a1a2e] font-medium">丝苗米</div><div className="text-[12px] text-[#999]">规格：吨</div></div>
+                    </div>
+                  </td>
+                  <td className="px-4 py-3 text-[13px] text-[#555]">
+                    <div>单价：¥ 1000.00</div><div>数量：3(吨)</div><div>总价：¥ 3000.00</div>
+                  </td>
+                  <td className="px-4 py-3 text-[13px] text-[#555]">
+                    <div>单价：¥ 1000.00</div><div>数量：3(吨)</div><div>总价：¥ 2950.00</div>
+                  </td>
+                  <td className="px-4 py-3 text-center">
+                    <button className="text-[#1a5fa8] text-[13px] hover:underline">详情</button>
+                  </td>
+                </tr>
+                <tr className="border-t border-[#e8edf5] bg-[#fafbfc]">
+                  <td colSpan={4} className="px-4 py-3 text-[13px]">
+                    <div className="flex gap-8">
+                      <div><span className="text-[#999]">买家凭证：</span><span className="text-[#1a5fa8] flex items-center gap-1 inline-flex"><span className="text-red-500 font-bold text-[10px]">PDF</span> 买家凭证.pdf</span></div>
+                      <div><span className="text-[#999]">买家验收备注：</span><span>——</span></div>
+                      <div><span className="text-[#999]">是否拒收本批次：</span><span>否</span></div>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          {/* 其他相关信息 */}
+          <div className="border border-[#e8edf5] rounded-lg p-5">
+            <h3 className="text-[14px] font-bold text-[#1a5fa8] mb-4">其他相关信息</h3>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-[13px]">
+              {[["发货时间","2026-07-08 10:40:45"],["物流信息","无"],["快递/物流公司","广东天业冷链物流有限公司"],["物流单号","WL598760431760"],["收货人信息","广东省广州市越秀区菜园东路78号  张悦  155****2732"],[""],["装货时间","2026-06-09 00:00:00"],["到货时间","2026-06-18 00:00:00"],["运输要求","常温"],["发货备注","-"]].map(([k,v],i)=>(
+                k ? <div key={i}><span className="text-[#999]">{k}：</span><span className="text-[#333]">{v}</span></div> : <div key={i} />
+              ))}
+              <div className="col-span-2">
+                <span className="text-[#999]">商家发货凭证：</span>
+                <span className="text-[#1a5fa8] inline-flex items-center gap-1"><span className="text-red-500 font-bold text-[10px]">PDF</span> 商家发货凭证.pdf</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ─── 批次单/对账单/结算单 独立区块 ─── */
 function BatchPanel() {
   const [activeTab, setActiveTab] = useState<"batch"|"account"|"settlement">("batch")
+  const [synced, setSynced] = useState(false)
+  const [syncing, setSyncing] = useState(false)
+  const [detailOpen, setDetailOpen] = useState(false)
+
+  function handleSync() {
+    setSyncing(true)
+    setTimeout(() => { setSyncing(false); setSynced(true) }, 800)
+  }
+
   const tabs = [
-    { key: "batch" as const,      label: "批次单列表"  },
-    { key: "account" as const,    label: "关联对账单"  },
-    { key: "settlement" as const, label: "关联结算单"  },
+    { key: "batch" as const,      label: "批次单列表" },
+    { key: "account" as const,    label: "关联对账单" },
+    { key: "settlement" as const, label: "关联结算单" },
   ]
+
   return (
-    <div className="bg-white rounded-lg border border-[#e8edf5]">
-      <div className="flex border-b border-[#e8edf5] px-5 pt-1">
-        {tabs.map(t => (
-          <button
-            key={t.key}
-            onClick={() => setActiveTab(t.key)}
-            className={`px-4 py-2.5 text-[13px] border-b-2 mr-1 transition-colors ${
-              activeTab === t.key
-                ? "border-[#1a5fa8] text-[#1a5fa8] font-semibold"
-                : "border-transparent text-[#666] hover:text-[#1a5fa8]"
-            }`}
-          >
-            {t.label}
-          </button>
-        ))}
-      </div>
-      <div className="px-5 py-5">
-        {activeTab === "batch" && (
-          <div className="flex items-center gap-3 px-4 py-3 bg-[#f0f7ff] border border-[#c6deff] rounded-lg text-[13px] text-[#3a6fa8]">
-            <svg className="w-4 h-4 shrink-0 text-[#1a5fa8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
-            </svg>
-            <span>货物正在入库处理中，批次单将在入库完成后自动同步至此，请稍后查看。</span>
+    <>
+      <div className="bg-white rounded-lg border border-[#e8edf5]">
+        <div className="flex items-center border-b border-[#e8edf5] px-5 pt-1">
+          <div className="flex flex-1">
+            {tabs.map(t => (
+              <button
+                key={t.key}
+                onClick={() => setActiveTab(t.key)}
+                className={`px-4 py-2.5 text-[13px] border-b-2 mr-1 transition-colors ${
+                  activeTab === t.key
+                    ? "border-[#1a5fa8] text-[#1a5fa8] font-semibold"
+                    : "border-transparent text-[#666] hover:text-[#1a5fa8]"
+                }`}
+              >
+                {t.label}
+              </button>
+            ))}
           </div>
-        )}
-        {activeTab === "account" && (
-          <div className="text-[13px] text-[#999] text-center py-6">暂无关联对账单</div>
-        )}
-        {activeTab === "settlement" && (
-          <div className="text-[13px] text-[#999] text-center py-6">暂无关联结算单</div>
-        )}
+          {activeTab === "batch" && (
+            <button
+              onClick={handleSync}
+              disabled={syncing}
+              className="flex items-center gap-1.5 px-3 py-1.5 mb-1 border border-[#1a5fa8] text-[#1a5fa8] text-[12px] rounded hover:bg-[#e8f4fd] transition-colors disabled:opacity-60"
+            >
+              <RefreshCw className={`w-3.5 h-3.5 ${syncing ? "animate-spin" : ""}`} />
+              {syncing ? "同步中..." : "同步"}
+            </button>
+          )}
+        </div>
+        <div className="px-5 py-4">
+          {activeTab === "batch" && (
+            synced ? (
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 px-4 py-3 bg-[#f0f7ff] border border-[#c6deff] rounded-lg text-[13px] text-[#3a6fa8]">
+                  <svg className="w-4 h-4 shrink-0 text-[#1a5fa8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                    <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                  </svg>
+                  <span>货物正在入库处理中，批次单将在入库完成后自动同步至此，请稍后查看。</span>
+                </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-[12px] border border-[#e8edf5]">
+                  <thead className="bg-[#f5f7fa]">
+                    <tr>
+                      {["批次单编号","发货时间","快递/物流公司","物流单号","商品","批次状态","关联对账单编号","关联结算单编号","发货数量(单位)","发货总金额(元)","验收总金额(元)","操作"].map(h=>(
+                        <th key={h} className="px-2.5 py-2.5 text-left font-semibold text-[#666] whitespace-nowrap">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {BATCH_ROWS.map(b => (
+                      <tr key={b.id} className="border-t border-[#e8edf5] hover:bg-[#fafbfc]">
+                        <td className="px-2.5 py-3 text-[#1a1a2e] whitespace-nowrap">{b.id}</td>
+                        <td className="px-2.5 py-3 text-[#666] whitespace-pre-line">{b.time}</td>
+                        <td className="px-2.5 py-3 text-[#666] whitespace-nowrap">{b.logistics}</td>
+                        <td className="px-2.5 py-3 text-[#1a5fa8] whitespace-nowrap">{b.trackNo}</td>
+                        <td className="px-2.5 py-3 text-[#666] whitespace-pre-line">{b.product}</td>
+                        <td className="px-2.5 py-3 text-[#e8831a] whitespace-nowrap">{b.status}</td>
+                        <td className="px-2.5 py-3 text-[#666] whitespace-nowrap">{b.accountNo}</td>
+                        <td className="px-2.5 py-3 text-[#666] whitespace-nowrap">{b.settlementNo}</td>
+                        <td className="px-2.5 py-3 text-[#1a1a2e]">{b.qty}</td>
+                        <td className="px-2.5 py-3 text-[#1a1a2e]">{b.total}</td>
+                        <td className="px-2.5 py-3 text-[#1a1a2e]">{b.checked}</td>
+                        <td className="px-2.5 py-3">
+                          <button onClick={() => setDetailOpen(true)} className="text-[#1a5fa8] hover:underline whitespace-nowrap">详情</button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              </div>
+            ) : (
+              <div className="flex items-center gap-3 px-4 py-3 bg-[#f0f7ff] border border-[#c6deff] rounded-lg text-[13px] text-[#3a6fa8]">
+                <svg className="w-4 h-4 shrink-0 text-[#1a5fa8]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                  <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                </svg>
+                <span>货物正在入库处理中，批次单将在入库完成后自动同步至此，请稍后查看。</span>
+              </div>
+            )
+          )}
+          {activeTab === "account" && (
+            <div className="text-[13px] text-[#999] text-center py-6">暂无关联对账单</div>
+          )}
+          {activeTab === "settlement" && (
+            <div className="text-[13px] text-[#999] text-center py-6">暂无关联结算单</div>
+          )}
+        </div>
       </div>
-    </div>
+      {detailOpen && <BatchDetailDrawer onClose={() => setDetailOpen(false)} />}
+    </>
   )
 }
