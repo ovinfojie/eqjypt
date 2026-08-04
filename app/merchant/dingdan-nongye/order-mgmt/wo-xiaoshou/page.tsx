@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { Search, Download, X, Upload, FileText } from "lucide-react"
+import { Search, Download, X, Upload, FileText, CheckSquare } from "lucide-react"
 
 const ORDERS = [
   { id:"2434059405460956", time:"2026-04-20 22:05:48", product:"南晶香占", spec:"吨", amount:2300, deposit:230, source:"订单农业服务", buyer:"广东新供销天润粮油集团有限公司", receiver:"张悦", phone:"136****9768", address:"广州市越秀区荣园东路80号", delivery:"卖家配送", planTime:"2026-04-23 00:00:00 至 2026-04-25 23:59:59", settlement:"建行龙存款", status:"待卖方确认", action:"确认订单" },
@@ -191,10 +191,101 @@ function ShippingModal({ onClose }: { onClose: () => void }) {
   )
 }
 
+/* ─── 订单变更弹窗 ─── */
+function OrderChangeModal({ onClose }: { onClose: () => void }) {
+  const [reason, setReason] = useState("")
+  const [qty, setQty] = useState("")
+  const [price, setPrice] = useState("")
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
+      <div className="bg-white rounded-lg w-[520px] shadow-2xl" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8edf5]">
+          <h3 className="text-[15px] font-bold text-[#1a1a2e]">订单变更</h3>
+          <button onClick={onClose}><X className="w-5 h-5 text-[#999]" /></button>
+        </div>
+        <div className="px-6 py-5 space-y-4">
+          <div className="bg-[#f5f7fa] rounded p-3 text-[13px] space-y-1">
+            <div className="flex gap-4"><span className="text-[#999] w-[72px]">订单编号</span><span className="text-[#333]">2434059405460958</span></div>
+            <div className="flex gap-4"><span className="text-[#999] w-[72px]">商品</span><span className="text-[#333]">大豆（吨）</span></div>
+            <div className="flex gap-4"><span className="text-[#999] w-[72px]">当前数量</span><span className="text-[#333]">27000吨</span></div>
+          </div>
+          <div>
+            <label className="block text-[13px] font-medium text-[#333] mb-1.5">变更原因 <span className="text-red-500">*</span></label>
+            <div className="space-y-2">
+              {["数量变更", "价格调整", "交货时间变更", "其他原因"].map(r => (
+                <label key={r} className="flex items-center gap-2 text-[13px] text-[#444] cursor-pointer">
+                  <input type="radio" name="xs_change_reason" value={r} onChange={() => setReason(r)} className="accent-[#1a5fa8]" />{r}
+                </label>
+              ))}
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <label className="block text-[13px] font-medium text-[#333] mb-1.5">变更后数量</label>
+              <input value={qty} onChange={e => setQty(e.target.value)} className="w-full border border-[#dde3ec] rounded px-3 py-1.5 text-[13px] focus:outline-none focus:border-[#1a5fa8]" placeholder="请输入（吨）" />
+            </div>
+            <div>
+              <label className="block text-[13px] font-medium text-[#333] mb-1.5">变更后单价</label>
+              <input value={price} onChange={e => setPrice(e.target.value)} className="w-full border border-[#dde3ec] rounded px-3 py-1.5 text-[13px] focus:outline-none focus:border-[#1a5fa8]" placeholder="请输入（元/吨）" />
+            </div>
+          </div>
+          <div>
+            <label className="block text-[13px] font-medium text-[#333] mb-1.5">补充说明</label>
+            <textarea rows={3} className="w-full border border-[#dde3ec] rounded px-3 py-2 text-[13px] resize-none focus:outline-none focus:border-[#1a5fa8]" placeholder="请输入补充说明（选填）" />
+          </div>
+        </div>
+        <div className="flex justify-end gap-3 px-6 py-4 border-t border-[#e8edf5]">
+          <button onClick={onClose} className="px-5 py-2 border border-[#dde3ec] text-[#555] text-[13px] rounded hover:border-[#999]">取消</button>
+          <button className="px-6 py-2 bg-[#1a5fa8] text-white text-[13px] font-semibold rounded hover:bg-[#0d4a8a]">提交变更</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ─── 申请取消弹窗 ─── */
+function ApplyCancelModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40" onClick={onClose}>
+      <div className="bg-white rounded-lg w-[480px] shadow-2xl" onClick={e => e.stopPropagation()}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-[#e8edf5]">
+          <h3 className="text-[15px] font-bold text-[#1a1a2e]">申请取消</h3>
+          <button onClick={onClose}><X className="w-5 h-5 text-[#999]" /></button>
+        </div>
+        <div className="px-6 py-5 space-y-4">
+          <div className="bg-[#fff8e6] border border-[#f5d78e] rounded px-4 py-3 text-[13px] text-[#8a6a00]">
+            申请取消后需等待对方同意，预付款将在对方同意后3个工作日内原路退回。
+          </div>
+          <div>
+            <label className="block text-[13px] font-medium text-[#333] mb-1.5">取消原因 <span className="text-red-500">*</span></label>
+            <div className="space-y-2">
+              {["价格变动，重新协商", "货源不足，无法履约", "买方要求取消", "其他原因"].map(r => (
+                <label key={r} className="flex items-center gap-2 text-[13px] text-[#444] cursor-pointer">
+                  <input type="radio" name="xs_apply_cancel_reason" value={r} className="accent-[#1a5fa8]" />{r}
+                </label>
+              ))}
+            </div>
+          </div>
+          <div>
+            <label className="block text-[13px] font-medium text-[#333] mb-1.5">备注说明</label>
+            <textarea className="w-full border border-[#dde3ec] rounded px-3 py-2 text-[13px] resize-none focus:outline-none focus:border-[#1a5fa8]" rows={3} placeholder="请输入备注（选填）" />
+          </div>
+        </div>
+        <div className="flex justify-end gap-3 px-6 py-4 border-t border-[#e8edf5]">
+          <button onClick={onClose} className="px-5 py-2 border border-[#dde3ec] text-[#555] text-[13px] rounded hover:border-[#999]">取消</button>
+          <button className="px-6 py-2 bg-[#e04040] text-white text-[13px] font-semibold rounded hover:bg-[#c03030]">提交申请</button>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default function WoXiaoshouPage() {
   const [activeTab, setActiveTab] = useState("全部")
   const [shippingModal, setShippingModal] = useState(false)
   const [contractModal, setContractModal] = useState(false)
+  const [changeModal, setChangeModal] = useState(false)
+  const [applyCancelModal, setApplyCancelModal] = useState(false)
 
   const getActionBtn = (order: typeof ORDERS[0]) => {
     const map: Record<string, { label: string; color: string; onClick: () => void }> = {
@@ -302,14 +393,20 @@ export default function WoXiaoshouPage() {
                 <div className="px-3 py-3 text-[11px] text-[#666]">{order.planTime}</div>
                 <div className="px-3 py-3 text-[#666]">{order.settlement}</div>
                 <div className="px-3 py-3"><span className={`text-[11px] font-medium ${order.status==="生产履约"?"text-[#1a5fa8]":order.status==="待发货"?"text-[#e8831a]":"text-[#666]"}`}>{order.status}</span></div>
-                <div className="px-3 py-3">{actionBtn&&<button onClick={actionBtn.onClick} className={`${actionBtn.color} hover:underline text-[12px]`}>{actionBtn.label}</button>}</div>
+                <div className="px-3 py-3 flex flex-col gap-1">
+                  {actionBtn && <button onClick={actionBtn.onClick} className={`${actionBtn.color} hover:underline text-[12px] text-left`}>{actionBtn.label}</button>}
+                  <button onClick={() => setChangeModal(true)} className="text-[#1a5fa8] hover:underline text-[12px] text-left">订单变更</button>
+                  <button onClick={() => setApplyCancelModal(true)} className="text-[#e04040] hover:underline text-[12px] text-left">申请取消</button>
+                </div>
               </div>
             </div>
           )
         })}
       </div>
 
-      {shippingModal && <ShippingModal onClose={()=>setShippingModal(false)} />}
+      {shippingModal    && <ShippingModal onClose={() => setShippingModal(false)} />}
+      {changeModal      && <OrderChangeModal onClose={() => setChangeModal(false)} />}
+      {applyCancelModal && <ApplyCancelModal onClose={() => setApplyCancelModal(false)} />}
     </div>
   )
 }
