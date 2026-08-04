@@ -37,13 +37,10 @@ const menuGroups = [
     ],
   },
   {
-    label: "订单农业管理",
+    label: "订单农业",
     items: [
-      { label: "需求管理",         href: "/admin/xunjia-list",                icon: ClipboardList },
-      { label: "订单种植需求管理", href: "/admin/dingdan-nongye/xq-list",     icon: ClipboardList },
-      { label: "订单种植供应管理", href: "/admin/dingdan-nongye/gy-list",     icon: Package       },
-      { label: "已成交订单管理",   href: "/admin/dingdan-nongye/order-list",  icon: Star          },
-      { label: "预约管理",         href: "/admin/yuyue",                      icon: Calendar      },
+      { label: "订单种植需求", href: "/admin/dingdan-nongye/zhongzhi-xq", icon: ClipboardList },
+      { label: "订单种植供应", href: "/admin/dingdan-nongye/zhongzhi-gy", icon: Package       },
     ],
   },
   {

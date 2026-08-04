@@ -5,6 +5,13 @@ import Link from "next/link"
 import { ChevronLeft, X, CheckSquare, Upload, FileText, Download, ChevronDown, ChevronUp, RefreshCw } from "lucide-react"
 
 const STEPS = ["提交订单","商家确认","付预付款","生产履约","发货","收货","对账结算","订单完成"]
+
+/* 发货记录 — 卖家每发货一次记录一条 */
+const SHIPMENT_RECORDS = [
+  { id:"FH20260708001", batchNo:"PB489238696064", product:"丝苗米", qty:"2.00 吨", logistics:"广东天业冷链物流有限公司", trackNo:"WL598760431760", delivery:"卖家配送", time:"2026-07-08 10:40:45", status:"已发货" },
+  { id:"FH20260710002", batchNo:"PB489238696065", product:"丝苗米", qty:"2.00 吨", logistics:"广东天业冷链物流有限公司", trackNo:"WL598760431761", delivery:"卖家配送", time:"2026-07-10 09:15:20", status:"已发货" },
+]
+
 const FARMER_TASKS = [
   { id:"ZZRW1781072816710", name:"张建国", area:100, supply:5,  paid:0,  period:"2026-06-11 至 2026-06-12", status:"待作业" },
   { id:"ZZRW1781072816711", name:"王虎",   area:200, supply:8,  paid:0,  period:"2026-06-11 至 2026-06-12", status:"作业中" },
@@ -119,7 +126,7 @@ function BatchAcceptModal({ onClose }: { onClose: () => void }) {
 }
 
 export default function WoCaigouDetailPage() {
-  const [activeTab, setActiveTab] = useState<"info"|"contract"|"production">("info")
+  const [activeTab, setActiveTab] = useState<"info"|"contract"|"production"|"shipment">("info")
   const [farmerFilter, setFarmerFilter] = useState("全部")
   const [batchModal, setBatchModal] = useState(false)
   const [orderInfoCollapsed, setOrderInfoCollapsed] = useState(false)
@@ -175,7 +182,7 @@ export default function WoCaigouDetailPage() {
           {/* Tab切换按钮 + 收起/展开 */}
           <div className="flex items-center border-b border-[#e8edf5]">
             <div className="flex flex-1">
-              {([["info","订单信息"],["contract","合同、发票"],["production","生产履约情况"]] as const).map(([t,l])=>(
+              {([["info","订单信息"],["contract","合同、发票"],["production","生产履约情况"],["shipment","发货记录"]] as const).map(([t,l])=>(
                 <button key={t} onClick={()=>setActiveTab(t)} className={`px-5 py-3 text-[13px] border-b-2 transition-colors ${activeTab===t?"border-[#1a5fa8] text-[#1a5fa8] font-semibold":"border-transparent text-[#666] hover:text-[#1a5fa8]"}`}>{l}</button>
               ))}
             </div>
@@ -218,7 +225,7 @@ export default function WoCaigouDetailPage() {
                 <div>
                   <h4 className="text-[13px] font-bold text-[#1a1a2e] border-l-4 border-[#1a5fa8] pl-3 mb-3">订单明细</h4>
                   <div className="grid grid-cols-3 gap-x-8 gap-y-4 text-[13px]">
-                    {[["买方","广东新供销天润粮油集团有限公司"],["商家","南雄市社村合作农业发展有限公司\n(南雄市社村合作农业发展有限公司)"],["供应商","——"],["买方联系人信息","王汉  18978907891"],["商家联系人信息","张悦  15527522832"],["供应商联系人信息","王鹏  15527522832"],["收货计划","2026-06-11 00:00:00 至 2026-06-12 23:59:59"],["配送方式","卖家配送"],["收货人信息","广东省广州市越秀区大东��道荣园东路78号\n陈先生  17878907890"],["定价方式","固定价"],["交易模式","担保交易"],["结算方式","预付款"],["支付渠道","工行安心付"],["买方订单备注","无"]].map(([k,v])=>(
+                    {[["买方","广东新供销天润粮油集团有限公司"],["商家","南雄市社村合作农业发展有限公司\n(南雄市社村合作农业发展有限公司)"],["供应商","——"],["买方联系人信息","王汉  18978907891"],["商家联系人信息","张悦  15527522832"],["供应商联系人信息","王鹏  15527522832"],["收货计划","2026-06-11 00:00:00 至 2026-06-12 23:59:59"],["配送方式","卖家配送"],["收货人信息","广东省广州市越秀区大东��道荣园东路78号\n陈先生  17878907890"],["定价方式","固定价"],["交易模式","担保交易"],["结算方式","预付款"],["支付渠道","工行安���付"],["买方订单备注","无"]].map(([k,v])=>(
                       <div key={k}><div className="text-[#999] mb-0.5">{k}</div><div className="text-[#333] whitespace-pre-line">{v}</div></div>
                     ))}
                   </div>
@@ -323,6 +330,38 @@ export default function WoCaigouDetailPage() {
                 </table>
               </>
             )}
+
+            {activeTab === "shipment" && (
+              <>
+                <div className="flex items-center justify-between mb-1">
+                  <h4 className="text-[13px] font-bold text-[#1a1a2e] border-l-4 border-[#1a5fa8] pl-3">发货记录</h4>
+                  <span className="text-[12px] text-[#999]">共 {SHIPMENT_RECORDS.length} 条发货记录，卖家每发货一次生成一条</span>
+                </div>
+                {SHIPMENT_RECORDS.length > 0 ? (
+                  <table className="w-full text-[13px] border border-[#e8edf5]">
+                    <thead className="bg-[#f5f7fa]"><tr>{["序号","发货单编号","关联批次单","商品","发货数量(单位)","快递/物流公司","物流单号","配送方式","发货时间","状态"].map(h=><th key={h} className="px-3 py-2.5 text-left font-semibold text-[#666] whitespace-nowrap">{h}</th>)}</tr></thead>
+                    <tbody>
+                      {SHIPMENT_RECORDS.map((s,i)=>(
+                        <tr key={s.id} className="border-t border-[#e8edf5] hover:bg-[#fafbfc]">
+                          <td className="px-3 py-3 text-[#666]">{i+1}</td>
+                          <td className="px-3 py-3 text-[#1a1a2e] whitespace-nowrap">{s.id}</td>
+                          <td className="px-3 py-3 text-[#1a5fa8] whitespace-nowrap">{s.batchNo}</td>
+                          <td className="px-3 py-3 text-[#666]">{s.product}</td>
+                          <td className="px-3 py-3 text-[#1a1a2e]">{s.qty}</td>
+                          <td className="px-3 py-3 text-[#666] whitespace-nowrap">{s.logistics}</td>
+                          <td className="px-3 py-3 text-[#1a5fa8] whitespace-nowrap">{s.trackNo}</td>
+                          <td className="px-3 py-3 text-[#666]">{s.delivery}</td>
+                          <td className="px-3 py-3 text-[#666] whitespace-nowrap">{s.time}</td>
+                          <td className="px-3 py-3"><span className="text-[12px] font-medium text-[#0a7a45]">{s.status}</span></td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ) : (
+                  <div className="text-[13px] text-[#999] text-center py-8">暂无发货记录</div>
+                )}
+              </>
+            )}
           </div>
         </div>
       </div>
@@ -420,12 +459,151 @@ function BatchDetailDrawer({ onClose }: { onClose: () => void }) {
   )
 }
 
+/* 关联对账单列表数据 */
+const ACCOUNT_ROWS = [
+  { no:"DZ260731000505", time:"2026-07-31 17:28:40", amount:"141.75", status:"已完成" },
+]
+/* 关联结算单列表数据 */
+const SETTLEMENT_ROWS = [
+  { no:"JS260731000110", time:"2026-07-31 17:29:01", amount:"141.75", status:"已完成" },
+]
+
+/* ─── 对账单详情弹窗 ─── */
+function AccountDetailModal({ onClose }: { onClose: () => void }) {
+  const info = [
+    ["对账单编号","DZ260731000505",false],["对账总金额","¥ 141.75",true],
+    ["付款对象","台山市大江供销社新",false,true],["付款账户","0086100004068366",false],
+    ["收款对象","矩正信息技术(上海)有限公司",false,true],["收款账户","0086100004068367",false],
+    ["买家","高州市社村合作农业发展有限公司02(台山市大江供销社新)",false],["商家","饶平种植专业合作社(矩正信息技术(上海)有限公司)",false],
+    ["对账单状态","已完成",false],["交易模式","非担保交易",false],
+    ["结算渠道","建行龙存管",false],["批次运费","¥ 0.00",false],
+    ["附加费用1","¥ 0.00",false],["附加费用2","¥ 0.00",false],
+    ["生成对账单时间","2026-07-31 17:28:40",false],["买家确认对账单时间","2026-07-31 17:29:01",false],
+  ] as [string,string,boolean,boolean?][]
+  return (
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 overflow-y-auto py-8" onClick={onClose}>
+      <div className="bg-white rounded-lg w-[900px] shadow-2xl" onClick={e=>e.stopPropagation()}>
+        <div className="px-6 py-4 border-b border-[#e8edf5] flex items-center justify-between">
+          <h3 className="text-[18px] font-bold text-[#1a1a2e]">对账单详情</h3>
+          <button onClick={onClose}><X className="w-5 h-5 text-[#999] hover:text-[#333]" /></button>
+        </div>
+        <div className="px-6 py-5 space-y-5">
+          <div className="border border-[#e8edf5] rounded-lg p-5">
+            <div className="grid grid-cols-2 gap-x-10 gap-y-4 text-[13px]">
+              {info.map(([k,v,red,bold],i)=>(
+                <div key={i} className="flex gap-2">
+                  <span className={`text-[#666] shrink-0 ${bold?"font-bold text-[#333]":""}`}>{k}：</span>
+                  <span className={`${red?"text-[#e04040] font-bold":bold?"text-[#1a1a2e] font-bold":k==="对账单状态"?"text-[#1a5fa8]":"text-[#333]"}`}>{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h4 className="text-[14px] font-bold text-[#1a1a2e] border-l-4 border-[#1a5fa8] pl-3 mb-3">对账的批次单信息（验收总金额：¥141.75）</h4>
+            <table className="w-full text-[13px] border border-[#e8edf5]">
+              <thead className="bg-[#f5f7fa]"><tr>{["批次单编号","关联交易订单","验收总金额","操作"].map(h=><th key={h} className="px-4 py-3 text-center font-semibold text-[#666]">{h}</th>)}</tr></thead>
+              <tbody>
+                <tr className="border-t border-[#e8edf5]">
+                  <td className="px-4 py-4 text-center text-[#1a1a2e]">PC260731000185</td>
+                  <td className="px-4 py-4 text-center text-[#1a1a2e]">YFDD260731000119</td>
+                  <td className="px-4 py-4 text-center text-[#1a1a2e]">¥ 141.75</td>
+                  <td className="px-4 py-4 text-center"><button className="text-[#1a5fa8] hover:underline">查看详情</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <div className="flex items-center justify-end gap-3 text-[12px] text-[#666] mt-3">
+              <span>共 1 条</span>
+              <span className="px-2 py-1 border border-[#dde3ec] rounded">10条/页</span>
+              <span className="w-6 h-6 flex items-center justify-center bg-[#1a5fa8] text-white rounded">1</span>
+              <span>前往<input className="w-10 mx-1 border border-[#dde3ec] rounded px-1 text-center" defaultValue={1} />页</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* ─── 结算单详情弹窗 ─── */
+function SettlementDetailModal({ onClose }: { onClose: () => void }) {
+  const info = [
+    ["结算单编号","JS260731000110",false],["结算总金额","¥ 141.75",true],
+    ["付款对象","台山市大江供销社新",false,true],["付款账户","0086100004068366",false],
+    ["收款对象","矩正信息技术(上海)有限公司",false,true],["收款账户","0086100004068367",false],
+    ["买家","高州市社村合作农业发展有限公司02(台山市大江供销社新)",false],["商家","饶平种植专业合作社(矩正信息技术(上海)有限公司)",false],
+    ["结算单状态","已完成",false],["交易模式","非担保交易",false],
+    ["结算渠道","建行龙存管",false],["批次运费","¥ 0.00",false],
+    ["附加费用1","¥ 0.00",false],["附加费用2","¥ 0.00",false],
+    ["生成结算单时间","2026-07-31 17:29:01",false],["付款时间","2026-07-31 17:30:40",false],
+  ] as [string,string,boolean,boolean?][]
+  return (
+    <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/40 overflow-y-auto py-8" onClick={onClose}>
+      <div className="bg-white rounded-lg w-[900px] shadow-2xl" onClick={e=>e.stopPropagation()}>
+        <div className="px-6 py-4 border-b border-[#e8edf5] flex items-center justify-between">
+          <h3 className="text-[18px] font-bold text-[#1a1a2e]">结算单详情</h3>
+          <button onClick={onClose}><X className="w-5 h-5 text-[#999] hover:text-[#333]" /></button>
+        </div>
+        <div className="px-6 py-5 space-y-5">
+          <div className="border border-[#e8edf5] rounded-lg p-5">
+            <div className="grid grid-cols-2 gap-x-10 gap-y-4 text-[13px]">
+              {info.map(([k,v,red,bold],i)=>(
+                <div key={i} className="flex gap-2">
+                  <span className={`text-[#666] shrink-0 ${bold?"font-bold text-[#333]":""}`}>{k}：</span>
+                  <span className={`${red?"text-[#e04040] font-bold":bold?"text-[#1a1a2e] font-bold":k==="结算单状态"?"text-[#1a5fa8]":"text-[#333]"}`}>{v}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div>
+            <h4 className="text-[14px] font-bold text-[#1a1a2e] border-l-4 border-[#1a5fa8] pl-3 mb-3">结算的批次单信息（验收总金额：¥141.75）</h4>
+            <table className="w-full text-[13px] border border-[#e8edf5]">
+              <thead className="bg-[#f5f7fa]"><tr>{["批次单编号","关联预付款订单","验收总金额","操作"].map(h=><th key={h} className="px-4 py-3 text-center font-semibold text-[#666]">{h}</th>)}</tr></thead>
+              <tbody>
+                <tr className="border-t border-[#e8edf5]">
+                  <td className="px-4 py-4 text-center text-[#1a1a2e]">PC260731000185</td>
+                  <td className="px-4 py-4 text-center text-[#1a1a2e]">YFDD260731000119</td>
+                  <td className="px-4 py-4 text-center text-[#1a1a2e]">¥ 141.75</td>
+                  <td className="px-4 py-4 text-center"><button className="text-[#1a5fa8] hover:underline">查看详情</button></td>
+                </tr>
+              </tbody>
+            </table>
+            <div className="flex items-center justify-end gap-3 text-[12px] text-[#666] mt-3">
+              <span>共 1 条</span>
+              <span className="px-2 py-1 border border-[#dde3ec] rounded">10条/页</span>
+              <span className="w-6 h-6 flex items-center justify-center bg-[#1a5fa8] text-white rounded">1</span>
+              <span>前往<input className="w-10 mx-1 border border-[#dde3ec] rounded px-1 text-center" defaultValue={1} />页</span>
+            </div>
+          </div>
+          <div>
+            <h4 className="text-[14px] font-bold text-[#1a1a2e] border-l-4 border-[#1a5fa8] pl-3 mb-3">支付信息</h4>
+            <div className="border border-[#e8edf5] rounded-lg p-5 space-y-3 text-[13px]">
+              <div><span className="text-[#666]">预付款抵扣金额：</span><span className="text-[#333]">¥ 0.00</span></div>
+              <div><span className="text-[#666]">剩余支付金额：</span><span className="text-[#333]">¥ 141.75</span></div>
+              <div><span className="text-[#666]">结算渠道：</span><span className="text-[#333]">线下支付</span></div>
+              <div><span className="text-[#666]">付款时间：</span><span className="text-[#333]">2026-07-31 17:30:40</span></div>
+              <div className="flex items-start gap-2">
+                <span className="text-[#666] pt-1">转账凭证：</span>
+                <div className="flex items-center gap-2 px-3 py-2 bg-[#f5f7fa] rounded border border-[#e8edf5]">
+                  <div className="w-5 h-5 bg-red-500 rounded flex items-center justify-center text-white text-[9px] font-bold">PDF</div>
+                  <span className="text-[#1a5fa8]">转账凭证.pdf</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 /* ─── 批次单/对账单/结算单 独立区块 ─── */
 function BatchPanel() {
   const [activeTab, setActiveTab] = useState<"batch"|"account"|"settlement">("batch")
   const [synced, setSynced] = useState(false)
   const [syncing, setSyncing] = useState(false)
   const [detailOpen, setDetailOpen] = useState(false)
+  const [accountDetailOpen, setAccountDetailOpen] = useState(false)
+  const [settlementDetailOpen, setSettlementDetailOpen] = useState(false)
 
   function handleSync() {
     setSyncing(true)
@@ -520,14 +698,66 @@ function BatchPanel() {
             )
           )}
           {activeTab === "account" && (
-            <div className="text-[13px] text-[#999] text-center py-6">暂无关联对账单</div>
+            ACCOUNT_ROWS.length > 0 ? (
+              <div>
+                <table className="w-full text-[13px] border border-[#e8edf5]">
+                  <thead className="bg-[#f5f7fa]"><tr>{["对账单编号","发起对账时间","关联本订单的对账金额（元）","对账单状态","操作"].map(h=><th key={h} className="px-4 py-3 text-center font-semibold text-[#666]">{h}</th>)}</tr></thead>
+                  <tbody>
+                    {ACCOUNT_ROWS.map(r=>(
+                      <tr key={r.no} className="border-t border-[#e8edf5] hover:bg-[#fafbfc]">
+                        <td className="px-4 py-4 text-center text-[#1a5fa8]">{r.no}</td>
+                        <td className="px-4 py-4 text-center text-[#666]">{r.time}</td>
+                        <td className="px-4 py-4 text-center text-[#1a1a2e]">{r.amount}</td>
+                        <td className="px-4 py-4 text-center text-[#0a7a45]">{r.status}</td>
+                        <td className="px-4 py-4 text-center"><button onClick={()=>setAccountDetailOpen(true)} className="text-[#1a5fa8] hover:underline">查看详情</button></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <div className="flex items-center justify-end gap-3 text-[12px] text-[#666] mt-3">
+                  <span>共 {ACCOUNT_ROWS.length} 条</span>
+                  <span className="px-2 py-1 border border-[#dde3ec] rounded">10条/页</span>
+                  <span className="w-6 h-6 flex items-center justify-center bg-[#1a5fa8] text-white rounded">1</span>
+                  <span>前往<input className="w-10 mx-1 border border-[#dde3ec] rounded px-1 text-center" defaultValue={1} />页</span>
+                </div>
+              </div>
+            ) : (
+              <div className="text-[13px] text-[#999] text-center py-6">暂无关联对账单</div>
+            )
           )}
           {activeTab === "settlement" && (
-            <div className="text-[13px] text-[#999] text-center py-6">暂无关联结算单</div>
+            SETTLEMENT_ROWS.length > 0 ? (
+              <div>
+                <table className="w-full text-[13px] border border-[#e8edf5]">
+                  <thead className="bg-[#f5f7fa]"><tr>{["结算单编号","生成结算单时间","关联本订单的结算金额（元）","结算单状态","操作"].map(h=><th key={h} className="px-4 py-3 text-center font-semibold text-[#666]">{h}</th>)}</tr></thead>
+                  <tbody>
+                    {SETTLEMENT_ROWS.map(r=>(
+                      <tr key={r.no} className="border-t border-[#e8edf5] hover:bg-[#fafbfc]">
+                        <td className="px-4 py-4 text-center text-[#1a5fa8]">{r.no}</td>
+                        <td className="px-4 py-4 text-center text-[#666]">{r.time}</td>
+                        <td className="px-4 py-4 text-center text-[#1a1a2e]">{r.amount}</td>
+                        <td className="px-4 py-4 text-center text-[#0a7a45]">{r.status}</td>
+                        <td className="px-4 py-4 text-center"><button onClick={()=>setSettlementDetailOpen(true)} className="text-[#1a5fa8] hover:underline">查看详情</button></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+                <div className="flex items-center justify-end gap-3 text-[12px] text-[#666] mt-3">
+                  <span>共 {SETTLEMENT_ROWS.length} 条</span>
+                  <span className="px-2 py-1 border border-[#dde3ec] rounded">10条/页</span>
+                  <span className="w-6 h-6 flex items-center justify-center bg-[#1a5fa8] text-white rounded">1</span>
+                  <span>前往<input className="w-10 mx-1 border border-[#dde3ec] rounded px-1 text-center" defaultValue={1} />页</span>
+                </div>
+              </div>
+            ) : (
+              <div className="text-[13px] text-[#999] text-center py-6">暂无关联结算单</div>
+            )
           )}
         </div>
       </div>
       {detailOpen && <BatchDetailDrawer onClose={() => setDetailOpen(false)} />}
+      {accountDetailOpen && <AccountDetailModal onClose={() => setAccountDetailOpen(false)} />}
+      {settlementDetailOpen && <SettlementDetailModal onClose={() => setSettlementDetailOpen(false)} />}
     </>
   )
 }
